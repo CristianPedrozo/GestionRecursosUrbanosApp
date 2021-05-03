@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RecolectAR_APP</string>
+    <string name="login_text">Login</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="img_company">Dashboard page</string>
 </resources>
