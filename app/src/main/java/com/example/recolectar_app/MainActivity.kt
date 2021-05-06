@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
+import com.example.recolectar_app.empleado.EmpleadoActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DashboardAdminActivity::class.java)
             startActivity(intent)
         } else {
-            Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
+            val intent2 = Intent(this, EmpleadoActivity::class.java)
+            startActivity(intent2)
+            //Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
         }
     }
 }
