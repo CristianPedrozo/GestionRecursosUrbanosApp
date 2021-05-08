@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.empleado.EmpleadoActivity
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.login_password).text.toString()
 
         if(email == "admin@admin.com" && password == "admin") {
-            val intent = Intent(this, DashboardAdminActivity::class.java)
+            val intent = Intent(this,AdministradorActivity::class.java)
             startActivity(intent)
         } else {
             val intent2 = Intent(this, EmpleadoActivity::class.java)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/usuarios"
+        android:icon="@drawable/ic_usuarios"
+        android:title="Usuarios" />
+    <item
+        android:id="@+id/contenedores"
+        android:icon="@drawable/ic_contenedor"
+        android:title="Contenedores" />
+    <item
+        android:id="@+id/camiones"
+        android:icon="@drawable/ic_camion"
+        android:title="Camiones" />
+    <item
+        android:id="@+id/zonas"
+        android:icon="@drawable/ic_zona"
+        android:title="Zonas" />
+    <item
+        android:id="@+id/monitoreo"
+        android:icon="@drawable/ic_monitoreo"
+        android:title="Monitoreo" />
+</menu>
