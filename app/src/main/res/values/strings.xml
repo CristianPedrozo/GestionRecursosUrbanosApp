@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecolectAR_APP</string>
+    <string name="title_activity_recorrido_conductor">Map</string>
+    <string name="title_activity_map_conductor">Map</string>
 </resources>
