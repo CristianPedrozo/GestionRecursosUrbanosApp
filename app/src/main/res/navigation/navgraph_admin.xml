@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navgraph_admin"
+    app:startDestination="@id/usuarios">
+
+    <fragment
+        android:id="@+id/contenedores"
+        android:name="com.example.recolectar_app.administrador.Contenedores"
+        android:label="fragment_administrador_contenedores" />
+    <fragment
+        android:id="@+id/monitoreo"
+        android:name="com.example.recolectar_app.administrador.Monitoreo"
+        android:label="fragment_administrador_monitoreo" />
+    <fragment
+        android:id="@+id/zonas"
+        android:name="com.example.recolectar_app.administrador.Zonas"
+        android:label="fragment_administrador_zonas" />
+    <fragment
+        android:id="@+id/camiones"
+        android:name="com.example.recolectar_app.administrador.Camiones"
+        android:label="fragment_administrador_camiones" />
+    <fragment
+        android:id="@+id/usuarios"
+        android:name="com.example.recolectar_app.administrador.Usuarios"
+        android:label="fragment_administrador_usuarios" />
+</navigation>

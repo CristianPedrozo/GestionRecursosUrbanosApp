@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
+import com.example.recolectar_app.administrador.AdministradorActivity
+import com.example.recolectar_app.empleado.EmpleadoActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +26,16 @@ class MainActivity : AppCompatActivity() {
         //hacer llamado a fiware para corroborar si el usuario existe, by email.
 
         if(email == "admin@admin.com" && password == "admin") {
-            //Redirigir a vista admin
-            //val intent = Intent(this, DashboardAdminActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this,AdministradorActivity::class.java)
+            startActivity(intent)
         }else if(email == "empleado@empleado.com" && password == "empleado"){
             //Redirigir a vista empleado
             //val intent = Intent(this, DashboardAdminActivity::class.java)
             //startActivity(intent)
         } else {
-            Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
+            val intent2 = Intent(this, EmpleadoActivity::class.java)
+            startActivity(intent2)
+            //Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
         }
     }
 }
