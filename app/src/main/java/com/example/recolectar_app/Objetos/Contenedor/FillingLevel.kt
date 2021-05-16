@@ -1,7 +1,7 @@
 package com.example.recolectar_app.Objetos.Contenedor
 
 data class FillingLevel(
-        val metadata: Metadata,
-        val type: String,
-        val value: Double
+        val metadata: Metadata = Metadata(),
+        val type: String="",
+        val value: Double=0.0
 )
