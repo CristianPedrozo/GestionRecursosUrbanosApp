@@ -1,16 +1,25 @@
 package com.example.recolectar_app.empleado
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.example.recolectar_app.R
+import com.example.recolectar_app.UtilidadesMaps
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -21,6 +30,7 @@ class Camino : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var mMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +40,38 @@ class Camino : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_empleado_camino, container, false)
+        val rootView= inflater.inflate(R.layout.fragment_empleado_camino, container, false)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync { googleMap ->
+            mMap = googleMap
+            updateMap()
+        }
+        val contexto = requireContext().applicationContext
+        UtilidadesMaps.crearRuta(contexto,LatLng(-34.591283, -58.414742),LatLng(-34.595566, -58.397494))
+        val btnIniciar=rootView.findViewById<Button>(R.id.btn_Inicio)
+        btnIniciar.setOnClickListener{
+            UtilidadesMaps.agregarMarkers(mMap)
+            mMap.addPolyline(UtilidadesMaps.lineOptions)
+
+        }
+        return rootView
+    }
+
+    private fun updateMap() {
+        val inicio = LatLng(-34.592678, -58.411280)
+        val cameraPosition = CameraPosition.Builder()
+            .target(inicio)
+            .zoom(18f)
+            //.bearing(45f)
+            //.tilt(90f)
+            .build()
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     companion object {
@@ -57,4 +93,6 @@ class Camino : Fragment() {
                 }
             }
     }
+
 }
+
