@@ -58,7 +58,6 @@ class Camino : Fragment() {
         btnIniciar.setOnClickListener{
             UtilidadesMaps.agregarMarkers(mMap)
             mMap.addPolyline(UtilidadesMaps.lineOptions)
-
         }
         return rootView
     }

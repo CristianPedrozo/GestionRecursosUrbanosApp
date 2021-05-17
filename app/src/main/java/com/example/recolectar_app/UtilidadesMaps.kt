@@ -10,6 +10,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
+import com.example.recolectar_app.Objetos.Instruccion
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -21,10 +22,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object UtilidadesMaps {
-    var routes: MutableList<MutableList<HashMap<String, String>>> = ArrayList()
-    var contenedores: MutableList<Contenedor> = ArrayList()
-    var coordenadaRutas: MutableList<LatLng> = ArrayList()
-    var lineOptions =PolylineOptions()
+    var routes: MutableList<MutableList<HashMap<String, String>>> = ArrayList() //guardo todos los puntos polyLine desencriptados
+    var contenedores: MutableList<Contenedor> = ArrayList() //guardo todos los contenedores asignados al cliente
+    var coordenadaRutas: MutableList<LatLng> = ArrayList() //guardo todas las coordenadas que se deber recolectar
+    var instrucciones : MutableList<Instruccion> = ArrayList() //guardo todas las intrucciones para el viaje
+    var lineOptions =PolylineOptions() //guardo todas las opciones para trajar la polyline en el mapa
     private var KEY_API="AIzaSyBdkQFmnElXImn5Po8QhlW2A4e8NZq3Vyw"
     private var URL_API="https://maps.googleapis.com/maps/api/directions/json?key="
 
@@ -34,6 +36,7 @@ object UtilidadesMaps {
         val url = crearUrlApi(inicio,fin)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             parsearRequest(response)
+            obtenerInstrucciones(response)
         }, { error ->
             Toast.makeText(contexto, "No se puede conectar $error", Toast.LENGTH_LONG).show()
             println()
@@ -172,6 +175,48 @@ object UtilidadesMaps {
     fun agregarMarkers (mMap:GoogleMap){
         for (i in 0 until contenedores.size){
             mMap.addMarker(MarkerOptions().position(LatLng(contenedores[i].location.value.coordinates[0],contenedores[i].location.value.coordinates[1])).title(contenedores[i].id.toString()))
+        }
+    }
+    fun obtenerInstrucciones (response: JSONObject){
+        var jRoutes: JSONArray? = null
+        var jLegs: JSONArray? = null
+        var jSteps: JSONArray? = null
+        try {
+            jRoutes = response.getJSONArray("routes")
+            for (i in 0 until jRoutes.length()) {
+                jLegs = (jRoutes[i] as JSONObject).getJSONArray("legs")
+                val path: MutableList<HashMap<String, String>> = ArrayList()
+                for (j in 0 until jLegs.length()) {
+                    jSteps = (jLegs[j] as JSONObject).getJSONArray("steps")
+                    for (k in 0 until jSteps.length()) {
+                        var latInicio = ((jSteps[k] as JSONObject)["start_location"] as JSONObject)["lat"] as Double
+                        var lngInicio = ((jSteps[k] as JSONObject)["start_location"] as JSONObject)["lng"] as Double
+                        var inicio:LatLng = LatLng(latInicio,lngInicio)
+
+                        var latFin = ((jSteps[k] as JSONObject)["end_location"] as JSONObject)["lat"] as Double
+                        var lngFin = ((jSteps[k] as JSONObject)["end_location"] as JSONObject)["lng"] as Double
+                        var fin = LatLng(latFin,lngFin)
+
+                        var instruccion = ((jSteps[k] as JSONObject)["html_instructions"] as JSONObject) as String
+                        var accion = ((jSteps[k] as JSONObject)["maneuver"] as JSONObject) as String
+
+                        var auxInstruccion: Instruccion = Instruccion()
+
+                        auxInstruccion.accion=accion
+                        auxInstruccion.instruccion=instruccion
+                        auxInstruccion.inicio=inicio
+                        auxInstruccion.fin = fin
+
+                        this.instrucciones.add(auxInstruccion)
+                    }
+                }
+                print(path)
+                routes.add(path)
+                decodificarRuta()
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
         }
     }
 }
