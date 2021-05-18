@@ -2,8 +2,12 @@ package com.example.recolectar_app
 
 import android.content.Context
 import android.graphics.Color
+import android.text.Html
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -170,7 +174,7 @@ object UtilidadesMaps {
         var inicioFinCoordenada="&origin="+ inicio.latitude.toString() + "," + inicio.longitude.toString() +
                 "&destination="+ fin.latitude.toString() + "," + fin.longitude.toString()
 
-        return ("$URL_API$KEY_API$inicioFinCoordenada&waypoints=optimize:true$coordenada")
+        return ("$URL_API$KEY_API&language=es-419$inicioFinCoordenada&waypoints=optimize:true$coordenada")
     }
     fun agregarMarkers (mMap:GoogleMap){
         for (i in 0 until contenedores.size){
@@ -191,16 +195,17 @@ object UtilidadesMaps {
                     for (k in 0 until jSteps.length()) {
                         var latInicio = ((jSteps[k] as JSONObject)["start_location"] as JSONObject)["lat"] as Double
                         var lngInicio = ((jSteps[k] as JSONObject)["start_location"] as JSONObject)["lng"] as Double
-                        var inicio:LatLng = LatLng(latInicio,lngInicio)
+                        var inicio = LatLng(latInicio,lngInicio)
 
                         var latFin = ((jSteps[k] as JSONObject)["end_location"] as JSONObject)["lat"] as Double
                         var lngFin = ((jSteps[k] as JSONObject)["end_location"] as JSONObject)["lng"] as Double
                         var fin = LatLng(latFin,lngFin)
 
-                        var instruccion = ((jSteps[k] as JSONObject)["html_instructions"] as JSONObject) as String
-                        var accion = ((jSteps[k] as JSONObject)["maneuver"] as JSONObject) as String
-
-                        var auxInstruccion: Instruccion = Instruccion()
+                        var instruccion = ((jSteps[k] as JSONObject)["html_instructions"]) as String
+                        var accion=""
+                        if(((jSteps[k] as JSONObject).has("maneuver")))
+                            accion = (jSteps[k] as JSONObject)["maneuver"] as String
+                        var auxInstruccion:Instruccion = Instruccion()
 
                         auxInstruccion.accion=accion
                         auxInstruccion.instruccion=instruccion
@@ -208,15 +213,37 @@ object UtilidadesMaps {
                         auxInstruccion.fin = fin
 
                         this.instrucciones.add(auxInstruccion)
+                        print(auxInstruccion.toString())
                     }
                 }
-                print(path)
-                routes.add(path)
-                decodificarRuta()
             }
         } catch (e: JSONException) {
             e.printStackTrace()
         } catch (e: Exception) {
+        }
+    }
+    fun actualizarIntruccion(t1:TextView,t2:TextView,iv_actual:ImageView,iv_sig:ImageView,ubicacionActual:LatLng,contexto:Context){
+        if (instrucciones[0].estoyCerca(ubicacionActual)) {
+            t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
+            t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[2].instruccion)
+            seleccionarImagen(instrucciones[1].accion,iv_actual,contexto)
+            seleccionarImagen(instrucciones[2].accion,iv_sig,contexto)
+            instrucciones.removeAt(0)
+        }
+        if (t1.text==""&&t2.text==""){
+            t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[0].instruccion)
+            t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
+            seleccionarImagen(instrucciones[0].accion,iv_actual,contexto)
+            seleccionarImagen(instrucciones[1].accion,iv_sig,contexto)
+        }
+    }
+    private fun seleccionarImagen(accion:String,iv:ImageView,contexto: Context){
+        when (accion) {
+            "turn-left" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.izquierda))
+            "turn-right" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.derecha))
+            else -> { // Note the block
+                iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.derecho))
+            }
         }
     }
 }
