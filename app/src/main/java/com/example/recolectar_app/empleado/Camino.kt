@@ -71,7 +71,7 @@ class Camino : Fragment() {
             mMap.addPolyline(UtilidadesMaps.lineOptions)
             UtilidadesMaps.actualizarIntruccion(tvInstruccion,tvSigInstruccion,ivActual,ivSig,LatLng(-34.591283, -58.414742),contexto)
             cvInstruccion.visibility=View.VISIBLE
-        }
+            }
         return rootView
     }
 
