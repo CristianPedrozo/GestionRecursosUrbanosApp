@@ -18,9 +18,10 @@ class Instruccion {
         locationB.latitude=ubicacion.latitude
         locationB.longitude=ubicacion.longitude
 
-        if(locationA.distanceTo(locationB)>10.0){
+        if(locationA.distanceTo(locationB)<10.0){
             return true
         }
         return false
     }
+
 }
