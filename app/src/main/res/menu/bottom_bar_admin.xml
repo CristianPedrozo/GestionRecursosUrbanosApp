@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_contenedor"
         android:title="Contenedores" />
     <item
-        android:id="@+id/camiones"
+        android:id="@+id/camionesActivity"
         android:icon="@drawable/ic_camion"
         android:title="Camiones" />
     <item

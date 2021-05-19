@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RecolectAR_APP">
-        <activity android:name=".administrador.AdministradorActivity"></activity>
+        <activity
+            android:name=".activities.CamionesActivity"
+            android:label="@string/title_activity_camiones"
+            android:theme="@style/Theme.RecolectAR_APP.NoActionBar"></activity>
+        <activity android:name=".administrador.AdministradorActivity" />
         <activity
             android:name=".administrador.AdminActivity"
             android:label="@string/title_activity_admin"
