@@ -25,9 +25,4 @@
         android:id="@+id/usuarios"
         android:name="com.example.recolectar_app.administrador.Usuarios"
         android:label="fragment_administrador_usuarios" />
-    <activity
-        android:id="@+id/camionesActivity"
-        android:name="com.example.recolectar_app.activities.CamionesActivity"
-        android:label="activity_camiones"
-        tools:layout="@layout/activity_camiones" />
 </navigation>
