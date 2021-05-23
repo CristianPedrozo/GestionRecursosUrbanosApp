@@ -20,9 +20,22 @@
     <fragment
         android:id="@+id/camiones"
         android:name="com.example.recolectar_app.administrador.Camiones"
-        android:label="fragment_administrador_camiones" />
+        android:label="fragment_administrador_camiones" >
+        <action
+            android:id="@+id/action_camiones_to_camionDetalle"
+            app:destination="@id/camionDetalle" />
+    </fragment>
     <fragment
         android:id="@+id/usuarios"
         android:name="com.example.recolectar_app.administrador.Usuarios"
         android:label="fragment_administrador_usuarios" />
+    <fragment
+        android:id="@+id/camionDetalle"
+        android:name="com.example.recolectar_app.fragments.CamionDetalle"
+        android:label="fragment_camion_detalle"
+        tools:layout="@layout/fragment_camion_detalle" >
+        <argument
+            android:name="camion"
+            app:argType="com.example.recolectar_app.entities.Camion" />
+    </fragment>
 </navigation>

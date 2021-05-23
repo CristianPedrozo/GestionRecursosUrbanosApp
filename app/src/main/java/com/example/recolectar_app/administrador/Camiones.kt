@@ -71,9 +71,10 @@ class Camiones : Fragment() {
         camionListAdapter = CamionListAdapter(camiones);
 
         /*
-        contactoListAdapter = ContactoListAdapter(contactos) { x ->
+        camionListAdapter = CamionListAdapter(camiones) { x ->
             onItemClick(x)
-        }*/
+        }
+         */
 
         recCamiones.adapter = camionListAdapter
 
