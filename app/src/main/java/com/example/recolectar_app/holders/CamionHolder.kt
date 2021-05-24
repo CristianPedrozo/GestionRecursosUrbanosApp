@@ -10,7 +10,6 @@ import com.example.recolectar_app.administrador.CamionesDirections
 import com.example.recolectar_app.entities.Camion
 import kotlinx.coroutines.selects.select
 
-
 class CamionHolder (v: View) : RecyclerView.ViewHolder(v) {
 
     private var view: View

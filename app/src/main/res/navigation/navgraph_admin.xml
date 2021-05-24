@@ -8,7 +8,14 @@
     <fragment
         android:id="@+id/contenedores"
         android:name="com.example.recolectar_app.administrador.Contenedores"
-        android:label="fragment_administrador_contenedores" />
+        android:label="fragment_administrador_contenedores" >
+        <action
+            android:id="@+id/action_contenedores_to_contenedorDetalle"
+            app:destination="@id/contenedorDetalle" />
+        <action
+            android:id="@+id/action_contenedores_to_alta_contenedor"
+            app:destination="@id/alta_contenedor" />
+    </fragment>
     <fragment
         android:id="@+id/monitoreo"
         android:name="com.example.recolectar_app.administrador.Monitoreo"
@@ -38,4 +45,14 @@
             android:name="camion"
             app:argType="com.example.recolectar_app.entities.Camion" />
     </fragment>
+    <fragment
+        android:id="@+id/contenedorDetalle"
+        android:name="com.example.recolectar_app.fragments.ContenedorDetalle"
+        android:label="fragment_contenedor_detalle"
+        tools:layout="@layout/fragment_contenedor_detalle" />
+    <fragment
+        android:id="@+id/alta_contenedor"
+        android:name="com.example.recolectar_app.fragments.alta_contenedor"
+        android:label="fragment_alta_contenedor"
+        tools:layout="@layout/fragment_alta_contenedor" />
 </navigation>
