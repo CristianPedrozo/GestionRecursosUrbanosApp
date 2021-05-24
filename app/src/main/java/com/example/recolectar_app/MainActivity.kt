@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             //val intent = Intent(this, DashboardAdminActivity::class.java)
             //startActivity(intent)
         } else {
+
             val intent2 = Intent(this, EmpleadoActivity::class.java)
             startActivity(intent2)
             //Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
