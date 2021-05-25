@@ -1,13 +1,20 @@
 package com.example.recolectar_app.entities
 
-class User(id : String, dni : String, rol : String) {
+import java.io.Serializable
+
+class User(id : String, email : String) : Serializable {
 
     private var id: String = ""
     private var dni: String = ""
     private var email: String = ""
     private var estado: String = ""
     private var rol: String = ""
+    private var password : String = ""
     private lateinit var camion: Camion
+
+    private fun setPassword(pass : String){
+        this.password = pass
+    }
 
     public fun getId(): String {
         return this.id
@@ -27,6 +34,9 @@ class User(id : String, dni : String, rol : String) {
 
     public fun getRol(): String {
         return this.rol
+    }
+    public fun getEmail(): String {
+        return this.email
     }
 
     public fun getCamion(): Camion {
