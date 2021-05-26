@@ -23,7 +23,14 @@
     <fragment
         android:id="@+id/zonas"
         android:name="com.example.recolectar_app.administrador.Zonas"
-        android:label="fragment_administrador_zonas" />
+        android:label="fragment_administrador_zonas" >
+        <action
+            android:id="@+id/action_zonas_to_alta_zona"
+            app:destination="@id/alta_zona" />
+        <action
+            android:id="@+id/action_zonas_to_zonaDetalle"
+            app:destination="@id/zonaDetalle" />
+    </fragment>
     <fragment
         android:id="@+id/camiones"
         android:name="com.example.recolectar_app.administrador.Camiones"
@@ -55,4 +62,12 @@
         android:name="com.example.recolectar_app.fragments.alta_contenedor"
         android:label="fragment_alta_contenedor"
         tools:layout="@layout/fragment_alta_contenedor" />
+    <fragment
+        android:id="@+id/alta_zona"
+        android:name="com.example.recolectar_app.zonas.alta_zona"
+        android:label="alta_zona" />
+    <fragment
+        android:id="@+id/zonaDetalle"
+        android:name="com.example.recolectar_app.zonas.ZonaDetalle"
+        android:label="ZonaDetalle" />
 </navigation>

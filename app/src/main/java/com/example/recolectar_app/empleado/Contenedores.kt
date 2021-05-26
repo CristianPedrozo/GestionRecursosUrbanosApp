@@ -20,7 +20,7 @@ import org.json.JSONObject
 
 class Contenedores : Fragment() {
     //esto tiene q ser variable dependiendo del usuario y su vehiculo
-    var url = "http://46.17.108.122:1026/v2/entities/?q=refVehicle==vehicle:1&type=WasteContainer"
+    var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
 
     lateinit var v: View
     lateinit var recContenedores : RecyclerView
@@ -49,6 +49,7 @@ class Contenedores : Fragment() {
         super.onStart()
         var gson = Gson()
         val queue = Volley.newRequestQueue(activity)
+
         val jsonArrayRequest = JsonArrayRequest(url,
             { response ->
                 for (i in 0 until response.length()){

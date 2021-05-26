@@ -31,6 +31,9 @@ class ContenedorListAdapter ( private var contenedorList: MutableList<Contenedor
     override fun onBindViewHolder(holder: ContenedorHolder, position: Int) {
 
         holder.setId(contenedorList[position].id)
+        holder.setFillingLevel(contenedorList[position].fillingLevel)
+        holder.setLocation(contenedorList[position].location)
+        holder.setTemperature(contenedorList[position].temperature)
 
 //        Glide
 //            .with(context)

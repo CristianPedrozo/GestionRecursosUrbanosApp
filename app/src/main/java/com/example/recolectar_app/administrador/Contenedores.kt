@@ -56,13 +56,13 @@ class Contenedores : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        for (i in 1..5) {
-            contenedores.add(Contenedor("Cont-1AD"))
-            contenedores.add(Contenedor("Cont-1AD"))
-            contenedores.add(Contenedor("Cont-1AD"))
-            contenedores.add(Contenedor("Cont-1AD"))
-
-        }
+//        for (i in 1..5) {
+//            contenedores.add(Contenedor("Cont-1AD"))
+//            contenedores.add(Contenedor("Cont-1AD"))
+//            contenedores.add(Contenedor("Cont-1AD"))
+//            contenedores.add(Contenedor("Cont-1AD"))
+//
+//        }
 
         //Configuración Obligatoria
         recContenedores.setHasFixedSize(true)
