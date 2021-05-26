@@ -1,6 +1,7 @@
 package com.example.recolectar_app.administrador
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.adapters.CamionListAdapter
@@ -16,6 +19,7 @@ import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.entities.Camion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +66,31 @@ class Contenedores : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+    var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
+    override fun onStart() {
+        super.onStart()
+        var gson = Gson()
+        val queue = Volley.newRequestQueue(activity)
+        val jsonArrayRequest = JsonArrayRequest(url,
+            { response ->
+                Log.d("Response Prueba", response.toString())
+                for (i in 0 until response.length()){
+                    val contenedor : Contenedor = gson.fromJson(response.getJSONObject(i).toString(),Contenedor::class.java)
+                    Log.d("Contenedor", contenedor.toString())
+                    contenedores.add(contenedor)
+                }
+                recContenedores.setHasFixedSize(true)
+                linearLayoutManager = LinearLayoutManager(context)
+                recContenedores.layoutManager = linearLayoutManager
+
+                contenedorListAdapter = ContenedorListAdapter(contenedores);
+
+
+                recContenedores.adapter = contenedorListAdapter
+            }, {print("prueba error")})
+        queue.add(jsonArrayRequest)
+    }
+/*
     override fun onStart() {
         super.onStart()
 
@@ -87,6 +116,8 @@ class Contenedores : Fragment() {
         recContenedores.adapter = contenedorListAdapter
 
     }
+
+ */
 
     fun onItemClick ( position : Int ) : Boolean {
         Snackbar.make(v,position.toString(), Snackbar.LENGTH_SHORT).show()
