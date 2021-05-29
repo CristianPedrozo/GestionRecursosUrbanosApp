@@ -1,5 +1,7 @@
 package com.example.recolectar_app.Objetos.Contenedor
 
+import android.os.Parcelable
+
 data class Contenedor (
     /*
         val category: Category,

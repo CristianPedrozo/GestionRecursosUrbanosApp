@@ -49,7 +49,11 @@
         android:id="@+id/contenedorDetalle"
         android:name="com.example.recolectar_app.fragments.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
-        tools:layout="@layout/fragment_contenedor_detalle" />
+        tools:layout="@layout/fragment_contenedor_detalle" >
+        <argument
+            android:name="Id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
         android:name="com.example.recolectar_app.fragments.alta_contenedor"

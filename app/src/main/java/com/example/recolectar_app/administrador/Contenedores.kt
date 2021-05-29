@@ -55,6 +55,7 @@ class Contenedores : Fragment() {
         //Para el botón flotante agregar Contenedor
         botton_agregar = v.findViewById(R.id.boton_agregar)
         botton_agregar.setOnClickListener(){
+
             val action = ContenedoresDirections.actionContenedoresToAltaContenedor()
             v.findNavController().navigate(action)
         }
@@ -66,7 +67,7 @@ class Contenedores : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
+    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer"
     override fun onStart() {
         super.onStart()
         var gson = Gson()

@@ -16,7 +16,8 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
     init {
         v.setOnClickListener(){ v: View ->
             //var contenedor= Contenedor("ABDS01")
-            val action = ContenedoresDirections.actionContenedoresToContenedorDetalle()
+            val id:String = "wastecontainer:1"
+            val action = ContenedoresDirections.actionContenedoresToContenedorDetalle(id)
             v.findNavController().navigate(action)
             //Toast.makeText(itemView.context,"clickeaste ", Toast.LENGTH_LONG).show()
         }
