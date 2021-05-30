@@ -11,7 +11,6 @@ import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.empleado.EmpleadoActivity
 
 class MainActivity : AppCompatActivity() {
-    var url = "http://46.17.108.122:1026/v2/entities"
 
 
 
