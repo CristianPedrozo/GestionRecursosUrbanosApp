@@ -29,7 +29,12 @@
             app:destination="@id/alta_zona" />
         <action
             android:id="@+id/action_zonas_to_zonaDetalle"
-            app:destination="@id/zonaDetalle" />
+            app:destination="@id/zonaDetalle">
+            <argument
+                android:name="idZona"
+                app:argType="string"
+                android:defaultValue="id" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/camiones"
@@ -65,9 +70,21 @@
     <fragment
         android:id="@+id/alta_zona"
         android:name="com.example.recolectar_app.zonas.alta_zona"
-        android:label="alta_zona" />
+        android:label="alta_zona" >
+        <action
+            android:id="@+id/action_alta_zona_to_zonas"
+            app:destination="@id/zonas" />
+    </fragment>
+
     <fragment
         android:id="@+id/zonaDetalle"
         android:name="com.example.recolectar_app.zonas.ZonaDetalle"
-        android:label="ZonaDetalle" />
+        android:label="ZonaDetalle" >
+        <argument
+            android:name="idZona"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_zonaDetalle_to_zonas"
+            app:destination="@id/zonas" />
+    </fragment>
 </navigation>

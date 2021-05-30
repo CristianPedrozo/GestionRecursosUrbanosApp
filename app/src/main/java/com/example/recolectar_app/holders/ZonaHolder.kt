@@ -2,32 +2,40 @@ package com.example.recolectar_app.holders
 
 import android.view.View
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.R
 import com.example.recolectar_app.administrador.ZonasDirections
+import com.example.recolectar_app.zonas.Zona
 
 class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
 
-    private var view: View
 
-    init {
-        v.setOnClickListener(){ v: View ->
-            val action = ZonasDirections.actionZonasToZonaDetalle()
-            v.findNavController().navigate(action)
+
+//    init {
+//        v.setOnClickListener(){ v: View ->
+//            val txt: TextView = v.findViewById(R.id.txt_id_itemZona)
+//            val id = txt.text.toString()
+//            val bundle = bundleOf("id" to id)
+//            v.findNavController().navigate(R.id.action_zonas_to_zonaDetalle,bundle)
+//        }
+//        this.view = v
+//    }
+
+
+    private var view: View = v
+    private var txt : TextView = v.findViewById(R.id.txt_id_itemZona)
+
+
+    fun bind(zona: Zona, listener: (Zona) -> Unit) = with(view){
+        txt.text = zona.id
+        val stringId = zona.id
+        setOnClickListener {
+            listener(zona)
+            Navigation.findNavController(view).navigate(ZonasDirections.actionZonasToZonaDetalle(stringId))
         }
-        this.view = v
-    }
-
-    fun setId(id: String) {
-        val txt: TextView = view.findViewById(R.id.txt_id_itemZona)
-        txt.text = id
-    }
-
-
-    fun getCardLayout (): CardView {
-        return view.findViewById(R.id.card_package_item_zona)
     }
 
 

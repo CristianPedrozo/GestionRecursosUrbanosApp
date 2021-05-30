@@ -5,16 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.recolectar_app.R
 
 
 class item_zona : Fragment() {
+    private lateinit var v: View
+    lateinit var idZona : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -22,13 +24,15 @@ class item_zona : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_item_zona, container, false)
+        v = inflater.inflate(R.layout.fragment_item_zona, container, false)
+        idZona = v.findViewById(R.id.txt_id_itemZona)
+        return v
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             item_zona().apply {
                 arguments = Bundle().apply {
 

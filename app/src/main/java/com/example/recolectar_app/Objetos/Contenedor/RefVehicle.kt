@@ -4,6 +4,10 @@ import com.example.recolectar_app.Objetos.Contenedor.Metadata
 
 data class RefVehicle(
         val metadata: Metadata,
-        val type: String,
+        val type: String = "Relationship",
         val value: String
+
 )
+
+
+

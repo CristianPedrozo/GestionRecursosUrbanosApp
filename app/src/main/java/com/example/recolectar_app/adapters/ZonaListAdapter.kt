@@ -6,7 +6,12 @@ import com.example.recolectar_app.R
 import com.example.recolectar_app.holders.ZonaHolder
 import com.example.recolectar_app.zonas.Zona
 
-class ZonaListAdapter (private var zonaList: MutableList<Zona>) : RecyclerView.Adapter<ZonaHolder>() {
+class ZonaListAdapter(
+    private var zonaList: MutableList<Zona>,
+    val listener: (Zona) -> Unit
+) : RecyclerView.Adapter<ZonaHolder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ZonaHolder {
         val view =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_zona,parent,false)
@@ -29,10 +34,6 @@ class ZonaListAdapter (private var zonaList: MutableList<Zona>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ZonaHolder, position: Int) {
-
-        holder.setId(zonaList[position].id)
-
-
-
+        holder.bind(zonaList[position],listener)
     }
 }

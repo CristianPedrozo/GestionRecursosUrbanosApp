@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.empleado.EmpleadoActivity
@@ -46,30 +47,11 @@ class MainActivity : AppCompatActivity() {
 //            //val intent = Intent(this, DashboardAdminActivity::class.java)
 //            //startActivity(intent)
         } else {
-//            val user = User("empleado:test${email}",email)
-//            val jsonObject = JSONObject()
-//            jsonObject.accumulate("id", "${user.getId()}")
-//            jsonObject.accumulate("type", "Empleado")
-//            jsonObject.accumulate("email", "${user.getEmail()}")
-//
-//
-//            val jsonObjectRequest = JsonObjectRequest(url,jsonObject,
-//                { response ->
-//
-//                },
-//                { response ->
-//
-//                }
-//            )
-            //queue.add(jsonObjectRequest)
             val intent2 = Intent(this@MainActivity, EmpleadoActivity::class.java)
-//            intent.putExtra("user",user)
             startActivity(intent2)
             //Toast.makeText(this, "Email o contraseña invalidos", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
 
 
