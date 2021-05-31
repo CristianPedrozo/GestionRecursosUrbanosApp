@@ -1,5 +1,6 @@
 package com.example.recolectar_app.empleado
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -21,7 +22,6 @@ class EmpleadoActivity : AppCompatActivity() {
         bottomNavView = findViewById(R.id.bottom_bar)
 
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
-
 
     }
 }
