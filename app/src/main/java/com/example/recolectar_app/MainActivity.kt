@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnIniciar=findViewById<Button>(R.id.b_Inicio)
         btnIniciar.setOnClickListener{
-            UtilidadesMaps.webServiceObtenerRuta(this,"")
+//            UtilidadesMaps.webServiceObtenerRuta(this,"")
             startActivity(Intent(this,RecorridoConductor::class.java))
         }
 

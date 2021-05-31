@@ -20,27 +20,13 @@ import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 
-<<<<<<< HEAD
 
-class Camino : Fragment() {
-=======
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Camino.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Camino : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var mMap: GoogleMap
->>>>>>> 8de08a3420b0c49760cfb8c14bfbc0968506e9c2
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +41,6 @@ class Camino : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-<<<<<<< HEAD
-
-        return inflater.inflate(R.layout.fragment_empleado_camino, container, false)
-=======
         // Inflate the layout for this fragment
         val rootView= inflater.inflate(R.layout.fragment_empleado_camino, container, false)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -93,7 +75,6 @@ class Camino : Fragment() {
             //.tilt(90f)
             .build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
->>>>>>> 8de08a3420b0c49760cfb8c14bfbc0968506e9c2
     }
 
     companion object {

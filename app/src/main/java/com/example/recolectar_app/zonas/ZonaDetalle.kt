@@ -69,7 +69,7 @@ class ZonaDetalle : Fragment() {
     }
 
     private fun removeZona(requestHandler: RequestHandler) {
-        Toast.makeText(thiscontext, urid}", Toast.LENGTH_LONG).show()
+        Toast.makeText(thiscontext,"delete", Toast.LENGTH_LONG).show()
         requestHandler.deleteRequest("${url}${id}",
             { response ->
                 Toast.makeText(thiscontext, "response delete" + response, Toast.LENGTH_LONG).show()
