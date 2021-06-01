@@ -1,40 +1,20 @@
 package com.example.recolectar_app.fragments
 
 import android.os.Bundle
-import android.support.v4.media.session.MediaSessionCompat.Token.fromBundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.app.Person.fromBundle
-import androidx.media.AudioAttributesCompat.fromBundle
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.google.gson.Gson
-/*
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContenedorDetalle.newInstance] factory method to
- * create an instance of this fragment.
- */
-
- */
 class ContenedorDetalle : Fragment() {
-    /*
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-     */
     private lateinit var id: String
     private lateinit var v: View
     //var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=$id"
@@ -45,17 +25,11 @@ class ContenedorDetalle : Fragment() {
     lateinit var text_contenedor_latitud: TextView
     lateinit var text_contenedor_longitud: TextView
     lateinit var text_contenedor_estado: TextView
+    lateinit var text_contenedor_ruta: TextView
+    lateinit var text_contenedor_vehiculo: TextView
+    lateinit var text_contenedor_temperatura: TextView
+    lateinit var text_contenedor_zona: TextView
 
-/*
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
- */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +41,10 @@ class ContenedorDetalle : Fragment() {
         text_contenedor_latitud = v.findViewById(R.id.text_latitud)
         text_contenedor_longitud = v.findViewById(R.id.text_longitud)
         text_contenedor_estado= v.findViewById(R.id.text_estado)
+        text_contenedor_ruta= v.findViewById(R.id.text_ruta)
+        text_contenedor_vehiculo = v.findViewById(R.id.text_camion)
+        text_contenedor_temperatura = v.findViewById(R.id.text_temperatura)
+        text_contenedor_zona=v.findViewById(R.id.text_zona)
 
         return v
     }
@@ -90,6 +68,10 @@ class ContenedorDetalle : Fragment() {
                 text_contenedor_estado.setText(contenedor.status.value)
                 text_contenedor_latitud.setText(contenedor.location.value.coordinates[0].toString())
                 text_contenedor_longitud.setText(contenedor.location.value.coordinates[1].toString())
+                text_contenedor_ruta.setText(contenedor.refRuta.value)
+                text_contenedor_vehiculo.setText(contenedor.refVehicle.value)
+                text_contenedor_temperatura.setText(contenedor.temperature.value.toString())
+                text_contenedor_zona.setText(contenedor.refZona.value)
             }, {print("prueba error")})
         queue.add(jsonArrayRequest)
     }

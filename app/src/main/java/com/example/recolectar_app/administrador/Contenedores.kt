@@ -63,9 +63,6 @@ class Contenedores : Fragment() {
         return v
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
     var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer"
     override fun onStart() {
