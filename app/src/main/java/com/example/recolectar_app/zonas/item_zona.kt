@@ -11,7 +11,7 @@ import com.example.recolectar_app.R
 
 class item_zona : Fragment() {
     private lateinit var v: View
-    lateinit var idZona : TextView
+//    lateinit var idZona : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,8 @@ class item_zona : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_item_zona, container, false)
-        idZona = v.findViewById(R.id.txt_id_itemZona)
+//        idZona = v.findViewById(R.id.txt_id_itemZona)
+//        idZona.text = idZona.text.split(":")[1]
         return v
     }
 

@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.administrador.ZonasDirections
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -21,7 +20,8 @@ class alta_zona : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
     lateinit var v : View
-    lateinit var editText_Id_Zona : EditText
+    lateinit var editText_id_alta_zona : EditText
+    lateinit var editText_refVehicle_alta_zona : EditText
     lateinit var btn_alta_zona : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,8 @@ class alta_zona : Fragment() {
 
         var requestHandler = RequestHandler.getInstance(thiscontext)
         v= inflater.inflate(R.layout.fragment_alta_zona, container, false)
-        editText_Id_Zona = v.findViewById(R.id.editText_Id_zona)
+        editText_id_alta_zona = v.findViewById(R.id.editText_Id_alta_zona)
+        editText_refVehicle_alta_zona = v.findViewById(R.id.editText_refVehicle_alta_zona)
         btn_alta_zona = v.findViewById(R.id.btn_alta_zona)
         btn_alta_zona.setOnClickListener {
             addZona(requestHandler)
@@ -51,9 +52,8 @@ class alta_zona : Fragment() {
 
     private fun addZona(requestHandler : RequestHandler) {
         val gson = Gson()
-        val zona = Zona(editText_Id_Zona.text.toString(),
-            Zona.RefVehicle("Relationship","vehicle:1"),
-            Zona::class.java.simpleName.toString())
+        val zona = Zona(editText_id_alta_zona.text.toString(),
+            Zona.RefVehicle(editText_refVehicle_alta_zona.toString()))
         val string = gson.toJson(zona)
         val jsonObject = JSONObject(string)
 //        Toast.makeText(thiscontext, "obj $jsonObject", Toast.LENGTH_LONG).show()

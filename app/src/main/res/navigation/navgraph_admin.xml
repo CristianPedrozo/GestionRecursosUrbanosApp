@@ -34,6 +34,9 @@
                 android:name="idZona"
                 app:argType="string"
                 android:defaultValue="id" />
+            <argument
+                android:name="refVehicleZona"
+                app:argType="string"/>
         </action>
     </fragment>
     <fragment
@@ -82,6 +85,9 @@
         android:label="ZonaDetalle" >
         <argument
             android:name="idZona"
+            app:argType="string"/>
+        <argument
+            android:name="refVehicleZona"
             app:argType="string"/>
         <action
             android:id="@+id/action_zonaDetalle_to_zonas"

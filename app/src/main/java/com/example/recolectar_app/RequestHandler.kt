@@ -70,17 +70,17 @@ class RequestHandler private constructor(context: Context) {
         addToRequestQueue(putRequest)
     }
 
-    //PATCH Method with params
-    fun patchRequest(url:String, response : Response.Listener<JSONObject>, error: Response.ErrorListener, obj : JSONObject)
+    //PATCH Method
+    fun patchRequest(url:String,obj : JSONObject, response : Response.Listener<JSONObject>, error: Response.ErrorListener, )
     {
-        val patchRequest = JsonObjectRequest(Request.Method.PATCH, url,obj,response,error)
+        val patchRequest = JsonObjectRequest(Request.Method.POST, url,obj,response,error)
         addToRequestQueue(patchRequest)
     }
 
     //DELETE Method
-    fun deleteRequest(url:String, response : Response.Listener<JSONObject>, error: Response.ErrorListener)
+    fun deleteRequest(url:String, response: Response.Listener<String>, error: Response.ErrorListener)
     {
-        val deleteRequest = JsonObjectRequest(Request.Method.DELETE,url,null,response,error)
+        val deleteRequest = StringRequest(Request.Method.DELETE,url,response,error)
         addToRequestQueue(deleteRequest)
     }
 
