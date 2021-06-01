@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,30 +43,24 @@ class alta_zona : Fragment() {
         v= inflater.inflate(R.layout.fragment_alta_zona, container, false)
         editText_id_alta_zona = v.findViewById(R.id.editText_Id_alta_zona)
         editText_refVehicle_alta_zona = v.findViewById(R.id.editText_refVehicle_alta_zona)
+        editText_id_alta_zona.hint = "Coloca un id"
+        editText_refVehicle_alta_zona.hint = "Coloca el id del camion"
         btn_alta_zona = v.findViewById(R.id.btn_alta_zona)
         btn_alta_zona.setOnClickListener {
             addZona(requestHandler)
+            val action = alta_zonaDirections.actionAltaZonaToZonas()
+            v.findNavController().navigate(action)
         }
         return v
     }
 
     private fun addZona(requestHandler : RequestHandler) {
         val gson = Gson()
-        val zona = Zona(editText_id_alta_zona.text.toString(),
-            Zona.RefVehicle(editText_refVehicle_alta_zona.toString()))
+        val zona = Zona(editText_id_alta_zona.text.toString())
+        zona.setRefVehicleValue(editText_refVehicle_alta_zona.text.toString())
         val string = gson.toJson(zona)
         val jsonObject = JSONObject(string)
-//        Toast.makeText(thiscontext, "obj $jsonObject", Toast.LENGTH_LONG).show()
-        requestHandler.postRequest(
-            url,
-            { response ->
-                Toast.makeText(thiscontext, "response alta" + response, Toast.LENGTH_LONG).show()
-            },
-            { error ->
-                Toast.makeText(thiscontext, "error alta" + error, Toast.LENGTH_LONG).show()
-            },
-            jsonObject
-        )
+        requestHandler.postRequest(url,{},{},jsonObject)
     }
 
 

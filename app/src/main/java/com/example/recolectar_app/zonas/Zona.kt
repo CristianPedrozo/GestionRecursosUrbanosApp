@@ -1,16 +1,23 @@
 package com.example.recolectar_app.zonas
 
-import android.widget.Toast
 
-data class Zona(val id: String, val refVehicle: RefVehicle) {
+data class Zona(var id: String) {
     val type : String = "Zona"
+    var refVehicle: RefVehicle? = null
 
     data class RefVehicle(var value : String){
         val type: String = "Relationship"
     }
 
-    init {
-        this.refVehicle.value = "vehicle:${this.refVehicle.value}"
+    fun setRefVehicleValue(string: String){
+        this.refVehicle = RefVehicle("vehicle:${string}")
     }
+
+    init {
+        this.id = "zona:${id}"
+    }
+
+
+
 }
 

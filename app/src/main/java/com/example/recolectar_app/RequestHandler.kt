@@ -78,9 +78,9 @@ class RequestHandler private constructor(context: Context) {
     }
 
     //DELETE Method
-    fun deleteRequest(url:String, response: Response.Listener<String>, error: Response.ErrorListener)
+    fun deleteRequest(url:String,obj : JSONObject, response: Response.Listener<JSONObject>, error: Response.ErrorListener)
     {
-        val deleteRequest = StringRequest(Request.Method.DELETE,url,response,error)
+        val deleteRequest = JsonObjectRequest(Request.Method.POST,url,obj,response,error)
         addToRequestQueue(deleteRequest)
     }
 

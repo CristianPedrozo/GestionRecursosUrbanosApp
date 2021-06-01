@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
+import com.example.recolectar_app.DeleteRequestObject
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
@@ -59,7 +59,7 @@ class ZonaDetalle : Fragment() {
         et_id_zona = v.findViewById(R.id.txt_id_edit_zona)
         et_id_zona.text = id
         et_refVehicle_zona = v.findViewById(R.id.txt_refVehicle_edit_zona)
-        et_refVehicle_zona.hint = refVehicle
+        et_refVehicle_zona.hint = "Coloca el id del camion"
 
         btn_edit_zona.setOnClickListener {
             editZona(requestHandler)
@@ -75,28 +75,29 @@ class ZonaDetalle : Fragment() {
     }
 
     private fun removeZona(requestHandler: RequestHandler) {
-        Toast.makeText(thiscontext,"${url}${id}", Toast.LENGTH_LONG).show()
-        requestHandler.deleteRequest("${url}${id}",
-            { response ->
-                Toast.makeText(thiscontext, "response delete $response", Toast.LENGTH_LONG).show()
-            },
-            { error ->
-                Log.e(TAG,error.toString())
-                Toast.makeText(thiscontext, "error delete $error", Toast.LENGTH_LONG).show()
-            }
-        )
+        val gson = Gson()
+        val zona = Zona(id)
+        val deleteObject = DeleteRequestObject()
+        deleteObject.addEntitie(zona)
+        val jsonDeleteObject = gson.toJson(deleteObject)
+        val jsonObject = JSONObject(jsonDeleteObject)
+        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
     }
 
 
     private fun editZona(requestHandler: RequestHandler) {
         val gson = Gson()
         refVehicle = et_refVehicle_zona.text.toString()
-        val zona = Zona(id, Zona.RefVehicle(refVehicle))
+        val zona = Zona(id)
+        zona.setRefVehicleValue(refVehicle)
         val patchObject = PatchRequestObject()
         patchObject.addEntitie(zona)
+
         val jsonPatchObject = gson.toJson(patchObject)
+
         val jsonObject = JSONObject(jsonPatchObject)
-        requestHandler.patchRequest(urlUpdate,jsonObject, {},{},)
+
+        requestHandler.patchRequest(urlUpdate,jsonObject,{},{})
     }
 
     companion object {
