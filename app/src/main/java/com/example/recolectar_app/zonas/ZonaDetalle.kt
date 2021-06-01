@@ -2,7 +2,6 @@ package com.example.recolectar_app.zonas
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.navigation.findNavController
-import com.example.recolectar_app.DeleteRequestObject
+import com.example.recolectar_app.DeleteZonaRequest
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
@@ -77,7 +76,7 @@ class ZonaDetalle : Fragment() {
     private fun removeZona(requestHandler: RequestHandler) {
         val gson = Gson()
         val zona = Zona(id)
-        val deleteObject = DeleteRequestObject()
+        val deleteObject = DeleteZonaRequest()
         deleteObject.addEntitie(zona)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)

@@ -4,7 +4,7 @@ import com.example.recolectar_app.zonas.Zona
 import org.json.JSONObject
 import java.util.*
 
-class DeleteRequestObject {
+class DeleteZonaRequest {
     var actionType : String = "delete"
     var entities = ArrayList<Zona>()
 
