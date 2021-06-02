@@ -1,5 +1,6 @@
 package com.example.recolectar_app.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,12 +12,14 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
+import com.example.recolectar_app.RequestHandler
+import com.example.recolectar_app.zonas.ZonaDetalleArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
 
-    private lateinit var id: String
+    private lateinit var idContenedor: String
     private lateinit var v: View
     //var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=$id"
     var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=wastecontainer:1"
@@ -30,13 +33,19 @@ class ContenedorDetalle : Fragment() {
     lateinit var text_contenedor_vehiculo: TextView
     lateinit var text_contenedor_temperatura: TextView
     lateinit var text_contenedor_zona: TextView
+    lateinit var thiscontext : Context
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         v= inflater.inflate(R.layout.fragment_contenedor_detalle, container, false)
-
+        if (container != null) {
+            thiscontext = container.context
+        };
+        val requestHandler = RequestHandler.getInstance(thiscontext)
+        val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
+        idContenedor = args?.id.toString()
         text_contenedor_id  = v.findViewById(R.id.text_id);
         text_contenedor_tipo = v.findViewById(R.id.text_tipo);
         text_contenedor_latitud = v.findViewById(R.id.text_latitud)
@@ -53,8 +62,7 @@ class ContenedorDetalle : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        id = ContenedorDetalleArgs.fromBundle(requireArguments()).id
-        Log.d("ID Prueba", id)
+        Log.d("ID Prueba", idContenedor)
         var gson = Gson()
         val queue = Volley.newRequestQueue(activity)
         val jsonArrayRequest = JsonArrayRequest(url,
@@ -77,26 +85,4 @@ class ContenedorDetalle : Fragment() {
         queue.add(jsonArrayRequest)
     }
 
-/*
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ContenedorDetalle.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContenedorDetalle().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
- */
 }

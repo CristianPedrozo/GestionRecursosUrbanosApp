@@ -6,16 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ContenedorDetalle">
-<<<<<<< HEAD
-
-    <TextView
-        android:id="@+id/lbl_AM_zona"
-        android:layout_width="wrap_content"
-=======
     <ScrollView
         android:id="@+id/scrollView_alta_Camion"
         android:layout_width="match_parent"
->>>>>>> 314e127a175ffbbb61e74fd8b6ae416743262c72
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 

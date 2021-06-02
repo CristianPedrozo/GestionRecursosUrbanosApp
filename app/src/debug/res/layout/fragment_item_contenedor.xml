@@ -16,81 +16,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-<<<<<<< HEAD
-        android:layout_height="202dp">
-=======
+
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <!-- Media -->
->>>>>>> 314e127a175ffbbb61e74fd8b6ae416743262c72
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:layout_marginBottom="10dp"
-            android:text="Id"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.272"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.105" />
-
-        <TextView
-            android:id="@+id/txt_temp_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Temp"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.099" />
-
-        <TextView
-            android:id="@+id/txt_llenado_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Llenado"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.878"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.788" />
-
-        <TextView
-            android:id="@+id/txt_location_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.183"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.788" />
-=======
             android:orientation="vertical"
             android:padding="16dp">
 
             <!-- Title, secondary and supporting text -->
             <TextView
-                android:id="@+id/txt_id_item"
+                android:id="@+id/txt_id_item_contenedor"
                 android:text="Id Contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <TextView
-                android:id="@+id/txt_tipo_item"
+                android:id="@+id/txt_tipo_item_contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -100,7 +48,7 @@
                 />
 
             <TextView
-                android:id="@+id/txt_zona_item"
+                android:id="@+id/txt_zona_item_contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -109,7 +57,7 @@
                 android:textColor="?android:attr/textColorSecondary" />
 
         </LinearLayout>
->>>>>>> 314e127a175ffbbb61e74fd8b6ae416743262c72
+
 
         <!-- Buttons -->
 

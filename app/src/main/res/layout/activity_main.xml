@@ -108,5 +108,6 @@
             android:id="@+id/b_Inicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar" />
+            android:text="Iniciar"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
