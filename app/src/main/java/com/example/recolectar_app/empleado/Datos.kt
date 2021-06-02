@@ -34,7 +34,7 @@ class Datos : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-<<<<<<< HEAD
+
         v = inflater.inflate(R.layout.fragment_empleado_datos, container, false)
         datos = v.findViewById(R.id.txtdatos)
         val queue = Volley.newRequestQueue(activity)
@@ -47,11 +47,7 @@ class Datos : Fragment() {
         )
         queue.add(jsonObjectRequest)
         return v
-=======
 
-        return inflater.inflate(R.layout.fragment_empleado_datos, container, false)
-
->>>>>>> 25a7edf7d3fed5b9632d69996f8a59a0e678f799
     }
 
 
