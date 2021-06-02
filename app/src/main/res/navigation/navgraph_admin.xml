@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph_admin"
     app:startDestination="@id/usuarios">
 
     <fragment
         android:id="@+id/contenedores"
         android:name="com.example.recolectar_app.administrador.Contenedores"
-        android:label="fragment_administrador_contenedores" />
+        android:label="fragment_administrador_contenedores" >
+        <action
+            android:id="@+id/action_contenedores_to_contenedorDetalle"
+            app:destination="@id/contenedorDetalle" />
+        <action
+            android:id="@+id/action_contenedores_to_alta_contenedor"
+            app:destination="@id/alta_contenedor" />
+    </fragment>
     <fragment
         android:id="@+id/monitoreo"
         android:name="com.example.recolectar_app.administrador.Monitoreo"
@@ -15,13 +23,91 @@
     <fragment
         android:id="@+id/zonas"
         android:name="com.example.recolectar_app.administrador.Zonas"
-        android:label="fragment_administrador_zonas" />
+        android:label="fragment_administrador_zonas" >
+        <action
+            android:id="@+id/action_zonas_to_alta_zona"
+            app:destination="@id/alta_zona" />
+        <action
+            android:id="@+id/action_zonas_to_zonaDetalle"
+            app:destination="@id/zonaDetalle">
+            <argument
+                android:name="idZona"
+                app:argType="string"
+                android:defaultValue="id" />
+            <argument
+                android:name="refVehicleZona"
+                app:argType="string"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/camiones"
         android:name="com.example.recolectar_app.administrador.Camiones"
-        android:label="fragment_administrador_camiones" />
+        android:label="fragment_administrador_camiones" >
+        <action
+            android:id="@+id/action_camiones_to_camionDetalle"
+            app:destination="@id/camionDetalle" />
+        <action
+            android:id="@+id/action_camiones_to_alta_camion"
+            app:destination="@id/alta_camion" />
+    </fragment>
     <fragment
         android:id="@+id/usuarios"
         android:name="com.example.recolectar_app.administrador.Usuarios"
         android:label="fragment_administrador_usuarios" />
+    <fragment
+        android:id="@+id/camionDetalle"
+        android:name="com.example.recolectar_app.fragments.CamionDetalle"
+        android:label="fragment_camion_detalle"
+        tools:layout="@layout/fragment_camion_detalle">
+        <argument
+            android:name="camion"
+            app:argType="com.example.recolectar_app.entities.Camion" />
+        <action
+            android:id="@+id/action_camionDetalle_to_alta_camion"
+            app:destination="@id/alta_camion" />
+    </fragment>
+    <fragment
+        android:id="@+id/contenedorDetalle"
+        android:name="com.example.recolectar_app.fragments.ContenedorDetalle"
+        android:label="fragment_contenedor_detalle"
+        tools:layout="@layout/fragment_contenedor_detalle" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_contenedorDetalle_to_alta_contenedor"
+            app:destination="@id/alta_contenedor" />
+    </fragment>
+    <fragment
+        android:id="@+id/alta_contenedor"
+        android:name="com.example.recolectar_app.fragments.alta_contenedor"
+        android:label="fragment_alta_contenedor"
+        tools:layout="@layout/fragment_alta_contenedor" />
+    <fragment
+        android:id="@+id/alta_zona"
+        android:name="com.example.recolectar_app.zonas.alta_zona"
+        android:label="alta_zona" >
+        <action
+            android:id="@+id/action_alta_zona_to_zonas"
+            app:destination="@id/zonas" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/zonaDetalle"
+        android:name="com.example.recolectar_app.zonas.ZonaDetalle"
+        android:label="ZonaDetalle" >
+        <argument
+            android:name="idZona"
+            app:argType="string"/>
+        <argument
+            android:name="refVehicleZona"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_zonaDetalle_to_zonas"
+            app:destination="@id/zonas" />
+    </fragment>
+    <fragment
+        android:id="@+id/alta_camion"
+        android:name="com.example.recolectar_app.fragments.alta_camion"
+        android:label="alta_camion" />
 </navigation>

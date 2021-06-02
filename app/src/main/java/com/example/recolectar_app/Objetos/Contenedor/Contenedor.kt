@@ -1,21 +1,36 @@
 package com.example.recolectar_app.Objetos.Contenedor
 
-data class Contenedor(
-        val category: Category = Category(),
-        val dateLastEmptying: DateLastEmptying = DateLastEmptying(),
-        val fillingLevel: FillingLevel = FillingLevel(),
-        val id: String = "",
-        val location: Location = Location(),
-        val nextActuationDeadline: NextActuationDeadline = NextActuationDeadline(),
-        val refDevice: RefDevice = RefDevice(),
-        val refWasteContainerIsle: RefWasteContainerIsle = RefWasteContainerIsle(),
-        val refWasteContainerModel: RefWasteContainerModel = RefWasteContainerModel(),
-        val serialNumber: SerialNumber = SerialNumber(),
-        val status: Status = Status(),
-        val temperature: Temperature = Temperature(),
-        val type: String = "",
+import android.os.Parcelable
 
-        ) {
-}
+data class Contenedor (
+    /*
+        val category: Category,
+        val dateLastEmptying: DateLastEmptying,
+        val fillingLevel: FillingLevel,
+        val  id: String,
+       val location: Location,
+       val nextActuationDeadline: NextActuationDeadline,
+       val refDevice: RefDevice,
+       val refWasteContainerIsle: RefWasteContainerIsle,
+       val refWasteContainerModel: RefWasteContainerModel,
+       val serialNumber: SerialNumber,
+       val status: Status,
+       val temperature: Temperature,
+       val type: String
 
+     */
+        val id: String,
+        val dateLastEmptying: DateLastEmptying,
+        val fillingLevel: FillingLevel,
+
+        val location: Location,
+        val nextActuationDeadline: NextActuationDeadline,
+        val refRuta: RefRuta,
+        val refVehicle: RefVehicle,
+        val refZona: RefZona,
+        val status: Status,
+        val temperature: Temperature,
+        val type: String
+
+)
 
