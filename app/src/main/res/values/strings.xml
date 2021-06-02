@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RecolectAR_APP</string>
     <string name="title_activity_recorrido_conductor">Map</string>
     <string name="title_activity_map_conductor">Map</string>
@@ -19,4 +19,43 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_camiones">CamionesActivity</string>
+    <!--Para ABM Contenedores-->
+    <string-array name="estados_contenedor">
+        <item>Proyectado</item>
+        <item>Instalado</item>
+        <item>EnServicio</item>
+        <item>En Reparación</item>
+        <item>Dado De Baja</item>
+    </string-array>
+    <string-array name="tipos_residuos">
+        <item>Sólidos Urbanos</item>
+        <item>Orgánicos</item>
+        <item>Inorgánicos</item>
+        <item>Manejo Especial</item>
+    </string-array>
+    <string name="label_codigo_contenedor">Código</string>
+    <string name="label_tipo_contenedor">Tipo</string>
+    <string name="label_estado_contenedor">Estado</string>
+    <string name="label_latitud_contenedor">Latitud</string>
+    <string name="label_longitud_contenedor">Longitud</string>
+    <string name="label_temperatura_contenedor">Temperatura</string>
+    <string name="label_ruta_contenedor">Ruta</string>
+    <string name="label_camion_contenedor">Camion</string>
+    <string name="label_zona_contenedor">Zona</string>
+    <!--Para ABM Camiones -->
+    <string name="label_patente_camion">Patente</string>
+    <string name="label_tipo_camion">Tipo</string>
+    <string name="label_estado_camion">Estado</string>
+    <string name="label_empleado_camion">Empleado</string>
+    <string name="label_zona_camion">Zona</string>
+    <string name="label_latitud_camion">Latitud</string>
+    <string name="label_longitud_camion">Longitud</string>
+    <string-array name="estados_camion">
+        <item>Proyectado</item>
+        <item>Instalado</item>
+        <item>En Servicio</item>
+        <item>En Reparación</item>
+        <item>Dado De Baja</item>
+    </string-array>
+
 </resources>

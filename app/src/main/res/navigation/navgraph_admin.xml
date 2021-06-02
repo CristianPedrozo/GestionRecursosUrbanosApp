@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_camiones_to_camionDetalle"
             app:destination="@id/camionDetalle" />
+        <action
+            android:id="@+id/action_camiones_to_alta_camion"
+            app:destination="@id/alta_camion" />
     </fragment>
     <fragment
         android:id="@+id/usuarios"
@@ -55,19 +58,30 @@
         android:id="@+id/camionDetalle"
         android:name="com.example.recolectar_app.fragments.CamionDetalle"
         android:label="fragment_camion_detalle"
-        tools:layout="@layout/fragment_camion_detalle" >
+        tools:layout="@layout/fragment_camion_detalle">
         <argument
             android:name="camion"
             app:argType="com.example.recolectar_app.entities.Camion" />
+        <action
+            android:id="@+id/action_camionDetalle_to_alta_camion"
+            app:destination="@id/alta_camion" />
     </fragment>
     <fragment
         android:id="@+id/contenedorDetalle"
         android:name="com.example.recolectar_app.fragments.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
-        tools:layout="@layout/fragment_contenedor_detalle" />
+        tools:layout="@layout/fragment_contenedor_detalle" >
+        <argument
+            android:name="Id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_contenedorDetalle_to_alta_contenedor"
+            app:destination="@id/alta_contenedor" />
+    </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
         android:name="com.example.recolectar_app.fragments.alta_contenedor"
+<<<<<<< HEAD
         android:label="fragment_alta_contenedor"
         tools:layout="@layout/fragment_alta_contenedor" />
     <fragment
@@ -93,4 +107,11 @@
             android:id="@+id/action_zonaDetalle_to_zonas"
             app:destination="@id/zonas" />
     </fragment>
+=======
+        android:label="fragment_alta_contenedor" />
+    <fragment
+        android:id="@+id/alta_camion"
+        android:name="com.example.recolectar_app.fragments.alta_camion"
+        android:label="alta_camion" />
+>>>>>>> 314e127a175ffbbb61e74fd8b6ae416743262c72
 </navigation>

@@ -31,10 +31,15 @@ class ContenedorListAdapter ( private var contenedorList: MutableList<Contenedor
     override fun onBindViewHolder(holder: ContenedorHolder, position: Int) {
 
         holder.setId(contenedorList[position].id)
+<<<<<<< HEAD
         holder.setFillingLevel(contenedorList[position].fillingLevel)
         holder.setLocation(contenedorList[position].location)
         holder.setTemperature(contenedorList[position].temperature)
 
+=======
+        holder.setTipo(contenedorList[position].type)
+        holder.setZona(contenedorList[position].refZona.value)
+>>>>>>> 314e127a175ffbbb61e74fd8b6ae416743262c72
 //        Glide
 //            .with(context)
 //            .load("https://firebasestorage.googleapis.com/v0/b/firestoreexample-ec489.appspot.com/o/Fotos%2FGUERNICA.jpg?alt=media&token=001a8ffc-96c2-4aeb-9120-8d5099b3fa1c")

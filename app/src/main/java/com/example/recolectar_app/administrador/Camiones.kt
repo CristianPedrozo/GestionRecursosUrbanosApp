@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.R
 import com.example.recolectar_app.adapters.CamionListAdapter
 import com.example.recolectar_app.entities.Camion
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,6 +27,9 @@ private const val ARG_PARAM2 = "param2"
 class Camiones : Fragment() {
 
     lateinit var v: View
+    //Para botón flotante Agregar Camión
+    lateinit var botton_agregar: FloatingActionButton
+    //
 
     lateinit var recCamiones: RecyclerView
 
@@ -42,13 +47,16 @@ class Camiones : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v = inflater.inflate(R.layout.list_fragment, container, false)
+        v = inflater.inflate(R.layout.fragment_list_camiones, container, false)
         recCamiones = v.findViewById(R.id.rec_camiones)
-        return v
-    }
+        //Para el botón flotante agregar Contenedor
+        botton_agregar = v.findViewById(R.id.boton_agregar)
+        botton_agregar.setOnClickListener(){
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+            val action = CamionesDirections.actionCamionesToAltaCamion()
+            v.findNavController().navigate(action)
+        }
+        return v
     }
 
     override fun onStart() {
