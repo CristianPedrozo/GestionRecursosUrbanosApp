@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editText_Id"
+                android:id="@+id/editText_Codigo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,13 +98,15 @@
                 app:helperText="*Requerido"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:inputType="numberSigned">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp" />
+                    app:boxCornerRadiusTopStart="10dp"
+                    android:inputType="numberSigned"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -150,7 +152,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp" />
+                    app:boxCornerRadiusTopStart="10dp"
+                    android:inputType="numberSigned"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

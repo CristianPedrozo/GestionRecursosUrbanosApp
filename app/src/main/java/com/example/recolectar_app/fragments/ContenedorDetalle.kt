@@ -11,6 +11,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
+import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
