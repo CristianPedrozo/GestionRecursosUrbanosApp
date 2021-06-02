@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_camiones_to_camionDetalle"
             app:destination="@id/camionDetalle" />
+        <action
+            android:id="@+id/action_camiones_to_alta_camion"
+            app:destination="@id/alta_camion" />
     </fragment>
     <fragment
         android:id="@+id/usuarios"
@@ -59,4 +62,8 @@
         android:name="com.example.recolectar_app.fragments.alta_contenedor"
         android:label="fragment_alta_contenedor"
         tools:layout="@layout/fragment_alta_contenedor" />
+    <fragment
+        android:id="@+id/alta_camion"
+        android:name="com.example.recolectar_app.fragments.alta_camion"
+        android:label="alta_camion" />
 </navigation>
