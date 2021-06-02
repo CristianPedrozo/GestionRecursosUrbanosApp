@@ -17,7 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RecolectAR_APP">
-        <activity android:name=".administrador.AdministradorActivity" />
+        <service
+            android:name=".VolleySincrono"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".administrador.AdministradorActivity"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.RecolectAR_APP.NoActionBar" />
         <activity android:name=".empleado.EmpleadoActivity" />
 
         <meta-data

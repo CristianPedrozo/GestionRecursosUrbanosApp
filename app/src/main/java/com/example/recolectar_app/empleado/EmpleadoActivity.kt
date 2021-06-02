@@ -29,7 +29,6 @@ class EmpleadoActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
 
-
     }
 
 
