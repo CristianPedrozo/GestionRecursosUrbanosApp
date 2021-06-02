@@ -30,19 +30,16 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
 
+<<<<<<< HEAD
+=======
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var auxContador=0
 
+>>>>>>> 25a7edf7d3fed5b9632d69996f8a59a0e678f799
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Camino.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Camino : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -52,11 +49,11 @@ class Camino : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var ultimaUbicacion: Location
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -115,6 +112,9 @@ class Camino : Fragment() {
     }
 
     companion object {
+<<<<<<< HEAD
+
+=======
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -125,12 +125,12 @@ class Camino : Fragment() {
          */
         private const val LOCATION_PERMISSION_REQUEST_CODE=1
         // TODO: Rename and change types and number of parameters
+>>>>>>> 25a7edf7d3fed5b9632d69996f8a59a0e678f799
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Camino().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

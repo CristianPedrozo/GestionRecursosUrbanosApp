@@ -97,12 +97,12 @@ object UtilidadesMaps {
         listaContenedores.add(LatLng(-34.597076, -58.418840))
         listaContenedores.add(LatLng(-34.592755, -58.419770))
 
-        for (i in 0 until listaContenedores.size){
-            var con: Contenedor= Contenedor()
-            con.location.value.coordinates.add(listaContenedores[i].latitude.toDouble())
-            con.location.value.coordinates.add(listaContenedores[i].longitude.toDouble())
-            contenedores.add(con)
-        }
+//        for (i in 0 until listaContenedores.size){
+//            var con: Contenedor= Contenedor()
+//            con.location.value.coordinates.add(listaContenedores[i].latitude.toDouble())
+//            con.location.value.coordinates.add(listaContenedores[i].longitude.toDouble())
+//            contenedores.add(con)
+//        }
     }
     fun obtenerCoordenadasContenedores(){
         for (i in 0 until contenedores.size){
