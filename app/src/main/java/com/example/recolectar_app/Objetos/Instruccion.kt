@@ -2,12 +2,17 @@ package com.example.recolectar_app.Objetos
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import kotlin.math.atan
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Instruccion {
     var instruccion : String = ""
     var accion : String =""
     var inicio : LatLng = LatLng(0.0,0.0)
     var fin : LatLng = LatLng(0.0,0.0)
+    var inclinacionMapa =0.0
 
     fun estoyCerca(ubicacion:LatLng): Boolean {
         val locationA = Location("punto A")
@@ -23,5 +28,15 @@ class Instruccion {
         }
         return false
     }
-
+    fun calculoInclinacion(): Double {
+        val latitude1 = Math.toRadians(inicio.latitude)
+        val latitude2 = Math.toRadians(fin.latitude)
+        val longDiff = Math.toRadians(fin.longitude - inicio.longitude)
+        val y = sin(longDiff) * cos(latitude2)
+        val x =
+            cos(latitude1) * sin(latitude2) - sin(
+                latitude1
+            ) * cos(latitude2) * cos(longDiff)
+        return (Math.toDegrees(atan2(y, x)) + 360.0) % 360.0
+    }
 }

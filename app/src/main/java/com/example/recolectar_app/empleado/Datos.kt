@@ -35,7 +35,9 @@ class Datos : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_empleado_datos, container, false)
+
     }
 
     companion object {

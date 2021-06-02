@@ -9,13 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.Objetos.Instruccion
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
@@ -25,10 +25,11 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 object UtilidadesMaps {
-    var routes: MutableList<MutableList<HashMap<String, String>>> = ArrayList() //guardo todos los puntos polyLine desencriptados
+    var coordenadasDecodificadas: MutableList<LatLng> = ArrayList() //guardo todas las ubicaciones decodificadas para simular ubicacion
     var contenedores: MutableList<Contenedor> = ArrayList() //guardo todos los contenedores asignados al cliente
-    var coordenadaRutas: MutableList<LatLng> = ArrayList() //guardo todas las coordenadas que se deber recolectar
+    var coordenadasContenedores: MutableList<LatLng> = ArrayList() //guardo todas las coordenadas que se deber recolectar
     var instrucciones : MutableList<Instruccion> = ArrayList() //guardo todas las intrucciones para el viaje
     var lineOptions =PolylineOptions() //guardo todas las opciones para trajar la polyline en el mapa
     private var KEY_API="AIzaSyBdkQFmnElXImn5Po8QhlW2A4e8NZq3Vyw"
@@ -36,10 +37,10 @@ object UtilidadesMaps {
 
     fun crearRuta( contexto:Context,inicio:LatLng,fin:LatLng) {
         obtenerContenedores()
-        obtenerCoordenadasRuta()
+        obtenerCoordenadasContenedores()
         val url = crearUrlApi(inicio,fin)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
-            parsearRequest(response)
+            obtenerCoordenadasRuta(response)
             obtenerInstrucciones(response)
         }, { error ->
             Toast.makeText(contexto, "No se puede conectar $error", Toast.LENGTH_LONG).show()
@@ -82,31 +83,6 @@ object UtilidadesMaps {
         }
         return poly
     }
-    private fun decodificarRuta (){
-        var center: LatLng? = null
-        // Agregamos todos los puntos en la ruta al objeto LineOptions
-        for (i in 0 until routes.size) {
-            val rr= routes.size
-            // Obteniendo el detalle de la ruta
-            val path: List<HashMap<String, String>> = routes[i]
-            // Obteniendo todos los puntos y/o coordenadas de la ruta
-            for (j in path.indices) {
-                val point = path[j]
-                val lat = point["lat"]!!.toDouble()
-                val lng = point["lng"]!!.toDouble()
-                val position = LatLng(lat, lng)
-                if (center == null) {
-                    //Obtengo la 1ra coordenada para centrar el mapa en la misma.
-                    center = LatLng(lat, lng)
-                }
-                lineOptions.add(position)//agrergamos cada punto al lineOptions
-            }
-            //Definimos el grosor de las Polilíneas
-            lineOptions.width(20f)
-            //Definimos el color de la Polilíneas
-            lineOptions.color(Color.BLACK)
-        }
-    }
     fun obtenerContenedores(){
         //esta funcion consultara todos los contenedores asignados al empleado logeado
         var listaContenedores:MutableList<LatLng> = ArrayList()
@@ -128,12 +104,12 @@ object UtilidadesMaps {
             contenedores.add(con)
         }
     }
-    fun obtenerCoordenadasRuta(){
+    fun obtenerCoordenadasContenedores(){
         for (i in 0 until contenedores.size){
-            coordenadaRutas.add(LatLng(contenedores[i].location.value.coordinates[0],contenedores[i].location.value.coordinates[1]))
+            coordenadasContenedores.add(LatLng(contenedores[i].location.value.coordinates[0],contenedores[i].location.value.coordinates[1]))
         }
     }
-    private fun parsearRequest (response:JSONObject){
+    private fun obtenerCoordenadasRuta (response:JSONObject){
         var jRoutes: JSONArray? = null
         var jLegs: JSONArray? = null
         var jSteps: JSONArray? = null
@@ -141,7 +117,6 @@ object UtilidadesMaps {
             jRoutes = response.getJSONArray("routes")
             for (i in 0 until jRoutes.length()) {
                 jLegs = (jRoutes[i] as JSONObject).getJSONArray("legs")
-                val path: MutableList<HashMap<String, String>> = ArrayList()
                 for (j in 0 until jLegs.length()) {
                     jSteps = (jLegs[j] as JSONObject).getJSONArray("steps")
                     for (k in 0 until jSteps.length()) {
@@ -149,16 +124,14 @@ object UtilidadesMaps {
                         polyline = ((jSteps[k] as JSONObject)["polyline"] as JSONObject)["points"] as String
                         val list = decodePoly(polyline)
                         for (l in list.indices) {
-                            val hm = HashMap<String, String>()
-                            hm["lat"] = list[l].latitude.toString()
-                            hm["lng"] = list[l].longitude.toString()
-                            path.add(hm)
+                            coordenadasDecodificadas.add(LatLng(list[l].latitude,list[l].longitude))
                         }
                     }
                 }
-                print(path)
-                routes.add(path)
-                decodificarRuta()
+                print(coordenadasDecodificadas)
+                lineOptions.addAll(coordenadasDecodificadas)
+                lineOptions.width(20f)
+                lineOptions.color(Color.BLACK)
             }
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -167,8 +140,8 @@ object UtilidadesMaps {
     }
     private fun crearUrlApi(inicio: LatLng,fin: LatLng):String{
         var coordenada=""
-        for (i in 0 until coordenadaRutas.size){
-            coordenada = coordenada + "|" + coordenadaRutas[i].latitude.toString()+","+coordenadaRutas[i].longitude.toString()
+        for (i in 0 until coordenadasContenedores.size){
+            coordenada = coordenada + "|" + coordenadasContenedores[i].latitude.toString()+","+coordenadasContenedores[i].longitude.toString()
         }
 
         var inicioFinCoordenada="&origin="+ inicio.latitude.toString() + "," + inicio.longitude.toString() +
@@ -211,6 +184,8 @@ object UtilidadesMaps {
                         auxInstruccion.instruccion=instruccion
                         auxInstruccion.inicio=inicio
                         auxInstruccion.fin = fin
+                        var aux=auxInstruccion.calculoInclinacion()
+                        auxInstruccion.inclinacionMapa = aux
 
                         this.instrucciones.add(auxInstruccion)
                         print(auxInstruccion.toString())
@@ -222,20 +197,38 @@ object UtilidadesMaps {
         } catch (e: Exception) {
         }
     }
-    fun actualizarIntruccion(t1:TextView,t2:TextView,iv_actual:ImageView,iv_sig:ImageView,ubicacionActual:LatLng,contexto:Context){
+    fun actualizarIntruccion(t1:TextView,t2:TextView,iv_actual:ImageView,iv_sig:ImageView,ubicacionActual:LatLng,contexto:Context,mMap: GoogleMap){
         if (instrucciones[0].estoyCerca(ubicacionActual)) {
             t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
             t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[2].instruccion)
             seleccionarImagen(instrucciones[1].accion,iv_actual,contexto)
             seleccionarImagen(instrucciones[2].accion,iv_sig,contexto)
+            val cameraPosition = CameraPosition.Builder()
+                .target(instrucciones[1].inicio) // Sets the center of the map to Mountain View
+                .zoom(45f) // Sets the zoom
+                .bearing(instrucciones[1].inclinacionMapa.toFloat()) // Sets the orientation of the camera to east
+                .tilt(85f) // Sets the tilt of the camera to 30 degrees
+                .build() // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             instrucciones.removeAt(0)
+        }else{
+            if (t1.text==""&&t2.text==""){
+                t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[0].instruccion)
+                t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
+                seleccionarImagen(instrucciones[0].accion,iv_actual,contexto)
+                seleccionarImagen(instrucciones[1].accion,iv_sig,contexto)
+                val cameraPosition = CameraPosition.Builder()
+                    .target(instrucciones[0].inicio) // Sets the center of the map to Mountain View
+                    .zoom(45f) // Sets the zoom
+                    .bearing(instrucciones[0].inclinacionMapa.toFloat()) // Sets the orientation of the camera to east
+                    .tilt(85f) // Sets the tilt of the camera to 30 degrees
+                    .build() // Creates a CameraPosition from the builder
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            }else{
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionActual))
+            }
         }
-        if (t1.text==""&&t2.text==""){
-            t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[0].instruccion)
-            t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
-            seleccionarImagen(instrucciones[0].accion,iv_actual,contexto)
-            seleccionarImagen(instrucciones[1].accion,iv_sig,contexto)
-        }
+
     }
     private fun seleccionarImagen(accion:String,iv:ImageView,contexto: Context){
         when (accion) {
