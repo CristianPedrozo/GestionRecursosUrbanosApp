@@ -28,7 +28,14 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
         val txt: TextView = view.findViewById(R.id.txt_id_item)
         txt.text = id
     }
-
+    fun setTipo(tipo: String) {
+        val txt: TextView = view.findViewById(R.id.txt_tipo_item)
+        txt.text = tipo
+    }
+    fun setZona(zona: String) {
+        val txt: TextView = view.findViewById(R.id.txt_zona_item)
+        txt.text = zona
+    }
     fun getCardLayout (): CardView {
         return view.findViewById(R.id.card_package_item_contenedor)
     }

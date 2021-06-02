@@ -43,10 +43,13 @@
         android:id="@+id/camionDetalle"
         android:name="com.example.recolectar_app.fragments.CamionDetalle"
         android:label="fragment_camion_detalle"
-        tools:layout="@layout/fragment_camion_detalle" >
+        tools:layout="@layout/fragment_camion_detalle">
         <argument
             android:name="camion"
             app:argType="com.example.recolectar_app.entities.Camion" />
+        <action
+            android:id="@+id/action_camionDetalle_to_alta_camion"
+            app:destination="@id/alta_camion" />
     </fragment>
     <fragment
         android:id="@+id/contenedorDetalle"
@@ -56,12 +59,14 @@
         <argument
             android:name="Id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_contenedorDetalle_to_alta_contenedor"
+            app:destination="@id/alta_contenedor" />
     </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
         android:name="com.example.recolectar_app.fragments.alta_contenedor"
-        android:label="fragment_alta_contenedor"
-        tools:layout="@layout/fragment_alta_contenedor" />
+        android:label="fragment_alta_contenedor" />
     <fragment
         android:id="@+id/alta_camion"
         android:name="com.example.recolectar_app.fragments.alta_camion"
