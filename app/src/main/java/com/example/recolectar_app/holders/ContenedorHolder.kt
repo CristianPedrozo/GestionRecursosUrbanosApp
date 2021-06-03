@@ -16,12 +16,17 @@ import com.example.recolectar_app.administrador.ZonasDirections
 import com.example.recolectar_app.zonas.Zona
 
 class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
-
+    private var view: View = v
+    private var idContenedor : TextView = v.findViewById(R.id.txt_id_item_contenedor)
+//    private var ref : TextView = v.findViewById(R.id.txt_refVehicle_itemZona)
+/*
     private var view: View = v
     private var idContenedor : TextView = v.findViewById(R.id.txt_id_item_contenedor)
     private var type : TextView = v.findViewById(R.id.txt_tipo_item_contenedor)
     private var idZona : TextView = v.findViewById(R.id.txt_zona_item_contenedor)
 
+ */
+/*
     fun bind(contendor: Contenedor) = with(view){
         idZona.text = contendor.refZona.value
         idContenedor.text = contendor.id
@@ -30,6 +35,16 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
             Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(
                 idContenedor.text as String
             ))
+        }
+    }
+
+ */
+    fun bind(contenedor: Contenedor, listener: (Contenedor) -> Unit) = with(view){
+        idContenedor.text = contenedor.id.split(":")[1]
+
+        setOnClickListener {
+            listener(contenedor)
+            Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(idContenedor.text as String))
         }
     }
 

@@ -13,17 +13,22 @@ import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
+import com.example.recolectar_app.zonas.ZonaDetalle
 import com.example.recolectar_app.zonas.ZonaDetalleArgs
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
-
-    private lateinit var idContenedor: String
+    private val TAG = "ContenedorDetalle"
+    private var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=wastecontainer:"
+    //private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
     private lateinit var v: View
-    //var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=$id"
-    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=wastecontainer:1"
-    //var url: String = url_base.plus(id)
+    private lateinit var id: String
+    private lateinit var btn_edit_zona : FloatingActionButton
+    private lateinit var btn_remove_zona : FloatingActionButton
+    private lateinit var et_id_contenedor : TextView
+    lateinit var thiscontext : Context
     lateinit var text_contenedor_id : TextView
     lateinit var text_contenedor_tipo: TextView
     lateinit var text_contenedor_latitud: TextView
@@ -33,7 +38,15 @@ class ContenedorDetalle : Fragment() {
     lateinit var text_contenedor_vehiculo: TextView
     lateinit var text_contenedor_temperatura: TextView
     lateinit var text_contenedor_zona: TextView
-    lateinit var thiscontext : Context
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +58,7 @@ class ContenedorDetalle : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
-        idContenedor = args?.id.toString()
+        id = args?.id.toString()
         text_contenedor_id  = v.findViewById(R.id.text_id);
         text_contenedor_tipo = v.findViewById(R.id.text_tipo);
         text_contenedor_latitud = v.findViewById(R.id.text_latitud)
@@ -59,13 +72,12 @@ class ContenedorDetalle : Fragment() {
         return v
     }
 
-
     override fun onStart() {
         super.onStart()
-        Log.d("ID Prueba", idContenedor)
         var gson = Gson()
         val queue = Volley.newRequestQueue(activity)
-        val jsonArrayRequest = JsonArrayRequest(url,
+        val url_contenedor=url + id
+        val jsonArrayRequest = JsonArrayRequest(url_contenedor,
             { response ->
                 Log.d("Response Prueba", response.toString())
 
@@ -85,4 +97,14 @@ class ContenedorDetalle : Fragment() {
         queue.add(jsonArrayRequest)
     }
 
+    companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            ContenedorDetalle().apply {
+                arguments = Bundle().apply {
+
+                }
+            }
+    }
 }
