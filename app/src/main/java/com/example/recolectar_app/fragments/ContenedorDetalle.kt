@@ -21,7 +21,7 @@ import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
     private val TAG = "ContenedorDetalle"
-    private var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id=wastecontainer:"
+    private var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id="
     //private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
     private lateinit var v: View
     private lateinit var id: String
@@ -46,7 +46,6 @@ class ContenedorDetalle : Fragment() {
 
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

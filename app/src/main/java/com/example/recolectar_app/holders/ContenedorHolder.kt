@@ -18,27 +18,7 @@ import com.example.recolectar_app.zonas.Zona
 class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
     private var view: View = v
     private var idContenedor : TextView = v.findViewById(R.id.txt_id_item_contenedor)
-//    private var ref : TextView = v.findViewById(R.id.txt_refVehicle_itemZona)
-/*
-    private var view: View = v
-    private var idContenedor : TextView = v.findViewById(R.id.txt_id_item_contenedor)
-    private var type : TextView = v.findViewById(R.id.txt_tipo_item_contenedor)
-    private var idZona : TextView = v.findViewById(R.id.txt_zona_item_contenedor)
 
- */
-/*
-    fun bind(contendor: Contenedor) = with(view){
-        idZona.text = contendor.refZona.value
-        idContenedor.text = contendor.id
-        type.text = contendor.type
-        setOnClickListener {
-            Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(
-                idContenedor.text as String
-            ))
-        }
-    }
-
- */
     fun bind(contenedor: Contenedor, listener: (Contenedor) -> Unit) = with(view){
         idContenedor.text = contenedor.id.split(":")[1]
 
@@ -47,5 +27,24 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
             Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(idContenedor.text as String))
         }
     }
+    fun setId(id: String) {
+        val txt: TextView = view.findViewById(R.id.txt_id_item_contenedor)
+        txt.text = id
+    }
+
+    fun setTipo(tipo: String) {
+        val txt: TextView = view.findViewById(R.id.txt_tipo_item_contenedor)
+        txt.text = tipo
+    }
+    fun setZona(zona: String) {
+        val txt: TextView = view.findViewById(R.id.txt_zona_item_contenedor)
+        txt.text = zona
+    }
+    /*
+    fun getCardLayout (): CardView {
+        return view.findViewById(R.id.card_package_item_contenedor)
+    }
+
+     */
 
 }
