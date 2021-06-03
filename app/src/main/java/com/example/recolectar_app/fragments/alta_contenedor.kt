@@ -1,5 +1,4 @@
 package com.example.recolectar_app.fragments
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,10 +13,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.util.regex.Pattern
 
 class alta_contenedor : Fragment() {
     lateinit var v:View
     lateinit var codigo:TextInputLayout
+    lateinit var latitud: TextInputLayout
+    lateinit var longitud: TextInputLayout
     lateinit var autoCompleteTextView: AutoCompleteTextView
     lateinit var autoCompleteTextView_tipo: AutoCompleteTextView
     lateinit var botonCrear: FloatingActionButton
@@ -47,7 +49,7 @@ class alta_contenedor : Fragment() {
     }
 
     private fun validarCampos(){
-        val result = arrayOf(validarCodigo())
+        val result = arrayOf(validarCodigo(),validarLatitud(),validarLongitud())
         if(false in result){
             return
         }
@@ -63,4 +65,33 @@ class alta_contenedor : Fragment() {
         }
     }
 
+    private fun validarLatitud():Boolean{
+        latitud = v.findViewById(R.id.editText_Latitud)
+        val latitudRegex = Pattern.compile("/^(-?[1-8]?d(?:.d{1,18})?|90(?:.0{1,18})?)\$/")
+
+        return if (!latitud.toString().isEmpty()) {
+            latitud.error = "El campo es requerido"
+            false
+        }else if(!latitudRegex.matcher(latitud.toString()).matches()){
+            latitud.error = "Formato longitud incorrecta"
+            false
+        }else{
+            true
+        }
+    }
+
+    private fun validarLongitud():Boolean{
+        longitud = v.findViewById(R.id.editText_Longitud)
+        val longitudRegex = Pattern.compile("/^(-?(?:1[0-7]|[1-9])?d(?:.d{1,18})?|180(?:.0{1,18})?)\$/")
+
+        return if (!longitud.toString().isEmpty()) {
+            longitud.error = "El campo es requerido"
+            false
+        }else if(!longitudRegex.matcher(longitud.toString()).matches()){
+            longitud.error = "Formato longitud incorrecta"
+            false
+        }else{
+            true
+        }
+    }
 }
