@@ -2,11 +2,12 @@ package com.example.recolectar_app.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
-import com.example.recolectar_app.entities.Camion
+import com.example.recolectar_app.camiones.Camion
 import com.example.recolectar_app.holders.CamionHolder
 
-class CamionListAdapter ( private var camionList: MutableList<Camion>) : RecyclerView.Adapter<CamionHolder>() {
+class CamionListAdapter ( private var camionList: MutableList<Camion>,val listener: (Camion) -> Unit) : RecyclerView.Adapter<CamionHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CamionHolder {
         val view =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_camion,parent,false)
@@ -30,7 +31,10 @@ class CamionListAdapter ( private var camionList: MutableList<Camion>) : Recycle
 
     override fun onBindViewHolder(holder: CamionHolder, position: Int) {
 
-        holder.setName(camionList[position].patente)
+        holder.bind(camionList[position],listener)
+        holder.setId(camionList[position].id)
+        holder.setTipo(camionList[position].type)
+        //holder.setZona(camionList[position].refZona.value)
 
 //        Glide
 //            .with(context)

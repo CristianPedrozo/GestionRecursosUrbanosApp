@@ -2,26 +2,18 @@ package com.example.recolectar_app.administrador
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.adapters.CamionListAdapter
 import com.example.recolectar_app.adapters.ContenedorListAdapter
-import com.example.recolectar_app.adapters.ZonaListAdapter
-import com.example.recolectar_app.entities.Camion
-import com.example.recolectar_app.zonas.Zona
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
