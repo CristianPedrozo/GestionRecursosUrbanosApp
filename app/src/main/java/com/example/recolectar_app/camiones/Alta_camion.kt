@@ -117,15 +117,16 @@ class alta_camion : Fragment() {
     private fun validarCampos(): Boolean {
         var resultT = true
         val result = arrayOf(validarId(),validarPatente(),validarCarga())
-        if(false in result) {
-            resultT = false
+        if(false in result){
+            resultT =false
         }
-    return resultT
+        return resultT
     }
+
 
     private fun validarId():Boolean {
         id = v.findViewById(R.id.editText_Id)
-        return if (!id.toString().isEmpty()) {
+        return if (id.text.toString().isEmpty()) {
             id.error = "El campo es requerido"
             false
         }else{
@@ -135,7 +136,7 @@ class alta_camion : Fragment() {
 
     private fun validarPatente():Boolean {
         patente = v.findViewById(R.id.editText_Patente)
-        return if (!patente.toString().isEmpty()) {
+        return if (patente.text.toString().isEmpty()) {
             patente.error = "El campo es requerido"
             false
         }else{
@@ -144,7 +145,7 @@ class alta_camion : Fragment() {
     }
     private fun validarCarga():Boolean {
         carga = v.findViewById(R.id.editText_Carga)
-        return if (!carga.toString().isEmpty()) {
+        return if (carga.text.toString().isEmpty()) {
             carga.error = "El campo es requerido"
             false
         }else{
