@@ -42,6 +42,7 @@
     <string name="label_camion_contenedor">Camion</string>
     <string name="label_zona_contenedor">Zona</string>
     <!--Para ABM Camiones -->
+    <string name="label_Id_camion">ID</string>
     <string name="label_patente_camion">Patente</string>
     <string name="label_tipo_camion">Tipo</string>
     <string name="label_estado_camion">Estado</string>
@@ -49,6 +50,7 @@
     <string name="label_zona_camion">Zona</string>
     <string name="label_latitud_camion">Latitud</string>
     <string name="label_longitud_camion">Longitud</string>
+    <string name="label_carga_camion">Carga</string>
     <string-array name="estados_camion">
         <item>parked</item>
         <item>onRoute</item>

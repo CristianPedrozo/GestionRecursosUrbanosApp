@@ -21,6 +21,7 @@ class CamionDetalle : Fragment() {
     private lateinit var id: String
     lateinit var thiscontext : Context
     lateinit var text_id_camion: TextView
+    lateinit var text_patente_camion: TextView
     lateinit var text_tipo_camion:TextView
     lateinit var text_estado_camion:TextView
     //lateinit var text_camion_zona:TextView
@@ -45,6 +46,7 @@ class CamionDetalle : Fragment() {
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
         id = args?.id.toString()
         text_id_camion=v.findViewById(R.id.text_id_camion)
+        text_patente_camion=v.findViewById(R.id.text_patente_camion)
         text_estado_camion=v.findViewById(R.id.text_estado_camion)
         text_tipo_camion=v.findViewById(R.id.text_tipo_camion)
         //text_camion_zona=v.findViewById(R.id.text_zona)
@@ -63,8 +65,10 @@ class CamionDetalle : Fragment() {
                 val camion : Camion = gson.fromJson(response.getJSONObject(0).toString(),
                     Camion::class.java)
                 text_id_camion.setText(camion.id)
-                text_tipo_camion.setText(camion.type)
-                //text_camion_id.setText(camion.id)
+                text_patente_camion.setText(camion.vehiclePlateIdentifier.value)
+                text_tipo_camion.setText(camion.vehicleType.value)
+                text_estado_camion.setText(camion.serviceStatus.value)
+                //
                 //text_camion_tipo.setText(camion.type)
                 //text_camion_estado.setText(camion.status.value)
                 //text_camion_zona.setText(camion.refZona.value)

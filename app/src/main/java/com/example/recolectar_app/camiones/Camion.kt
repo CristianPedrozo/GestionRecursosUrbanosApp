@@ -48,7 +48,9 @@ class Camion(var id: String, var serviceStatus:String) {
 data class Camion(
     /*
     var areaServed: AreaServed,
+    */
     var cargoWeight: CargoWeight,
+    /*
     var category: Category,
 
      */
@@ -64,9 +66,11 @@ data class Camion(
     /*
     var speed: Speed,
     var type: String,
+
+     */
     var vehiclePlateIdentifier: VehiclePlateIdentifier,
     var vehicleType: VehicleType
-     */
+
 ) {
     val type : String = "Vehicle"
     data class AreaServed(
@@ -141,5 +145,6 @@ data class Camion(
     )
     init {
         this.id = "vehicle:${id}"
+
     }
 }

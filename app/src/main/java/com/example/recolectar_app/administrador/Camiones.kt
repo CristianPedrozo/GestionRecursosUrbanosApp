@@ -105,8 +105,6 @@ class Camiones : Fragment() {
                 camionListAdapter = CamionListAdapter(camiones){
                     Toast.makeText(thiscontext, it.id, Toast.LENGTH_SHORT).show()
                 }
-
-
                 recCamiones.adapter = camionListAdapter
             },
             { error ->

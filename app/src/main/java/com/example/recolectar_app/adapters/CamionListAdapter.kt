@@ -31,10 +31,11 @@ class CamionListAdapter ( private var camionList: MutableList<Camion>,val listen
 
     override fun onBindViewHolder(holder: CamionHolder, position: Int) {
 
+        //Para carga de datos en el Card de cada camión
         holder.bind(camionList[position],listener)
         holder.setId(camionList[position].id)
-        holder.setTipo(camionList[position].type)
-        //holder.setZona(camionList[position].refZona.value)
+        //holder.setTipo(camionList[position].serviceStatus.value.toString())
+        //holder.setEstado(camionList[position].serviceStatus.value.toString())
 
 //        Glide
 //            .with(context)

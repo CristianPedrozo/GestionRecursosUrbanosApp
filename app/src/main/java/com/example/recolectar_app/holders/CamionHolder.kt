@@ -42,9 +42,9 @@ class CamionHolder (v: View) : RecyclerView.ViewHolder(v) {
         val txt: TextView = view.findViewById(R.id.txt_tipo_item_camion)
         txt.text = tipo
     }
-    fun setZona(zona: String) {
-        val txt: TextView = view.findViewById(R.id.txt_zona_item_camion)
-        txt.text = zona
+    fun setEstado(estado: String) {
+        val txt: TextView = view.findViewById(R.id.txt_estado_item_camion)
+        txt.text = estado
     }
 
 //

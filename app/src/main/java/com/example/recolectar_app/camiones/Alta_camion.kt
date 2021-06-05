@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import org.json.JSONObject
+import java.lang.Integer.parseInt
 
 class alta_camion : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/"
@@ -29,6 +30,8 @@ class alta_camion : Fragment() {
     lateinit var autoCompleteTextView_tipo: AutoCompleteTextView
     lateinit var id: TextInputEditText
     lateinit var tipo: TextInputEditText
+    lateinit var patente: TextInputEditText
+    lateinit var carga: TextInputEditText
     lateinit var estado: String
     lateinit var empleado: TextInputEditText
     lateinit var btn_alta_camion: FloatingActionButton
@@ -57,11 +60,17 @@ class alta_camion : Fragment() {
 
         //Botón Alta Camion
         var requestHandler = RequestHandler.getInstance(thiscontext)
-        id= v.findViewById(R.id.editText_Patente)
+
+        //Relaciono variables con elementos  del xml
+        id= v.findViewById(R.id.editText_Id)
+        patente= v.findViewById(R.id.editText_Patente)
+        carga = v.findViewById(R.id.editText_Carga)
         autoCompleteTextView.setOnItemClickListener { parent, v, position, id ->
             estado= parent.getItemAtPosition(position).toString()
         }
         Log.d("Id camion", id.toString())
+
+        //Botón para dar de Alta Camion
         btn_alta_camion= v.findViewById(R.id.boton_agregar)
         btn_alta_camion.setOnClickListener(){
             addCamion(requestHandler)
@@ -74,8 +83,11 @@ class alta_camion : Fragment() {
 
     private fun addCamion(requestHandler : RequestHandler) {
         val gson = Gson()
-        Log.d("Id camion en addCamion",id.text.toString())
-        val camion = Camion(id.text.toString(),Camion.ServiceStatus(estado))
+        //Log.d("Id camion en addCamion",id.text.toString())
+        //Armo el objeto camión para darlo de alta
+
+        val camion = Camion(Camion.CargoWeight(carga.text.toString().toInt()),id.text.toString(),Camion.ServiceStatus(estado),Camion.VehiclePlateIdentifier(patente.text.toString()),Camion.VehicleType("lorry"))
+
         //camion.setRefEmpleadoValue(empleado.toString())
         val string = gson.toJson(camion)
         Log.d("POST camion", string.toString() )
