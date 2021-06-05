@@ -51,12 +51,14 @@ class alta_camion : Fragment() {
         val arrayAdapter = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)
         autoCompleteTextView = v.findViewById(R.id.autoCompleteTextView_estado)
         autoCompleteTextView.setAdapter(arrayAdapter)
-
+/*
         //Carga Combo Tipo
         val tipos = resources.getStringArray(R.array.tipos_residuos)
         val arrayAdapterTipo = ArrayAdapter(requireContext(),R.layout.combo_formulario,tipos)
         autoCompleteTextView_tipo = v.findViewById(R.id.autoCompleteTextView_tipo)
         autoCompleteTextView_tipo.setAdapter(arrayAdapterTipo)
+
+ */
 
         //Botón Alta Camion
         var requestHandler = RequestHandler.getInstance(thiscontext)
@@ -73,9 +75,10 @@ class alta_camion : Fragment() {
         //Botón para dar de Alta Camion
         btn_alta_camion= v.findViewById(R.id.boton_agregar)
         btn_alta_camion.setOnClickListener(){
+            if(validarCampos()){
             addCamion(requestHandler)
             val action=alta_camionDirections.actionAltaCamionToCamiones()
-            v.findNavController().navigate(action)
+            v.findNavController().navigate(action)}
         }
         return v
     }
@@ -83,9 +86,8 @@ class alta_camion : Fragment() {
 
     private fun addCamion(requestHandler : RequestHandler) {
         val gson = Gson()
-        //Log.d("Id camion en addCamion",id.text.toString())
-        //Armo el objeto camión para darlo de alta
 
+        //Armo el objeto camión para darlo de alta
         val camion = Camion(Camion.CargoWeight(carga.text.toString().toInt()),id.text.toString(),Camion.ServiceStatus(estado),Camion.VehiclePlateIdentifier(patente.text.toString()),Camion.VehicleType("lorry"))
 
         //camion.setRefEmpleadoValue(empleado.toString())
@@ -110,4 +112,44 @@ class alta_camion : Fragment() {
                 }
             }
     }
+ //Validación de los Campos del Formulario para dar de Alta el Camión
+
+    private fun validarCampos(): Boolean {
+        var resultT = true
+        val result = arrayOf(validarId(),validarPatente(),validarCarga())
+        if(false in result) {
+            resultT = false
+        }
+    return resultT
+    }
+
+    private fun validarId():Boolean {
+        id = v.findViewById(R.id.editText_Id)
+        return if (!id.toString().isEmpty()) {
+            id.error = "El campo es requerido"
+            false
+        }else{
+            true
+        }
+    }
+
+    private fun validarPatente():Boolean {
+        patente = v.findViewById(R.id.editText_Patente)
+        return if (!patente.toString().isEmpty()) {
+            patente.error = "El campo es requerido"
+            false
+        }else{
+            true
+        }
+    }
+    private fun validarCarga():Boolean {
+        carga = v.findViewById(R.id.editText_Carga)
+        return if (!carga.toString().isEmpty()) {
+            carga.error = "El campo es requerido"
+            false
+        }else{
+            true
+        }
+    }
+
 }

@@ -53,6 +53,7 @@ class alta_contenedor : Fragment() {
         return v
     }
 
+    //Validación de los campos del Formulario ALTA CONTENEDOR
     private fun validarCampos(){
         val result = arrayOf(validarCodigo(),validarLatitud(),validarLongitud())
         if(false in result){

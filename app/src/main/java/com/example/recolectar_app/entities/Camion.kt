@@ -2,6 +2,7 @@ package com.example.recolectar_app.entities
 
 import android.os.Parcel
 import android.os.Parcelable
+//No usar esta clase, se usó para pruebas, la clase a utilizar está en Camiones>Camion
 
 class Camion(patente: String?, tipo: String?):Parcelable {
     var patente: String = ""

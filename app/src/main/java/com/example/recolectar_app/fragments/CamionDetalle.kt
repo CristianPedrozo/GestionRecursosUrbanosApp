@@ -22,10 +22,11 @@ class CamionDetalle : Fragment() {
     lateinit var thiscontext : Context
     lateinit var text_id_camion: TextView
     lateinit var text_patente_camion: TextView
-    lateinit var text_tipo_camion:TextView
+    lateinit var text_carga_camion:TextView
+    //lateinit var text_tipo_camion:TextView
     lateinit var text_estado_camion:TextView
     //lateinit var text_camion_zona:TextView
-    lateinit var text_empleado_camion:TextView
+    //lateinit var text_empleado_camion:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +49,10 @@ class CamionDetalle : Fragment() {
         text_id_camion=v.findViewById(R.id.text_id_camion)
         text_patente_camion=v.findViewById(R.id.text_patente_camion)
         text_estado_camion=v.findViewById(R.id.text_estado_camion)
-        text_tipo_camion=v.findViewById(R.id.text_tipo_camion)
+        text_carga_camion=v.findViewById(R.id.text_carga_camion)
+        //text_tipo_camion=v.findViewById(R.id.text_tipo_camion)
         //text_camion_zona=v.findViewById(R.id.text_zona)
-        text_empleado_camion=v.findViewById(R.id.text_empleado_camion)
+        //text_empleado_camion=v.findViewById(R.id.text_empleado_camion)
         return v
     }
     override fun onStart() {
@@ -66,7 +68,8 @@ class CamionDetalle : Fragment() {
                     Camion::class.java)
                 text_id_camion.setText(camion.id)
                 text_patente_camion.setText(camion.vehiclePlateIdentifier.value)
-                text_tipo_camion.setText(camion.vehicleType.value)
+                //text_tipo_camion.setText(camion.vehicleType.value)
+                text_carga_camion.setText(camion.cargoWeight.value.toString())
                 text_estado_camion.setText(camion.serviceStatus.value)
                 //
                 //text_camion_tipo.setText(camion.type)
