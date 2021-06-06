@@ -23,3 +23,16 @@ class Camion(patente: String?, tipo: String?):Parcelable {
         TODO("Not yet implemented")
     }
 }
+
+
+/*
+data class Camion2(
+    var id: String,
+) {
+    val type : String = "Vehicle"
+    init {
+        this.id = "vehicle:${id}"
+    }
+}
+
+ */

@@ -35,6 +35,7 @@ class alta_camion : Fragment() {
     lateinit var estado: String
     lateinit var empleado: TextInputEditText
     lateinit var btn_alta_camion: FloatingActionButton
+    lateinit var btn_cancelar: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +80,13 @@ class alta_camion : Fragment() {
             addCamion(requestHandler)
             val action=alta_camionDirections.actionAltaCamionToCamiones()
             v.findNavController().navigate(action)}
+        }
+
+        //Botón Cancelar
+        btn_cancelar = v.findViewById(R.id.boton_cancelar)
+        btn_cancelar.setOnClickListener(){
+            val action=alta_camionDirections.actionAltaCamionToCamiones()
+            v.findNavController().navigate(action)
         }
         return v
     }

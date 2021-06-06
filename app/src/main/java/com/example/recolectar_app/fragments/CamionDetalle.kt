@@ -1,4 +1,6 @@
 package com.example.recolectar_app.fragments
+import DeleteCamionRequest
+import android.app.DownloadManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +9,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
+import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.camiones.Camion
+import com.example.recolectar_app.entities.Camion2
+import com.example.recolectar_app.zonas.Zona
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import org.json.JSONObject
 
 class CamionDetalle : Fragment() {
     private val TAG = "CamionDetalle"
     private var url = "http://46.17.108.122:1026/v2/entities/?type=Vehicle&id="
+    private var urlDelete = "http://46.17.108.122:1026/v2/entities/"
+    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+
     private lateinit var v: View
     private lateinit var id: String
     lateinit var thiscontext : Context
@@ -27,6 +41,8 @@ class CamionDetalle : Fragment() {
     lateinit var text_estado_camion:TextView
     //lateinit var text_camion_zona:TextView
     //lateinit var text_empleado_camion:TextView
+    lateinit var btn_editar: FloatingActionButton
+    lateinit var btn_eliminar: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +69,22 @@ class CamionDetalle : Fragment() {
         //text_tipo_camion=v.findViewById(R.id.text_tipo_camion)
         //text_camion_zona=v.findViewById(R.id.text_zona)
         //text_empleado_camion=v.findViewById(R.id.text_empleado_camion)
+
+        //Botón Editar
+        btn_editar = v.findViewById(R.id.boton_editar)
+        btn_editar.setOnClickListener(){
+            val action = CamionDetalleDirections.actionCamionDetalleToAltaCamion()
+            v.findNavController().navigate(action)
+        }
+        //Botón Eliminar
+        btn_eliminar = v.findViewById(R.id.boton_eliminar)
+        btn_eliminar.setOnClickListener(){
+            removeCamion(id)
+            val action = CamionDetalleDirections.actionCamionDetalleToCamiones()
+            v.findNavController().navigate(action)
+
+        }
+
         return v
     }
     override fun onStart() {
@@ -79,6 +111,38 @@ class CamionDetalle : Fragment() {
 
             }, {print("prueba error")})
         queue.add(jsonArrayRequest)
+    }
+
+
+
+    private fun removeCamion(id:String/*requestHandler: RequestHandler*/) {
+        /*
+        val gson = Gson()
+        val camion = Camion2(id)
+        val deleteObject = DeleteCamionRequest()
+        deleteObject.addEntitie(camion)
+        val jsonDeleteObject = gson.toJson(deleteObject)
+        val jsonObject = JSONObject(jsonDeleteObject)
+        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
+
+         */
+        // var gson = Gson()
+        val queue = Volley.newRequestQueue(activity)
+        val url_delete_camion=urlDelete + id
+        val stringRequest = StringRequest(Request.Method.DELETE, url_delete_camion,
+            Response.Listener<String> { response ->
+                // Do something with the response
+            },
+            Response.ErrorListener { error ->
+                // Handle error
+                Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                Log.i("jsonObjectRequest", "URL: " + stringRequest.getURL());
+                Log.i("jsonObjectRequest", "Payload: " + payOp.getJson().toString());
+                Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+
+            })
+        queue.add(stringRequest)
     }
 
     companion object {

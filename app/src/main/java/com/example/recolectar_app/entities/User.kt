@@ -10,7 +10,7 @@ class User(id : String, email : String) : Serializable {
     private var estado: String = ""
     private var rol: String = ""
     private var password : String = ""
-    private lateinit var camion: Camion
+    private lateinit var camion: Camion2
 
     private fun setPassword(pass : String){
         this.password = pass
@@ -39,11 +39,11 @@ class User(id : String, email : String) : Serializable {
         return this.email
     }
 
-    public fun getCamion(): Camion {
+    public fun getCamion(): Camion2 {
         return this.camion
     }
 
-    private fun setCamion(camion: Camion) {
+    private fun setCamion(camion: Camion2) {
         this.camion = camion
     }
 

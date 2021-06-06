@@ -28,7 +28,6 @@ class alta_contenedor : Fragment() {
     lateinit var autoCompleteTextView_tipo: AutoCompleteTextView
     lateinit var botonCrear: FloatingActionButton
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +48,6 @@ class alta_contenedor : Fragment() {
         //Validar campos para el alta de un contenedor
         botonCrear=v.findViewById(R.id.boton_agregar)
         botonCrear.setOnClickListener{validarCampos()}
-
         return v
     }
 
