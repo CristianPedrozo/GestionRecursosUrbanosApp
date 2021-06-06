@@ -19,7 +19,6 @@ import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.camiones.Camion
-import com.example.recolectar_app.entities.Camion2
 import com.example.recolectar_app.zonas.Zona
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -135,12 +134,7 @@ class CamionDetalle : Fragment() {
             },
             Response.ErrorListener { error ->
                 // Handle error
-                Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-                Log.i("jsonObjectRequest", "URL: " + stringRequest.getURL());
-                Log.i("jsonObjectRequest", "Payload: " + payOp.getJson().toString());
-                Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-
+                Log.d("error delete Vane", error.toString())
             })
         queue.add(stringRequest)
     }

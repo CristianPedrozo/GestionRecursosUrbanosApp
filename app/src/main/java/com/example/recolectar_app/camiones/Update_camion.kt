@@ -1,4 +1,4 @@
-package com.example.recolectar_app.fragments
+package com.example.recolectar_app.camiones
 
 import android.content.Context
 import android.os.Bundle
@@ -13,36 +13,34 @@ import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.zonas.ZonaDetalle
-import com.example.recolectar_app.zonas.ZonaDetalleArgs
+import com.example.recolectar_app.fragments.CamionDetalleArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import org.json.JSONObject
 
-class ContenedorDetalle : Fragment() {
-    private val TAG = "ContenedorDetalle"
-    private var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&id="
-    //private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+class Update_camion : Fragment() {
+    private val TAG = "CamionDetalle"
+    private var url = "http://46.17.108.122:1026/v2/entities/?type=Vehicle&id="
+    private var urlDelete = "http://46.17.108.122:1026/v2/entities/"
+    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+
     private lateinit var v: View
     private lateinit var id: String
-    private lateinit var btn_edit_zona : FloatingActionButton
-    private lateinit var btn_remove_zona : FloatingActionButton
-    private lateinit var et_id_contenedor : TextView
     lateinit var thiscontext : Context
-    lateinit var text_contenedor_id : TextView
-    lateinit var text_contenedor_tipo: TextView
-    lateinit var text_contenedor_latitud: TextView
-    lateinit var text_contenedor_longitud: TextView
-    lateinit var text_contenedor_estado: TextView
-    lateinit var text_contenedor_ruta: TextView
-    lateinit var text_contenedor_vehiculo: TextView
-    lateinit var text_contenedor_temperatura: TextView
-    lateinit var text_contenedor_zona: TextView
+    lateinit var text_id_camion: TextView
+    lateinit var text_patente_camion: TextView
+    lateinit var text_carga_camion: TextView
+    //lateinit var text_tipo_camion:TextView
+    lateinit var text_estado_camion: TextView
+    //lateinit var text_camion_zona:TextView
+    //lateinit var text_empleado_camion:TextView
+    lateinit var btn_editar: FloatingActionButton
+    lateinit var btn_eliminar: FloatingActionButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -50,22 +48,17 @@ class ContenedorDetalle : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v= inflater.inflate(R.layout.fragment_contenedor_detalle, container, false)
+        v= inflater.inflate(R.layout.fragment_update_camion, container, false)
         if (container != null) {
             thiscontext = container.context
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
-        val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
+        val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
         id = args?.id.toString()
-        text_contenedor_id  = v.findViewById(R.id.text_id);
-        text_contenedor_tipo = v.findViewById(R.id.text_tipo);
-        text_contenedor_latitud = v.findViewById(R.id.text_latitud)
-        text_contenedor_longitud = v.findViewById(R.id.text_longitud)
-        text_contenedor_estado= v.findViewById(R.id.text_estado)
-        text_contenedor_ruta= v.findViewById(R.id.text_ruta)
-        text_contenedor_vehiculo = v.findViewById(R.id.text_camion)
-        text_contenedor_temperatura = v.findViewById(R.id.text_temperatura)
-        text_contenedor_zona=v.findViewById(R.id.text_zona)
+        text_id_camion=v.findViewById(R.id.text_id_camion)
+        text_patente_camion=v.findViewById(R.id.text_patente_camion)
+        text_estado_camion=v.findViewById(R.id.text_estado_camion)
+        text_carga_camion=v.findViewById(R.id.text_carga_camion)
 
         return v
     }
@@ -82,6 +75,7 @@ class ContenedorDetalle : Fragment() {
                 val contenedor : Contenedor = gson.fromJson(response.getJSONObject(0).toString(),
                     Contenedor::class.java)
                 Log.d("Contenedor", contenedor.toString())
+                /*
                 text_contenedor_id.setText(contenedor.id)
                 text_contenedor_tipo.setText(contenedor.type)
                 text_contenedor_estado.setText(contenedor.status.value)
@@ -91,18 +85,24 @@ class ContenedorDetalle : Fragment() {
                 text_contenedor_vehiculo.setText(contenedor.refVehicle.value)
                 text_contenedor_temperatura.setText(contenedor.temperature.value.toString())
                 text_contenedor_zona.setText(contenedor.refZona.value)
+
+                 */
             }, {print("prueba error")})
         queue.add(jsonArrayRequest)
     }
+/*
+    private fun addCamion(requestHandler : RequestHandler) {
+        val gson = Gson()
 
-    companion object {
+        //Armo el objeto camión para darlo de alta
+        val camion = Camion(Camion.CargoWeight(carga.text.toString().toInt()),id.text.toString(),Camion.ServiceStatus(estado),Camion.VehiclePlateIdentifier(patente.text.toString()),Camion.VehicleType("lorry"))
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContenedorDetalle().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+        //camion.setRefEmpleadoValue(empleado.toString())
+        val string = gson.toJson(camion)
+        Log.d("POST camion", string.toString() )
+        val jsonObject = JSONObject(string)
+        requestHandler.postRequest(url,{},{},jsonObject)
     }
+    
+ */
 }

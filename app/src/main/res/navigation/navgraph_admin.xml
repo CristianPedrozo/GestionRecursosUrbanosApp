@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_camionDetalle_to_camiones"
             app:destination="@id/camiones" />
+        <action
+            android:id="@+id/action_camionDetalle_to_update_camion"
+            app:destination="@id/update_camion" />
     </fragment>
     <fragment
         android:id="@+id/contenedorDetalle"
@@ -120,5 +123,14 @@
         <action
             android:id="@+id/action_alta_camion_to_camiones"
             app:destination="@id/camiones" />
+    </fragment>
+    <fragment
+        android:id="@+id/update_camion"
+        android:name="com.example.recolectar_app.camiones.Update_camion"
+        android:label="fragment_update_camion"
+        tools:layout="@layout/fragment_update_camion" >
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.navigation.findNavController
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,6 +110,31 @@ class alta_camion : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        var gson = Gson()
+        val queue = Volley.newRequestQueue(activity)
+        val url_camion=url + id
+        /*
+        val jsonArrayRequest = JsonArrayRequest(url_camion,
+            { response ->
+                Log.d("Response Prueba", response.toString())
+
+                val camion : Camion = gson.fromJson(response.getJSONObject(0).toString(),
+                    Camion::class.java)
+                text_id_camion.setText(camion.id)
+                text_patente_camion.setText(camion.vehiclePlateIdentifier.value)
+                //text_tipo_camion.setText(camion.vehicleType.value)
+                text_carga_camion.setText(camion.cargoWeight.value.toString())
+                text_estado_camion.setText(camion.serviceStatus.value)
+                //
+                //text_camion_tipo.setText(camion.type)
+                //text_camion_estado.setText(camion.status.value)
+                //text_camion_zona.setText(camion.refZona.value)
+                //text_empleado_camion.text= camion.refEmpleado.toString()
+
+            }, {print("prueba error")})
+        queue.add(jsonArrayRequest)
+
+ */
     }
 
     companion object {
