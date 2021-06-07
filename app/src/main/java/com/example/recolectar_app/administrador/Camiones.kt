@@ -54,41 +54,6 @@ class Camiones : Fragment() {
         return v
     }
 
-    override fun onStart() {
-        super.onStart()
-/*
-        for (i in 1..5) {
-            camiones.add(Camion("BNG0989", "Ecologico"))
-            camiones.add(Camion("BNG0989", "Ecologico"))
-            camiones.add(Camion("BNG0989", "Ecologico"))
-            camiones.add(Camion("BNG0989", "Ecologico"))
-
-        }
-
-        //Configuración Obligatoria
-        recCamiones.setHasFixedSize(true)
-        linearLayoutManager = LinearLayoutManager(context)
-        recCamiones.layoutManager = linearLayoutManager
-
-
-        camionListAdapter = CamionListAdapter(camiones);
-
-        /*
-        camionListAdapter = CamionListAdapter(camiones) { x ->
-            onItemClick(x)
-        }
-         */
-
-        recCamiones.adapter = camionListAdapter
-
-
- */
-    }
-
-    fun onItemClick(position: Int): Boolean {
-        Snackbar.make(v, position.toString(), Snackbar.LENGTH_SHORT).show()
-        return true
-    }
 
     fun getData(requestHandler: RequestHandler){
         val gson = Gson()

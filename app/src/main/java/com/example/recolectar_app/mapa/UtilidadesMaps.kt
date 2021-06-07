@@ -1,4 +1,4 @@
-package com.example.recolectar_app
+package com.example.recolectar_app.mapa
 
 import android.content.Context
 import android.graphics.Color
@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
-import com.example.recolectar_app.Objetos.Instruccion
+import com.example.recolectar_app.R
+import com.example.recolectar_app.contenedores.Contenedor
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
@@ -106,7 +106,9 @@ object UtilidadesMaps {
     }
     fun obtenerCoordenadasContenedores(){
         for (i in 0 until contenedores.size){
-            coordenadasContenedores.add(LatLng(contenedores[i].location.value.coordinates[0],contenedores[i].location.value.coordinates[1]))
+            coordenadasContenedores.add(LatLng(
+                contenedores[i].location.value.coordinates[0],
+                contenedores[i].location.value.coordinates[1]))
         }
     }
     private fun obtenerCoordenadasRuta (response:JSONObject){
@@ -141,7 +143,7 @@ object UtilidadesMaps {
     private fun crearUrlApi(inicio: LatLng,fin: LatLng):String{
         var coordenada=""
         for (i in 0 until coordenadasContenedores.size){
-            coordenada = coordenada + "|" + coordenadasContenedores[i].latitude.toString()+","+coordenadasContenedores[i].longitude.toString()
+            coordenada = coordenada + "|" + coordenadasContenedores[i].latitude.toString()+","+ coordenadasContenedores[i].longitude.toString()
         }
 
         var inicioFinCoordenada="&origin="+ inicio.latitude.toString() + "," + inicio.longitude.toString() +
@@ -151,7 +153,9 @@ object UtilidadesMaps {
     }
     fun agregarMarkers (mMap:GoogleMap){
         for (i in 0 until contenedores.size){
-            mMap.addMarker(MarkerOptions().position(LatLng(contenedores[i].location.value.coordinates[0],contenedores[i].location.value.coordinates[1])).title(contenedores[i].id.toString()))
+            mMap.addMarker(MarkerOptions().position(LatLng(
+                contenedores[i].location.value.coordinates[0],
+                contenedores[i].location.value.coordinates[1])).title(contenedores[i].id.toString()))
         }
     }
     fun obtenerInstrucciones (response: JSONObject){
@@ -187,7 +191,7 @@ object UtilidadesMaps {
                         var aux=auxInstruccion.calculoInclinacion()
                         auxInstruccion.inclinacionMapa = aux
 
-                        this.instrucciones.add(auxInstruccion)
+                        instrucciones.add(auxInstruccion)
                         print(auxInstruccion.toString())
                     }
                 }
@@ -199,8 +203,8 @@ object UtilidadesMaps {
     }
     fun actualizarIntruccion(t1:TextView,t2:TextView,iv_actual:ImageView,iv_sig:ImageView,ubicacionActual:LatLng,contexto:Context,mMap: GoogleMap){
         if (instrucciones[0].estoyCerca(ubicacionActual)) {
-            t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
-            t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[2].instruccion)
+            t1.text= Html.fromHtml(instrucciones[1].instruccion)
+            t2.text= Html.fromHtml(instrucciones[2].instruccion)
             seleccionarImagen(instrucciones[1].accion,iv_actual,contexto)
             seleccionarImagen(instrucciones[2].accion,iv_sig,contexto)
             val cameraPosition = CameraPosition.Builder()
@@ -213,8 +217,8 @@ object UtilidadesMaps {
             instrucciones.removeAt(0)
         }else{
             if (t1.text==""&&t2.text==""){
-                t1.text= Html.fromHtml(UtilidadesMaps.instrucciones[0].instruccion)
-                t2.text= Html.fromHtml(UtilidadesMaps.instrucciones[1].instruccion)
+                t1.text= Html.fromHtml(instrucciones[0].instruccion)
+                t2.text= Html.fromHtml(instrucciones[1].instruccion)
                 seleccionarImagen(instrucciones[0].accion,iv_actual,contexto)
                 seleccionarImagen(instrucciones[1].accion,iv_sig,contexto)
                 val cameraPosition = CameraPosition.Builder()
@@ -232,10 +236,14 @@ object UtilidadesMaps {
     }
     private fun seleccionarImagen(accion:String,iv:ImageView,contexto: Context){
         when (accion) {
-            "turn-left" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.izquierda))
-            "turn-right" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.derecha))
+            "turn-left" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,
+                R.drawable.izquierda
+            ))
+            "turn-right" -> iv.setImageDrawable(ContextCompat.getDrawable(contexto,
+                R.drawable.derecha
+            ))
             else -> { // Note the block
-                iv.setImageDrawable(ContextCompat.getDrawable(contexto,R.drawable.derecho))
+                iv.setImageDrawable(ContextCompat.getDrawable(contexto, R.drawable.derecho))
             }
         }
     }

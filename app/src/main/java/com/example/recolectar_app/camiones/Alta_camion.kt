@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.EditText
+import android.widget.*
 import androidx.navigation.findNavController
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
@@ -70,6 +67,7 @@ class alta_camion : Fragment() {
         id= v.findViewById(R.id.editText_Id)
         patente= v.findViewById(R.id.editText_Patente)
         carga = v.findViewById(R.id.editText_Carga)
+        estado = arrayAdapter.getItem(0).toString()
         autoCompleteTextView.setOnItemClickListener { parent, v, position, id ->
             estado= parent.getItemAtPosition(position).toString()
         }
@@ -98,11 +96,14 @@ class alta_camion : Fragment() {
         val gson = Gson()
 
         //Armo el objeto camión para darlo de alta
-        val camion = Camion(Camion.CargoWeight(carga.text.toString().toInt()),id.text.toString(),Camion.ServiceStatus(estado),Camion.VehiclePlateIdentifier(patente.text.toString()),Camion.VehicleType("lorry"))
-
+        val camion = Camion(id.text.toString())
+        camion.setCargoWeight(carga.text.toString().toDouble())
+        camion.setServiceStatus(estado)
+        camion.setVehiclePlateIdentifier(patente.text.toString())
+        camion.setVehicleType("lorry")
         //camion.setRefEmpleadoValue(empleado.toString())
         val string = gson.toJson(camion)
-        Log.d("POST camion", string.toString() )
+        Toast.makeText(thiscontext, "${string}", Toast.LENGTH_LONG).show()
         val jsonObject = JSONObject(string)
         requestHandler.postRequest(url,{},{},jsonObject)
     }

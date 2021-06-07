@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.empleado.EmpleadoActivity
+import com.example.recolectar_app.mapa.RecorridoConductor
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val btnIniciar=findViewById<Button>(R.id.b_Inicio)
         btnIniciar.setOnClickListener{
 //            UtilidadesMaps.webServiceObtenerRuta(this,"")
-            startActivity(Intent(this,RecorridoConductor::class.java))
+            startActivity(Intent(this, RecorridoConductor::class.java))
         }
 
 

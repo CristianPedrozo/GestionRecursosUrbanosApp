@@ -1,5 +1,5 @@
 
-import com.example.recolectar_app.entities.Camion
+import com.example.recolectar_app.camiones.Camion
 import java.util.ArrayList
 
 class DeleteCamionRequest {

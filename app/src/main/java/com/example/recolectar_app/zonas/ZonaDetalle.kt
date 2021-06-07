@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.navigation.findNavController
-import com.example.recolectar_app.DeleteZonaRequest
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler

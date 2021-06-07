@@ -1,6 +1,5 @@
-package com.example.recolectar_app.fragments
+package com.example.recolectar_app.camiones
 import DeleteCamionRequest
-import android.app.DownloadManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -9,17 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.camiones.Camion
-import com.example.recolectar_app.zonas.Zona
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -32,6 +29,9 @@ class CamionDetalle : Fragment() {
 
     private lateinit var v: View
     private lateinit var id: String
+    private lateinit var status : String
+    private lateinit var patente : String
+    private lateinit var cargo : String
     lateinit var thiscontext : Context
     lateinit var text_id_camion: TextView
     lateinit var text_patente_camion: TextView
@@ -60,11 +60,18 @@ class CamionDetalle : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
-        id = args?.id.toString()
+        id = args?.idCamion.toString()
+        status = args?.statusCamion.toString()
+        patente = args?.patente.toString()
+        cargo = args?.carga.toString()
         text_id_camion=v.findViewById(R.id.text_id_camion)
+        text_id_camion.text = id
         text_patente_camion=v.findViewById(R.id.text_patente_camion)
+        text_patente_camion.text = patente
         text_estado_camion=v.findViewById(R.id.text_estado_camion)
+        text_estado_camion.text = status
         text_carga_camion=v.findViewById(R.id.text_carga_camion)
+        text_carga_camion.text = cargo
         //text_tipo_camion=v.findViewById(R.id.text_tipo_camion)
         //text_camion_zona=v.findViewById(R.id.text_zona)
         //text_empleado_camion=v.findViewById(R.id.text_empleado_camion)
@@ -72,71 +79,31 @@ class CamionDetalle : Fragment() {
         //Botón Editar
         btn_editar = v.findViewById(R.id.boton_editar)
         btn_editar.setOnClickListener(){
-            val action = CamionDetalleDirections.actionCamionDetalleToAltaCamion()
+            val action = CamionDetalleDirections.actionCamionDetalleToUpdateCamion(id,patente,cargo,status)
             v.findNavController().navigate(action)
         }
         //Botón Eliminar
         btn_eliminar = v.findViewById(R.id.boton_eliminar)
         btn_eliminar.setOnClickListener(){
-            removeCamion(id)
+            removeCamion(requestHandler)
             val action = CamionDetalleDirections.actionCamionDetalleToCamiones()
             v.findNavController().navigate(action)
 
         }
-
         return v
     }
-    override fun onStart() {
-        super.onStart()
-        var gson = Gson()
-        val queue = Volley.newRequestQueue(activity)
-        val url_camion=url + id
-        val jsonArrayRequest = JsonArrayRequest(url_camion,
-            { response ->
-                Log.d("Response Prueba", response.toString())
 
-                val camion : Camion = gson.fromJson(response.getJSONObject(0).toString(),
-                    Camion::class.java)
-                text_id_camion.setText(camion.id)
-                text_patente_camion.setText(camion.vehiclePlateIdentifier.value)
-                //text_tipo_camion.setText(camion.vehicleType.value)
-                text_carga_camion.setText(camion.cargoWeight.value.toString())
-                text_estado_camion.setText(camion.serviceStatus.value)
-                //
-                //text_camion_tipo.setText(camion.type)
-                //text_camion_estado.setText(camion.status.value)
-                //text_camion_zona.setText(camion.refZona.value)
-                //text_empleado_camion.text= camion.refEmpleado.toString()
-
-            }, {print("prueba error")})
-        queue.add(jsonArrayRequest)
-    }
-
-
-
-    private fun removeCamion(id:String/*requestHandler: RequestHandler*/) {
-        /*
+    private fun removeCamion(requestHandler: RequestHandler) {
         val gson = Gson()
-        val camion = Camion2(id)
+        Toast.makeText(thiscontext, id, Toast.LENGTH_SHORT).show()
+        val camion = Camion(id)
+        Toast.makeText(thiscontext, "$camion", Toast.LENGTH_LONG).show()
         val deleteObject = DeleteCamionRequest()
         deleteObject.addEntitie(camion)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
+        Toast.makeText(thiscontext, "${jsonObject}", Toast.LENGTH_LONG).show()
         requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
-
-         */
-        // var gson = Gson()
-        val queue = Volley.newRequestQueue(activity)
-        val url_delete_camion=urlDelete + id
-        val stringRequest = StringRequest(Request.Method.DELETE, url_delete_camion,
-            Response.Listener<String> { response ->
-                // Do something with the response
-            },
-            Response.ErrorListener { error ->
-                // Handle error
-                Log.d("error delete Vane", error.toString())
-            })
-        queue.add(stringRequest)
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package com.example.recolectar_app.fragments
+package com.example.recolectar_app.contenedores
 
 import android.content.Context
 import android.os.Bundle
@@ -10,13 +10,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.zonas.ZonaDetalle
-import com.example.recolectar_app.zonas.ZonaDetalleArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
@@ -56,7 +52,7 @@ class ContenedorDetalle : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
-        id = args?.id.toString()
+        id = args?.idContenedor.toString()
         text_contenedor_id  = v.findViewById(R.id.text_id);
         text_contenedor_tipo = v.findViewById(R.id.text_tipo);
         text_contenedor_latitud = v.findViewById(R.id.text_latitud)

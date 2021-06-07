@@ -9,15 +9,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.administrador.Contenedores
-import com.google.android.material.snackbar.Snackbar
+import com.example.recolectar_app.contenedores.Contenedor
 import com.google.gson.Gson
-import org.json.JSONObject
 
 class Contenedores : Fragment() {
     //esto tiene q ser variable dependiendo del usuario y su vehiculo

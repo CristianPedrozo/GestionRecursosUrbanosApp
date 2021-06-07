@@ -2,18 +2,11 @@ package com.example.recolectar_app.holders
 
 import android.view.View
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
-import com.example.recolectar_app.Objetos.Contenedor.FillingLevel
-import com.example.recolectar_app.Objetos.Contenedor.Location
-import com.example.recolectar_app.Objetos.Contenedor.Temperature
 import com.example.recolectar_app.R
 import com.example.recolectar_app.administrador.ContenedoresDirections
-import com.example.recolectar_app.administrador.ZonasDirections
-import com.example.recolectar_app.zonas.Zona
+import com.example.recolectar_app.contenedores.Contenedor
 
 class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
     private var view: View = v

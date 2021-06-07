@@ -17,8 +17,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.recolectar_app.R
-import com.example.recolectar_app.UtilidadesMaps
-import com.example.recolectar_app.UtilidadesOrdenacmiento
+import com.example.recolectar_app.mapa.UtilidadesMaps
+import com.example.recolectar_app.mapa.UtilidadesOrdenamiento
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -74,7 +74,7 @@ class Camino : Fragment() {
         val cvInstruccion=rootView.findViewById<CardView>(R.id.cv_Instrucciones)
         btnAux.setOnClickListener {
             context?.let { it1 ->
-                UtilidadesOrdenacmiento.realizarOrden(LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude),
+                UtilidadesOrdenamiento.realizarOrden(LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude),
                     it1
                 )
             }
@@ -131,7 +131,7 @@ class Camino : Fragment() {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 // función a ejecutar
-                var ubicacionActual=UtilidadesMaps.coordenadasDecodificadas[auxContador]
+                var ubicacionActual= UtilidadesMaps.coordenadasDecodificadas[auxContador]
                 UtilidadesMaps.actualizarIntruccion(t1,t2,iv_actual,iv_sig,ubicacionActual,contexto,mMap)
                // mMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionActual))
                 mMap.addMarker(MarkerOptions().position(ubicacionActual))

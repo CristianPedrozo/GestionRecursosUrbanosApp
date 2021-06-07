@@ -19,7 +19,7 @@
         android:theme="@style/Theme.RecolectAR_APP">
         <service
             android:name=".VolleySincrono"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".administrador.AdministradorActivity"
@@ -32,7 +32,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".RecorridoConductor"
+            android:name=".mapa.RecorridoConductor"
             android:label="@string/title_activity_recorrido_conductor" />
         <activity android:name=".MainActivity">
             <intent-filter>

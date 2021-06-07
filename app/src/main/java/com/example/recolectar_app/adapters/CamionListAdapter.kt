@@ -2,7 +2,6 @@ package com.example.recolectar_app.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.camiones.Camion
 import com.example.recolectar_app.holders.CamionHolder
@@ -30,23 +29,9 @@ class CamionListAdapter ( private var camionList: MutableList<Camion>,val listen
     }
 
     override fun onBindViewHolder(holder: CamionHolder, position: Int) {
-
         //Para carga de datos en el Card de cada camión
         holder.bind(camionList[position],listener)
-        holder.setId(camionList[position].id)
-        //holder.setTipo(camionList[position].serviceStatus.value.toString())
-        //holder.setEstado(camionList[position].serviceStatus.value.toString())
 
-//        Glide
-//            .with(context)
-//            .load("https://firebasestorage.googleapis.com/v0/b/firestoreexample-ec489.appspot.com/o/Fotos%2FGUERNICA.jpg?alt=media&token=001a8ffc-96c2-4aeb-9120-8d5099b3fa1c")
-//
-//            .centerInside()
-//            .into(holder.getImageView());
-//
-        /*    holder.getCardLayout().setOnLongClickListener() {
-                onItemClick(position)
-            }*/
 
     }
 }

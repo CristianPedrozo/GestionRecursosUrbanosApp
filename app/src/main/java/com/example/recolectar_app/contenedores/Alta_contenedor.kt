@@ -1,4 +1,4 @@
-package com.example.recolectar_app.fragments
+package com.example.recolectar_app.contenedores
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -6,17 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.TextView
-import android.widget.Toast
 import com.example.recolectar_app.R
-import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.zonas.Zona
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.gson.Gson
-import org.json.JSONObject
 import java.util.regex.Pattern
 
 class alta_contenedor : Fragment() {
