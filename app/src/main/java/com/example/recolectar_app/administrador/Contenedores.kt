@@ -29,7 +29,6 @@ class Contenedores : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var contenedorListAdapter: ContenedorListAdapter
 
-
     companion object {
         fun newInstance() = Contenedores()
     }
@@ -43,7 +42,7 @@ class Contenedores : Fragment() {
         };
         var requestHandler = RequestHandler.getInstance(thiscontext)
         getData(requestHandler)
-        v =  inflater.inflate(R.layout.fragment_list_contenedores, container, false)
+        v = inflater.inflate(R.layout.fragment_list_contenedores, container, false)
         recContenedor = v.findViewById(R.id.rec_contenedores)
         botton_agregar = v.findViewById(R.id.boton_agregar)
         botton_agregar.setOnClickListener() {
@@ -51,22 +50,6 @@ class Contenedores : Fragment() {
             v.findNavController().navigate(action)
         }
         return v
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
-    fun onItemClick ( position : Int ) : Boolean {
-        Snackbar.make(v,position.toString(), Snackbar.LENGTH_SHORT).show()
-        return true
     }
 
     fun getData(requestHandler: RequestHandler){

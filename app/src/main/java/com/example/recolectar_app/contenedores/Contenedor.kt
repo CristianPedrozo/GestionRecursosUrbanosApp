@@ -17,32 +17,32 @@ data class Contenedor(var id: String) {
     init {
         this.id = "wastecontainer:${id}"
     }
-    fun setLocation(coords : List<Double>){
-        this.location.value.coordinates = coords
+    fun setLocation(coords : MutableList<Double>){
+        this.location = Location(Location.Value(coords))
     }
     fun setNextActuationDeadLine(date: String){
-        this.nextActuationDeadline.value = date
+        this.nextActuationDeadline = NextActuationDeadline(date)
     }
     fun setRefRuta(ref : String){
-        this.refRuta.value = ref
+        this.refRuta = RefRuta(ref)
     }
     fun setRefVehicle(ref : String){
-        this.refVehicle.value = ref
+        this.refVehicle = RefVehicle(ref)
     }
     fun setRefZona(ref : String){
-        this.refZona.value = ref
+        this.refZona = RefZona(ref)
     }
     fun setStatus(status : String){
-        this.status.value = status
+        this.status = Status(status)
     }
     fun setTemperature(temp : Double){
-        this.temperature.value = temp
+        this.temperature = Temperature(temp)
     }
     fun setDateLastEmptying(date : String){
-        this.dateLastEmptying.value = date
+        this.dateLastEmptying = DateLastEmptying(date)
     }
     fun setFillingLevel(lvl : Double){
-        this.fillingLevel.value = lvl
+        this.fillingLevel = FillingLevel(lvl)
     }
 
 
@@ -63,7 +63,7 @@ data class Contenedor(var id: String) {
     ) {
         val type: String = "geo:json"
         data class Value(
-            var coordinates: List<Double>,
+            var coordinates: MutableList<Double>,
         ){
             val type: String = "Point"
         }

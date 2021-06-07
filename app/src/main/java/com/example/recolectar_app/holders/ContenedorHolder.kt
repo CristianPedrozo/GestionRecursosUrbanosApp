@@ -17,27 +17,9 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
 
         setOnClickListener {
             listener(contenedor)
-            Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(idContenedor.text as String))
+            Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(idContenedor.text as String, contenedor.status.value))
         }
     }
-    fun setId(id: String) {
-        val txt: TextView = view.findViewById(R.id.txt_id_item_contenedor)
-        txt.text = id
-    }
 
-    fun setTipo(tipo: String) {
-        val txt: TextView = view.findViewById(R.id.txt_tipo_item_contenedor)
-        txt.text = tipo
-    }
-    fun setZona(zona: String) {
-        val txt: TextView = view.findViewById(R.id.txt_zona_item_contenedor)
-        txt.text = zona
-    }
-    /*
-    fun getCardLayout (): CardView {
-        return view.findViewById(R.id.card_package_item_contenedor)
-    }
-
-     */
 
 }

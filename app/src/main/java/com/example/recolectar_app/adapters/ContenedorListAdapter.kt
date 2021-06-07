@@ -30,8 +30,5 @@ class ContenedorListAdapter (private var contenedorList: MutableList<Contenedor>
 
     override fun onBindViewHolder(holder: ContenedorHolder, position: Int) {
         holder.bind(contenedorList[position],listener)
-        holder.setId(contenedorList[position].id)
-        holder.setTipo(contenedorList[position].type)
-        holder.setZona(contenedorList[position].refZona.value)
     }
 }

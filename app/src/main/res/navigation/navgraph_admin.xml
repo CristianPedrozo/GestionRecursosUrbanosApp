@@ -11,7 +11,12 @@
         android:label="fragment_administrador_contenedores" >
         <action
             android:id="@+id/action_contenedores_to_contenedorDetalle"
-            app:destination="@id/contenedorDetalle" />
+            app:destination="@id/contenedorDetalle">
+            <argument
+                android:name="idContenedor"
+                app:argType="string"
+                android:defaultValue="id" />
+        </action>
         <action
             android:id="@+id/action_contenedores_to_alta_contenedor"
             app:destination="@id/alta_contenedor" />
@@ -115,10 +120,25 @@
         tools:layout="@layout/fragment_contenedor_detalle" >
         <argument
             android:name="idContenedor"
-            app:argType="string" />
+            app:argType="string"
+            />
+        <argument
+            android:name="statusContenedor"
+            app:argType="string"/>
         <action
-            android:id="@+id/action_contenedorDetalle_to_alta_contenedor"
-            app:destination="@id/alta_contenedor" />
+            android:id="@+id/action_contenedorDetalle_to_contenedores"
+            app:destination="@id/contenedores" />
+        <action
+            android:id="@+id/action_contenedorDetalle_to_update_Contenedor"
+            app:destination="@id/update_Contenedor">
+            <argument
+                android:name="idContenedor"
+                app:argType="string"
+                />
+            <argument
+                android:name="statusContenedor"
+                app:argType="string"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
@@ -177,5 +197,21 @@
         <argument
             android:name="carga"
             app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/update_Contenedor"
+        android:name="com.example.recolectar_app.contenedores.Update_Contenedor"
+        android:label="fragment_update__contenedor"
+        tools:layout="@layout/fragment_update__contenedor" >
+        <argument
+            android:name="idContenedor"
+            app:argType="string"
+            />
+        <argument
+            android:name="statusContenedor"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_update_Contenedor_to_contenedores"
+            app:destination="@id/contenedores" />
     </fragment>
 </navigation>

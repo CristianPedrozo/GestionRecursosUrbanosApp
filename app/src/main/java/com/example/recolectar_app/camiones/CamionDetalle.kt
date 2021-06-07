@@ -2,7 +2,6 @@ package com.example.recolectar_app.camiones
 import DeleteCamionRequest
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -23,9 +17,7 @@ import org.json.JSONObject
 
 class CamionDetalle : Fragment() {
     private val TAG = "CamionDetalle"
-    private var url = "http://46.17.108.122:1026/v2/entities/?type=Vehicle&id="
-    private var urlDelete = "http://46.17.108.122:1026/v2/entities/"
-    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+    private var url = "http://46.17.108.122:1026/v2/op/update"
 
     private lateinit var v: View
     private lateinit var id: String
@@ -95,15 +87,12 @@ class CamionDetalle : Fragment() {
 
     private fun removeCamion(requestHandler: RequestHandler) {
         val gson = Gson()
-        Toast.makeText(thiscontext, id, Toast.LENGTH_SHORT).show()
         val camion = Camion(id)
-        Toast.makeText(thiscontext, "$camion", Toast.LENGTH_LONG).show()
         val deleteObject = DeleteCamionRequest()
         deleteObject.addEntitie(camion)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
-        Toast.makeText(thiscontext, "${jsonObject}", Toast.LENGTH_LONG).show()
-        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
+        requestHandler.deleteRequest(url,jsonObject,{},{})
     }
 
     companion object {
