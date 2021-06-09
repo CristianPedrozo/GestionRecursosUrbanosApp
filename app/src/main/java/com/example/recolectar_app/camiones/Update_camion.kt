@@ -103,6 +103,6 @@ class Update_camion : Fragment() {
         val jsonObject = JSONObject(string)
         requestHandler.postRequest(url,{},{},jsonObject)
     }
-    
+
  */
 }
