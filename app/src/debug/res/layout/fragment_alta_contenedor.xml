@@ -5,7 +5,7 @@
     android:id="@+id/fragment_contenedor_detalle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ContenedorDetalle">
+    tools:context=".contenedores.ContenedorDetalle">
 
 
     <ScrollView
@@ -37,6 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -102,14 +103,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:inputType="numberSigned">
+                android:inputType="number|numberSigned|numberDecimal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    android:inputType="numberSigned"/>
+                    android:inputType="number|numberSigned|numberDecimal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -126,13 +127,15 @@
                 app:helperText="*Requerido"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:inputType="number|numberSigned|numberDecimal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp" />
+                    app:boxCornerRadiusTopStart="10dp"
+                    android:inputType="number|numberSigned|numberDecimal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -146,7 +149,6 @@
                 android:hint="@string/label_temperatura_contenedor"
                 app:boxBackgroundMode="outline"
                 app:endIconMode="clear_text"
-                app:helperText="*Requerido"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

@@ -1,4 +1,4 @@
-package com.example.recolectar_app.Objetos
+package com.example.recolectar_app.mapa
 
 import android.content.Context
 import android.util.Log
@@ -6,10 +6,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.UtilidadesOrdenacmiento
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -72,9 +69,9 @@ class unRequest() {
         ptoMasCercano=auxPtoMasCercano
         indexPtoMasCercano=auxIndexPtoMasCercano
 
-        if(UtilidadesOrdenacmiento.controlRequest==UtilidadesOrdenacmiento.arrayDeRequest.size-1){
-            UtilidadesOrdenacmiento.obtenerPuntoMasCercano()
+        if(UtilidadesOrdenamiento.controlRequest== UtilidadesOrdenamiento.arrayDeRequest.size-1){
+            UtilidadesOrdenamiento.obtenerPuntoMasCercano()
         }
-        UtilidadesOrdenacmiento.controlRequest++
+        UtilidadesOrdenamiento.controlRequest++
     }
 }

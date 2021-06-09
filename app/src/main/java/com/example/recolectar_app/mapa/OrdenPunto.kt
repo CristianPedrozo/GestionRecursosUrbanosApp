@@ -1,4 +1,4 @@
-package com.example.recolectar_app.Objetos
+package com.example.recolectar_app.mapa
 
 import com.google.android.gms.maps.model.LatLng
 

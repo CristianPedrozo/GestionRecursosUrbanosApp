@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_camion_detalle"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".camiones.CamionDetalle">
+    tools:context=".camiones.Update_camion">
 
     <ScrollView
         android:id="@+id/scrollView_detalle_Camion"
@@ -33,10 +33,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_id_camion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="false"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -54,10 +51,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_patente_camion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="false"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--
             <com.google.android.material.textfield.TextInputLayout
@@ -98,10 +92,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_estado_camion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="false"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -119,10 +110,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_carga_camion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="false"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--
             <com.google.android.material.textfield.TextInputLayout
@@ -198,4 +186,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.863"
         tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

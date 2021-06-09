@@ -12,7 +12,12 @@
         tools:layout="@layout/fragment_administrador_contenedores">
         <action
             android:id="@+id/action_contenedores_to_contenedorDetalle"
-            app:destination="@id/contenedorDetalle" />
+            app:destination="@id/contenedorDetalle">
+            <argument
+                android:name="idContenedor"
+                app:argType="string"
+                android:defaultValue="id" />
+        </action>
         <action
             android:id="@+id/action_contenedores_to_alta_contenedor"
             app:destination="@id/alta_contenedor" />
@@ -46,7 +51,21 @@
         android:label="fragment_administrador_camiones" >
         <action
             android:id="@+id/action_camiones_to_camionDetalle"
-            app:destination="@id/camionDetalle" />
+            app:destination="@id/camionDetalle">
+            <argument
+                android:name="idCamion"
+                app:argType="string"
+                />
+            <argument
+                android:name="patente"
+                app:argType="string"/>
+            <argument
+                android:name="carga"
+                app:argType="string"/>
+            <argument
+                android:name="statusCamion"
+                app:argType="string"/>
+        </action>
         <action
             android:id="@+id/action_camiones_to_alta_camion"
             app:destination="@id/alta_camion" />
@@ -61,33 +80,80 @@
     </fragment>
     <fragment
         android:id="@+id/camionDetalle"
-        android:name="com.example.recolectar_app.fragments.CamionDetalle"
+        android:name="com.example.recolectar_app.camiones.CamionDetalle"
         android:label="fragment_camion_detalle"
         tools:layout="@layout/fragment_camion_detalle">
         <argument
-            android:name="camion"
-            app:argType="com.example.recolectar_app.entities.Camion" />
+            android:name="idCamion"
+            app:argType="string" />
+        <argument
+            android:name="patente"
+            app:argType="string"/>
+        <argument
+            android:name="statusCamion"
+            app:argType="string"/>
+        <argument
+            android:name="carga"
+            app:argType="string"/>
         <action
             android:id="@+id/action_camionDetalle_to_alta_camion"
             app:destination="@id/alta_camion" />
+        <action
+            android:id="@+id/action_camionDetalle_to_camiones"
+            app:destination="@id/camiones" />
+        <action
+            android:id="@+id/action_camionDetalle_to_update_camion"
+            app:destination="@id/update_camion">
+            <argument
+                android:name="idCamion"
+                app:argType="string" />
+            <argument
+                android:name="patente"
+                app:argType="string"/>
+            <argument
+                android:name="carga"
+                app:argType="string"/>
+            <argument
+                android:name="statusCamion"
+                app:argType="string"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/contenedorDetalle"
-        android:name="com.example.recolectar_app.fragments.ContenedorDetalle"
+        android:name="com.example.recolectar_app.contenedores.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
         tools:layout="@layout/fragment_alta_contenedor">
         <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="idContenedor"
+            app:argType="string"
+            />
+        <argument
+            android:name="statusContenedor"
+            app:argType="string"/>
         <action
-            android:id="@+id/action_contenedorDetalle_to_alta_contenedor"
-            app:destination="@id/alta_contenedor" />
+            android:id="@+id/action_contenedorDetalle_to_contenedores"
+            app:destination="@id/contenedores" />
+        <action
+            android:id="@+id/action_contenedorDetalle_to_update_Contenedor"
+            app:destination="@id/update_Contenedor">
+            <argument
+                android:name="idContenedor"
+                app:argType="string"
+                />
+            <argument
+                android:name="statusContenedor"
+                app:argType="string"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
-        android:name="com.example.recolectar_app.fragments.alta_contenedor"
+        android:name="com.example.recolectar_app.contenedores.alta_contenedor"
         android:label="fragment_alta_contenedor"
-        tools:layout="@layout/fragment_alta_contenedor" />
+        tools:layout="@layout/fragment_alta_contenedor" >
+        <action
+            android:id="@+id/action_alta_contenedor_to_contenedores"
+            app:destination="@id/contenedores" />
+    </fragment>
     <fragment
         android:id="@+id/alta_zona"
         android:name="com.example.recolectar_app.zonas.alta_zona"
@@ -113,8 +179,46 @@
     </fragment>
     <fragment
         android:id="@+id/alta_camion"
-        android:name="com.example.recolectar_app.fragments.alta_camion"
-        android:label="alta_camion" />
+        android:name="com.example.recolectar_app.camiones.alta_camion"
+        android:label="alta_camion" >
+        <action
+            android:id="@+id/action_alta_camion_to_camiones"
+            app:destination="@id/camiones" />
+    </fragment>
+    <fragment
+        android:id="@+id/update_camion"
+        android:name="com.example.recolectar_app.camiones.Update_camion"
+        android:label="fragment_update_camion"
+        tools:layout="@layout/fragment_update_camion" >
+        <argument
+            android:name="idCamion"
+            app:argType="string" />
+        <argument
+            android:name="patente"
+            app:argType="string"/>
+        <argument
+            android:name="statusCamion"
+            app:argType="string"/>
+        <argument
+            android:name="carga"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/update_Contenedor"
+        android:name="com.example.recolectar_app.contenedores.Update_Contenedor"
+        android:label="fragment_update__contenedor"
+        tools:layout="@layout/fragment_update__contenedor" >
+        <argument
+            android:name="idContenedor"
+            app:argType="string"
+            />
+        <argument
+            android:name="statusContenedor"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_update_Contenedor_to_contenedores"
+            app:destination="@id/contenedores" />
+    </fragment>
     <fragment
         android:id="@+id/usuario_datos"
         android:name="com.example.recolectar_app.administrador.Datos_Administrador"

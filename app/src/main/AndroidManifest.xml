@@ -29,7 +29,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".RecorridoConductor"
+            android:name=".mapa.RecorridoConductor"
             android:label="@string/title_activity_recorrido_conductor" />
         <activity android:name=".MainActivity">
             <intent-filter>
