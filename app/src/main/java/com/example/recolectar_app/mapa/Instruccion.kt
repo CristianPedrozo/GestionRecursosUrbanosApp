@@ -1,8 +1,7 @@
-package com.example.recolectar_app.Objetos
+package com.example.recolectar_app.mapa
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
-import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin

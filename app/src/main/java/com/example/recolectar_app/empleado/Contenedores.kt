@@ -1,5 +1,6 @@
 package com.example.recolectar_app.empleado
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,20 +9,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.Objetos.Contenedor.Contenedor
 import com.example.recolectar_app.R
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.administrador.Contenedores
-import com.google.android.material.snackbar.Snackbar
+import com.example.recolectar_app.contenedores.Contenedor
 import com.google.gson.Gson
-import org.json.JSONObject
 
 class Contenedores : Fragment() {
     //esto tiene q ser variable dependiendo del usuario y su vehiculo
     var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
-
+    lateinit var thiscontext : Context
     lateinit var v: View
     lateinit var recContenedores : RecyclerView
     var contenedores : MutableList<Contenedor> = ArrayList<Contenedor>()
@@ -60,7 +58,9 @@ class Contenedores : Fragment() {
                 linearLayoutManager = LinearLayoutManager(context)
                 recContenedores.layoutManager = linearLayoutManager
 
-                contenedorListAdapter = ContenedorListAdapter(contenedores);
+                contenedorListAdapter = ContenedorListAdapter(contenedores) {
+                    android.widget.Toast.makeText(thiscontext, it.id, android.widget.Toast.LENGTH_SHORT).show()
+                };
 
 
                 recContenedores.adapter = contenedorListAdapter

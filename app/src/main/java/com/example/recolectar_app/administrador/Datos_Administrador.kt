@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.empleado.Datos
-import com.example.recolectar_app.fragments.ContenedorDetalleArgs
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Datos_Administrador : Fragment() {

@@ -17,7 +17,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_camiones">CamionesActivity</string>
@@ -45,6 +44,7 @@
     <string name="label_camion_contenedor">Camion</string>
     <string name="label_zona_contenedor">Zona</string>
     <!--Para ABM Camiones -->
+    <string name="label_Id_camion">ID</string>
     <string name="label_patente_camion">Patente</string>
     <string name="label_tipo_camion">Tipo</string>
     <string name="label_estado_camion">Estado</string>
@@ -52,12 +52,11 @@
     <string name="label_zona_camion">Zona</string>
     <string name="label_latitud_camion">Latitud</string>
     <string name="label_longitud_camion">Longitud</string>
+    <string name="label_carga_camion">Carga</string>
     <string-array name="estados_camion">
-        <item>Proyectado</item>
-        <item>Instalado</item>
-        <item>En Servicio</item>
-        <item>En Reparación</item>
-        <item>Dado De Baja</item>
+        <item>parked</item>
+        <item>onRoute</item>
+        <item>broken</item>
+        <item>outOfService</item>
     </string-array>
-
 </resources>

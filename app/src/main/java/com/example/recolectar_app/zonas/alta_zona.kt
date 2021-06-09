@@ -1,5 +1,4 @@
 package com.example.recolectar_app.zonas
-
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -53,22 +53,6 @@ class Zonas : Fragment() {
         return v
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
-    fun onItemClick ( position : Int ) : Boolean {
-        Snackbar.make(v,position.toString(), Snackbar.LENGTH_SHORT).show()
-        return true
-    }
-
     fun getData(requestHandler:RequestHandler){
         val gson = Gson()
         requestHandler.getArrayRequest(url,

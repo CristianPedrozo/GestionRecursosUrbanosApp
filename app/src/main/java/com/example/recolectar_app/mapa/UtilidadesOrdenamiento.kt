@@ -1,23 +1,9 @@
-package com.example.recolectar_app
+package com.example.recolectar_app.mapa
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.util.Log
-import android.widget.Toast
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.Objetos.OrdenPunto
-import com.example.recolectar_app.Objetos.PuntoDistancia
-import com.example.recolectar_app.Objetos.unRequest
 import com.google.android.gms.maps.model.LatLng
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-import kotlin.math.log
 
-object UtilidadesOrdenacmiento {
+object UtilidadesOrdenamiento {
     var puntosAOrdenar:MutableList<LatLng> = mutableListOf(
         LatLng(-34.5841907,-58.4013909),
         LatLng(-34.583682,-58.4020395),
@@ -192,17 +178,17 @@ object UtilidadesOrdenacmiento {
     }
     fun obtenerPuntoMasCercano(){
         var auxPtoMasCercano:PuntoDistancia= arrayDeRequest[0].ptoMasCercano
-        var indexAEliminar=arrayDeRequest[0].indexPtoMasCercano
+        var indexAEliminar= arrayDeRequest[0].indexPtoMasCercano
         for(i in 0 until arrayDeRequest.size){
             if(arrayDeRequest[i].ptoMasCercano.distancia<auxPtoMasCercano.distancia){
-                auxPtoMasCercano=arrayDeRequest[i].ptoMasCercano
+                auxPtoMasCercano= arrayDeRequest[i].ptoMasCercano
                 indexAEliminar=25*i+ arrayDeRequest[i].indexPtoMasCercano
             }
         }
 
         puntosOrdenados.add(auxPtoMasCercano)
         puntosAOrdenar.removeAt(indexAEliminar)
-        arrayDeRequest=ArrayList()
-        controlRequest=0
+        arrayDeRequest =ArrayList()
+        controlRequest =0
     }
 }

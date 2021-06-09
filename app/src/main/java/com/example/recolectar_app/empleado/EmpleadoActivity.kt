@@ -1,13 +1,10 @@
 package com.example.recolectar_app.empleado
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.recolectar_app.MainActivity
 import com.example.recolectar_app.R
-import com.example.recolectar_app.entities.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class EmpleadoActivity : AppCompatActivity() {

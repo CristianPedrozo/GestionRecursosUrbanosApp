@@ -12,7 +12,7 @@
     app:cardElevation="8dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?selectableItemBackground">>
+    android:foreground="?selectableItemBackground">
 
 
     <ImageView
