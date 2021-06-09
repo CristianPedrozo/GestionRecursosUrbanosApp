@@ -1,0 +1,26 @@
+[1mdiff --git a/app/src/main/java/com/example/recolectar_app/camiones/Alta_camion.kt b/app/src/main/java/com/example/recolectar_app/camiones/Alta_camion.kt[m
+[1mindex 458f148..bbe2992 100644[m
+[1m--- a/app/src/main/java/com/example/recolectar_app/camiones/Alta_camion.kt[m
+[1m+++ b/app/src/main/java/com/example/recolectar_app/camiones/Alta_camion.kt[m
+[36m@@ -103,7 +103,7 @@[m [mclass alta_camion : Fragment() {[m
+         camion.setVehicleType("lorry")[m
+         //camion.setRefEmpleadoValue(empleado.toString())[m
+         val string = gson.toJson(camion)[m
+[31m-        Toast.makeText(thiscontext, "${string}", Toast.LENGTH_LONG).show()[m
+[32m+[m[32m        Toast.makeText(thiscontext, string, Toast.LENGTH_LONG).show()[m
+         val jsonObject = JSONObject(string)[m
+         requestHandler.postRequest(url,{},{},jsonObject)[m
+     }[m
+[1mdiff --git a/app/src/main/java/com/example/recolectar_app/contenedores/Alta_contenedor.kt b/app/src/main/java/com/example/recolectar_app/contenedores/Alta_contenedor.kt[m
+[1mindex 1b33f20..1cf2c0a 100644[m
+[1m--- a/app/src/main/java/com/example/recolectar_app/contenedores/Alta_contenedor.kt[m
+[1m+++ b/app/src/main/java/com/example/recolectar_app/contenedores/Alta_contenedor.kt[m
+[36m@@ -39,7 +39,7 @@[m [mclass alta_contenedor : Fragment() {[m
+         if (container != null) {[m
+             thiscontext = container.context[m
+         };[m
+[31m-        var requestHandler = RequestHandler.getInstance(thiscontext)[m
+[32m+[m[32m        val requestHandler = RequestHandler.getInstance(thiscontext)[m
+         //Carga Combo Estados[m
+         val estados = resources.getStringArray(R.array.estados_contenedor)[m
+         val arrayAdapterEstado = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)[m

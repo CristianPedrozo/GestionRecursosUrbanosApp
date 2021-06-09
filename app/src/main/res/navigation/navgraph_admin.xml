@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/contenedores"
         android:name="com.example.recolectar_app.administrador.Contenedores"
-        android:label="fragment_administrador_contenedores" >
+        android:label="fragment_administrador_contenedores"
+        tools:layout="@layout/fragment_administrador_contenedores">
         <action
             android:id="@+id/action_contenedores_to_contenedorDetalle"
             app:destination="@id/contenedorDetalle">
@@ -72,7 +73,11 @@
     <fragment
         android:id="@+id/usuarios"
         android:name="com.example.recolectar_app.administrador.Usuarios"
-        android:label="fragment_administrador_usuarios" />
+        android:label="fragment_administrador_usuarios" >
+        <action
+            android:id="@+id/action_usuarios_to_datos"
+            app:destination="@id/usuario_datos" />
+    </fragment>
     <fragment
         android:id="@+id/camionDetalle"
         android:name="com.example.recolectar_app.camiones.CamionDetalle"
@@ -117,7 +122,7 @@
         android:id="@+id/contenedorDetalle"
         android:name="com.example.recolectar_app.contenedores.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
-        tools:layout="@layout/fragment_contenedor_detalle" >
+        tools:layout="@layout/fragment_alta_contenedor">
         <argument
             android:name="idContenedor"
             app:argType="string"
@@ -213,5 +218,13 @@
         <action
             android:id="@+id/action_update_Contenedor_to_contenedores"
             app:destination="@id/contenedores" />
+    </fragment>
+    <fragment
+        android:id="@+id/usuario_datos"
+        android:name="com.example.recolectar_app.administrador.Datos_Administrador"
+        android:label="fragment_empleado_datos">
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>

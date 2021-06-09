@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "478728509223",
+    "project_id": "recolectar-dffe1",
+    "storage_bucket": "recolectar-dffe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478728509223:android:87d0b878bcd3b49275fb02",
+        "android_client_info": {
+          "package_name": "com.example.recolectar_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478728509223-i7imeftlt2ag9l1r1smh3h2q9p8p8lv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDygiGPgkeT7BkhNboJlqiTMIUFh9fsxa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478728509223-i7imeftlt2ag9l1r1smh3h2q9p8p8lv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

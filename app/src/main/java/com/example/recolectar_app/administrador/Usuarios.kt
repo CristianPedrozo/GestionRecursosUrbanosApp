@@ -5,56 +5,82 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.R
+import com.example.recolectar_app.Usuario
+import com.example.recolectar_app.UsuarioAdapter
+import com.example.recolectar_app.adapters.ContenedorListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_administrador_usuarios.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Usuarios : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var v: View
+    //Para botón flotante Agregar Contenedor
+    lateinit var botton_agregar: FloatingActionButton
+    //
+    lateinit var recContenedores : RecyclerView
+    var contenedores : MutableList<Usuario> = ArrayList<Usuario>()
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var contenedorListAdapter: ContenedorListAdapter
+
+    lateinit var mRecyclerView : RecyclerView
+    val mAdapter : UsuarioAdapter = UsuarioAdapter()
+    val db = FirebaseFirestore.getInstance()
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        val button = v.findViewById<Button>(R.id.btnIrPantallaAgregarUsuario)
+        button.setOnClickListener {
+            redireccionarAUsuarios()
         }
-    }
+        getUsers()
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_administrador_usuarios, container, false)
+        v = inflater.inflate(R.layout.fragment_administrador_usuarios, container, false)
+        val button = v.findViewById<Button>(R.id.btnIrPantallaAgregarUsuario)
+        button.setOnClickListener {
+            redireccionarAUsuarios()
+        }
+        getUsers()
+        return v
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_aministrador_usuarios.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Usuarios().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        fun newInstance() = Usuarios()
+    }
+
+    fun redireccionarAUsuarios(){
+        var action = UsuariosDirections.actionUsuariosToDatos("")
+        v.findNavController().navigate(action)
+    }
+
+    fun setUpRecyclerView(users:MutableList<Usuario>){
+        mRecyclerView = v.findViewById<RecyclerView>(R.id.rvUsuario)
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.layoutManager = LinearLayoutManager(v.context)
+        mAdapter.UsuarioAdapter(users, v.context)
+        mRecyclerView.adapter = mAdapter
+    }
+
+    fun getUsers(){
+        db.collection("usuarios")
+            .get()
+            .addOnSuccessListener { result ->
+                var users:MutableList<Usuario> = ArrayList()
+                for (document in result) {
+                    users.add(Usuario(document.getString("razonSocial"), document.id,  document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
+                    setUpRecyclerView(users)
                 }
             }
     }
+
 }
