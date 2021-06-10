@@ -160,25 +160,25 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/boton_eliminar"
+        android:id="@+id/boton_cancelar_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Eliminar"
-        android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintBottom_toTopOf="@+id/boton_editar"
+        android:layout_marginTop="484dp"
+        android:contentDescription="Cancelar"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintBottom_toTopOf="@+id/boton_confirmar_editar_camion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.952"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/boton_editar"
+        android:id="@+id/boton_confirmar_editar_camion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Editar"
-        android:src="@drawable/ic_baseline_edit"
+        android:contentDescription="Confirmar"
+        android:src="@drawable/ic_baseline_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"

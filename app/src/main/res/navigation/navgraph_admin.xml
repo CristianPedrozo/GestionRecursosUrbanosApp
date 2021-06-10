@@ -202,6 +202,9 @@
         <argument
             android:name="carga"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_update_camion_to_camiones"
+            app:destination="@id/camiones" />
     </fragment>
     <fragment
         android:id="@+id/update_Contenedor"
