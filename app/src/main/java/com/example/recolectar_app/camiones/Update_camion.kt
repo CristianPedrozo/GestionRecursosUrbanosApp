@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -55,6 +56,13 @@ class Update_camion : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v= inflater.inflate(R.layout.fragment_update_camion, container, false)
+        //Carga Combo Estados
+        /*
+        val estados = resources.getStringArray(R.array.estados_camion)
+        val arrayAdapter = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)
+        autoCompleteTextView = v.findViewById(R.id.autoCompleteTextView_estado)
+        autoCompleteTextView.setAdapter(arrayAdapter)
+*/
         if (container != null) {
             thiscontext = container.context
         };
@@ -75,9 +83,12 @@ class Update_camion : Fragment() {
 
         btn_editar = v.findViewById(R.id.boton_confirmar_editar_camion)
         btn_editar.setOnClickListener(){
-            editCamion(requestHandler)
-            val action = Update_camionDirections.actionUpdateCamionToCamiones()
-            v.findNavController().navigate(action)
+            if(validarCampos()){
+                editCamion(requestHandler)
+                val action = Update_camionDirections.actionUpdateCamionToCamiones()
+                v.findNavController().navigate(action)
+            }
+
         }
         return v
     }
@@ -86,7 +97,10 @@ class Update_camion : Fragment() {
         //estado = tiet_estado.text.toString()
         //Toast.makeText(thiscontext, estado, Toast.LENGTH_SHORT).show()
         val camion = Camion(id)
-        //camion.setStatus(estado)
+        camion.setCargoWeight(text_carga_camion.text.toString().toDouble())
+        //camion.setServiceStatus(estado)
+        camion.setVehiclePlateIdentifier(text_patente_camion.text.toString())
+        camion.setVehicleType("lorry")
         val patchObject = PatchCamionObject()
         patchObject.addEntitie(camion)
         val jsonPatchObject = gson.toJson(patchObject)
@@ -104,4 +118,36 @@ class Update_camion : Fragment() {
                 }
             }
     }
+
+
+    //Validación de los Campos del Formulario para dar de Modificación  el Camión
+
+    private fun validarCampos(): Boolean {
+        var resultT = true
+        val result = arrayOf(validarPatente(),validarCarga())
+        if(false in result){
+            resultT =false
+        }
+        return resultT
+    }
+
+    private fun validarPatente():Boolean {
+        //patente = v.findViewById(R.id.editText_Patente)
+        return if (text_patente_camion.text.toString().isEmpty()) {
+            text_patente_camion.error = "El campo es requerido"
+            false
+        }else{
+            true
+        }
+    }
+    private fun validarCarga():Boolean {
+        //carga = v.findViewById(R.id.editText_Carga)
+        return if (text_carga_camion.text.toString().isEmpty()) {
+            text_carga_camion.error = "El campo es requerido"
+            false
+        }else{
+            true
+        }
+    }
+
 }
