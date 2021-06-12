@@ -6,8 +6,9 @@
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="text_usuarios">Usuarios</string>
-    <string name="agregar_usuarios">Agregar Usuario</string>
+    <string name="agregar_usuarios">Agregar nuevo usuario</string>
     <string name="login_button">Login</string>
+    <string name="mis_datos">Mis datos</string>
     <string name="img_company">Dashboard page</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
