@@ -1,5 +1,4 @@
 package com.example.recolectar_app.camiones
-
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
