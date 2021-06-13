@@ -13,12 +13,13 @@ class CamionHolder (v: View) : RecyclerView.ViewHolder(v) {
 
     private var view: View =v
     private var idCamion : TextView = v.findViewById(R.id.txt_id_item_camion)
-    private var type : TextView = v.findViewById(R.id.txt_tipo_item_camion)
+    //private var type : TextView = v.findViewById(R.id.txt_tipo_item_camion)
     private var status : TextView = v.findViewById(R.id.txt_estado_item_camion)
+    private var patente : TextView = v.findViewById(R.id.txt_tipo_item_camion)
 
     fun bind(camion: Camion, listener: (Camion) -> Unit) = with(view){
         idCamion.text = camion.id.split(":")[1]
-        type.text = camion.type
+        patente.text = camion.vehiclePlateIdentifier?.value
         status.text = camion.serviceStatus?.value
 
         setOnClickListener {

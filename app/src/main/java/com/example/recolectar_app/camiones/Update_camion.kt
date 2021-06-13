@@ -109,7 +109,7 @@ class Update_camion : Fragment() {
         patchObject.addEntitie(camion)
         val jsonPatchObject = gson.toJson(patchObject)
         val jsonObject = JSONObject(jsonPatchObject)
-        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_LONG).show()
+        //Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_LONG).show()
         requestHandler.patchRequest(url,jsonObject,{},{})
     }
 
