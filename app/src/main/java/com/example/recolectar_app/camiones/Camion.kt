@@ -8,7 +8,7 @@ data class Camion(var id: String){
     var vehicleType: VehicleType? = null
 
     init {
-        this.id = "Vehicle:${id}"
+        this.id = "vehicle:${id}"
     }
 
     fun setCargoWeight(cargo: Double){
