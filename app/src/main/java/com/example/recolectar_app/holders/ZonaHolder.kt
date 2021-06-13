@@ -15,11 +15,10 @@ class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
     private var ref : TextView = v.findViewById(R.id.txt_refVehicle_itemZona)
 
 
-    fun bind(zona: Zona, listener: (Zona) -> Unit) = with(view){
+    fun bind(zona: Zona) = with(view){
         idZona.text = zona.id.split(":")[1]
         ref.text = zona.refVehicle!!.value.split(":")[1]
         setOnClickListener {
-            listener(zona)
             Navigation.findNavController(view).navigate(ZonasDirections.actionZonasToZonaDetalle(idZona.text as String,ref.text as String))
         }
     }

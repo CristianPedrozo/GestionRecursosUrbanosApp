@@ -2,7 +2,6 @@ package com.example.recolectar_app.camiones
 
 import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,16 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import org.json.JSONObject
-import java.lang.Integer.parseInt
 
 class alta_camion : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/"
@@ -103,7 +99,6 @@ class alta_camion : Fragment() {
         camion.setVehicleType("lorry")
         //camion.setRefEmpleadoValue(empleado.toString())
         val string = gson.toJson(camion)
-        Toast.makeText(thiscontext, "${string}", Toast.LENGTH_LONG).show()
         val jsonObject = JSONObject(string)
         requestHandler.postRequest(url,{},{},jsonObject)
     }

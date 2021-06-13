@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
+import com.example.recolectar_app.administrador.Zonas
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -19,8 +20,7 @@ import org.json.JSONObject
 
 class ZonaDetalle : Fragment() {
     private val TAG = "ZonaDetalle"
-    private var url = "http://46.17.108.122:1026/v2/entities/"
-    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+    private var url = "http://46.17.108.122:1026/v2/op/update"
     private lateinit var v : View
     private lateinit var btn_edit_zona : FloatingActionButton
     private lateinit var btn_remove_zona : FloatingActionButton
@@ -29,7 +29,6 @@ class ZonaDetalle : Fragment() {
     lateinit var thiscontext : Context
     lateinit var id : String
     lateinit var refVehicle : String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +76,7 @@ class ZonaDetalle : Fragment() {
         deleteObject.addEntitie(zona)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
-        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
+        requestHandler.deleteRequest(url,jsonObject,{},{})
     }
 
 
@@ -88,12 +87,9 @@ class ZonaDetalle : Fragment() {
         zona.setRefVehicleValue(refVehicle)
         val patchObject = PatchRequestObject()
         patchObject.addEntitie(zona)
-
         val jsonPatchObject = gson.toJson(patchObject)
-
         val jsonObject = JSONObject(jsonPatchObject)
-
-        requestHandler.patchRequest(urlUpdate,jsonObject,{},{})
+        requestHandler.patchRequest(url,jsonObject,{},{})
     }
 
     companion object {

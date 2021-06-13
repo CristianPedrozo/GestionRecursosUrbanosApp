@@ -1,19 +1,14 @@
 package com.example.recolectar_app.camiones
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import org.json.JSONObject
 
 class Update_camion : Fragment() {
     private val TAG = "CamionDetalle"
