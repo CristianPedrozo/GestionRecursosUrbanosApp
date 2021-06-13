@@ -45,7 +45,7 @@ class Zonas : Fragment() {
 
         v =  inflater.inflate(R.layout.fragment_list_zonas, container, false)
         recZonas = v.findViewById(R.id.rec_zonas)
-        var requestHandler = RequestHandler.getInstance(thiscontext)
+        val requestHandler = RequestHandler.getInstance(thiscontext)
         getData(requestHandler)
         botton_agregar = v.findViewById(R.id.btn_agregar_zona)
         botton_agregar.setOnClickListener() {

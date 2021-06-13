@@ -23,7 +23,6 @@ class Update_Contenedor : Fragment() {
     private lateinit var v: View
     private lateinit var contenedor: Contenedor
     lateinit var thiscontext : Context
-    lateinit var id : String
     lateinit var estado : String
     lateinit var tiet_id : TextView
     lateinit var tiet_latitud : TextInputEditText
@@ -48,7 +47,7 @@ class Update_Contenedor : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v= inflater.inflate(R.layout.fragment_update__contenedor, container, false)
+        v= inflater.inflate(R.layout.fragment_update_contenedor, container, false)
         if (container != null) {
             thiscontext = container.context
         };
@@ -91,8 +90,9 @@ class Update_Contenedor : Fragment() {
     private fun editContenedor(requestHandler: RequestHandler) {
         val gson = Gson()
         estado = tiet_estado.text.toString()
-        val contenedor = Contenedor(id)
+        val contenedor = Contenedor(contenedor.id)
         contenedor.setStatus(estado)
+        //agregar los demas atributos modificados
         val patchObject = PatchContenedorObject()
         patchObject.addEntitie(contenedor)
         val jsonPatchObject = gson.toJson(patchObject)

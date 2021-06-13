@@ -67,4 +67,8 @@
         <item>broken</item>
         <item>outOfService</item>
     </string-array>
+    <!--Para ABM Zonas -->
+    <string name="label_id_zona">Zona n°:</string>
+    <string name="label_contenedores_zona">Contenedores:</string>
+    <string name="label_refVehicle_zona">Camion:</string>
 </resources>
