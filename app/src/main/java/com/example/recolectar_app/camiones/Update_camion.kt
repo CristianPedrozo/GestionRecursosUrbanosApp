@@ -43,7 +43,7 @@ class Update_camion : Fragment() {
     //lateinit var text_camion_zona:TextView
     //lateinit var text_empleado_camion:TextView
     lateinit var btn_editar: FloatingActionButton
-    lateinit var btn_eliminar: FloatingActionButton
+    lateinit var btn_cancelar: FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +93,11 @@ class Update_camion : Fragment() {
                 v.findNavController().navigate(action)
             }
 
+        }
+        btn_cancelar = v.findViewById(R.id.boton_cancelar_edit)
+        btn_cancelar.setOnClickListener(){
+            val action = Update_camionDirections.actionUpdateCamionToCamiones()
+            v.findNavController().navigate(action)
         }
         return v
     }
