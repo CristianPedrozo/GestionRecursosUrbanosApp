@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -27,7 +28,7 @@ class Update_camion : Fragment() {
     //private var url = "http://46.17.108.122:1026/v2/entities/?type=Vehicle&id="
     // var urlDelete = "http://46.17.108.122:1026/v2/entities/"
     private var url = "http://46.17.108.122:1026/v2/op/update"
-
+    lateinit var autoCompleteTextView: AutoCompleteTextView
     private lateinit var v: View
     private lateinit var id: String
     private lateinit var status : String
@@ -57,7 +58,7 @@ class Update_camion : Fragment() {
     ): View? {
         v= inflater.inflate(R.layout.fragment_update_camion, container, false)
         //Carga Combo Estados
-        /*
+/*
         val estados = resources.getStringArray(R.array.estados_camion)
         val arrayAdapter = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)
         autoCompleteTextView = v.findViewById(R.id.autoCompleteTextView_estado)
@@ -80,6 +81,9 @@ class Update_camion : Fragment() {
         text_estado_camion.text = status
         text_carga_camion=v.findViewById(R.id.text_carga_camion)
         text_carga_camion.text = cargo
+        //Para setear valor determinado en el combo
+        //autoCompleteTextView.threshold(3)
+
 
         btn_editar = v.findViewById(R.id.boton_confirmar_editar_camion)
         btn_editar.setOnClickListener(){
