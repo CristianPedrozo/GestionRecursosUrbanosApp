@@ -227,4 +227,9 @@
             android:name="email"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_perfil"
+        android:name="com.example.recolectar_app.fragment_perfil"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>
