@@ -68,8 +68,8 @@ class Update_Zona : Fragment() {
 
     private fun editZona(requestHandler: RequestHandler) {
         val gson = Gson()
-        val zona = Zona(zona.id)
-        //agregar los demas atributos modificados
+        val zona = Zona(zona.id!!.split(":")[1])
+        zona.setRefVehicleValue(tiet_camion_zona.text.toString())
         val patchObject = PatchRequestObject()
         patchObject.addEntitie(zona)
         val jsonPatchObject = gson.toJson(patchObject)

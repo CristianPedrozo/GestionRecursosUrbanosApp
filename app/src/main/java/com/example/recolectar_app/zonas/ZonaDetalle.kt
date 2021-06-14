@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
@@ -27,8 +28,6 @@ class ZonaDetalle : Fragment() {
     private lateinit var tv_refVehicle_zona : TextView
     private lateinit var tv_contenedores_zona : TextView
     lateinit var thiscontext : Context
-    lateinit var id : String
-    lateinit var refVehicle : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,11 +70,12 @@ class ZonaDetalle : Fragment() {
 
     private fun removeZona(requestHandler: RequestHandler) {
         val gson = Gson()
-        val zona = Zona(id)
+        val zona = Zona(zona.id!!.split(":")[1])
         val deleteObject = DeleteZonaRequest()
         deleteObject.addEntitie(zona)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
+        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
         requestHandler.deleteRequest(url,jsonObject,{},{})
     }
 

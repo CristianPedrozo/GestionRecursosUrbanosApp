@@ -8,7 +8,7 @@ import com.example.recolectar_app.contenedores.Contenedor
 data class Zona(var id: String?) : Parcelable {
     val type : String = "Zona"
     var refVehicle: RefVehicle? = null
-    var contenedores : Contenedores = Contenedores(ArrayList())
+    lateinit var contenedores : Contenedores
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
 
@@ -24,6 +24,10 @@ data class Zona(var id: String?) : Parcelable {
         fun addContenedor(contenedor : Contenedor){
             value.add(contenedor)
         }
+    }
+
+    fun setContenedores(arr : ArrayList<Contenedor>){
+        this.contenedores = Contenedores(arr)
     }
 
 
