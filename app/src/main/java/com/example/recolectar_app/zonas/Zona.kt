@@ -2,12 +2,13 @@ package com.example.recolectar_app.zonas
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.recolectar_app.contenedores.Contenedor
 
 
 data class Zona(var id: String?) : Parcelable {
     val type : String = "Zona"
     var refVehicle: RefVehicle? = null
-    var contenedores : Contenedores? = null
+    var contenedores : Contenedores = Contenedores(ArrayList())
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
 
@@ -17,14 +18,15 @@ data class Zona(var id: String?) : Parcelable {
         val type: String = "Relationship"
     }
 
-    data class Contenedores(var value : Int){
-        val type: String = "Number"
+    data class Contenedores(val value : ArrayList<Contenedor>){
+        val type: String = "List"
+
+        fun addContenedor(contenedor : Contenedor){
+            value.add(contenedor)
+        }
     }
 
 
-    fun setContenedores(n : Int){
-        this.contenedores = Contenedores(n)
-    }
     fun setRefVehicleValue(string: String){
         this.refVehicle = RefVehicle("vehicle:${string}")
     }

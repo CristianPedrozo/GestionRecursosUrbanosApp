@@ -6,14 +6,14 @@ import android.os.Parcelable
 class Contenedor(var id: String?) : Parcelable {
     val type: String = "WasteContainer"
     lateinit var location: Location
-    lateinit var nextActuationDeadline: NextActuationDeadline
-    lateinit var refRuta: RefRuta
-    lateinit var refVehicle: RefVehicle
-    lateinit var refZona: RefZona
+    var nextActuationDeadline: NextActuationDeadline? = null
+    var refRuta: RefRuta? = null
+    var refVehicle: RefVehicle? = null
+    var refZona: RefZona? = null
     lateinit var status: Status
-    lateinit var temperature: Temperature
-    lateinit var dateLastEmptying: DateLastEmptying
-    lateinit var fillingLevel: FillingLevel
+    var temperature: Temperature? = null
+    var dateLastEmptying: DateLastEmptying? = null
+    var fillingLevel: FillingLevel = FillingLevel(0.0)
     lateinit var wasteType : WasteType
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
@@ -34,13 +34,13 @@ class Contenedor(var id: String?) : Parcelable {
         this.nextActuationDeadline = NextActuationDeadline(date)
     }
     fun setRefRuta(ref : String){
-        this.refRuta = RefRuta(ref)
+        this.refRuta = RefRuta("ruta:$ref")
     }
     fun setRefVehicle(ref : String){
-        this.refVehicle = RefVehicle(ref)
+        this.refVehicle = RefVehicle("vehicle:$ref")
     }
     fun setRefZona(ref : String){
-        this.refZona = RefZona(ref)
+        this.refZona = RefZona("zona:$ref")
     }
     fun setStatus(status : String){
         this.status = Status(status)

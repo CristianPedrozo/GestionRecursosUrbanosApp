@@ -51,11 +51,11 @@ class ZonaDetalle : Fragment() {
         btn_edit_zona = v.findViewById(R.id.boton_editar_zona)
         btn_remove_zona = v.findViewById(R.id.boton_eliminar_zona)
         tv_id_zona = v.findViewById(R.id.text_id_detalle_zona)
-        tv_id_zona.text = zona.id
+        tv_id_zona.text = zona.id!!.split(":")[1]
         tv_refVehicle_zona = v.findViewById(R.id.text_camion_detalle_zona)
-        tv_refVehicle_zona.text = zona.refVehicle?.value
+        tv_refVehicle_zona.text = zona.refVehicle?.value!!.split(":")[1]
         tv_contenedores_zona = v.findViewById(R.id.text_contenedores_detalle_zona)
-        tv_contenedores_zona.text = zona.contenedores?.value.toString()
+        tv_contenedores_zona.text = zona.contenedores.value.size.toString()
 
         btn_edit_zona.setOnClickListener {
             val action = ZonaDetalleDirections.actionZonaDetalleToUpdateZona(zona)

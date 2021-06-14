@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.adapters.ZonaListAdapter
+import com.example.recolectar_app.contenedores.Contenedor
 import com.example.recolectar_app.zonas.Zona
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -23,6 +26,7 @@ import com.google.gson.Gson
 
 class Zonas : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/?type=Zona"
+    private var urlContenedoresAsignados = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer"
     lateinit var thiscontext : Context
     lateinit var v: View
     lateinit var botton_agregar: FloatingActionButton
@@ -47,6 +51,7 @@ class Zonas : Fragment() {
         recZonas = v.findViewById(R.id.rec_zonas)
         val requestHandler = RequestHandler.getInstance(thiscontext)
         getData(requestHandler)
+
         botton_agregar = v.findViewById(R.id.btn_agregar_zona)
         botton_agregar.setOnClickListener() {
             val action = ZonasDirections.actionZonasToAltaZona()
@@ -63,7 +68,9 @@ class Zonas : Fragment() {
                 for (i in 0 until response.length()) {
                     val zona : Zona = gson.fromJson(response.getJSONObject(i).toString(),Zona::class.java)
                     zonas.add(zona)
+
                 }
+                getContenedoresAsignados(requestHandler,zonas)
                 recZonas.setHasFixedSize(true)
                 linearLayoutManager = LinearLayoutManager(context)
                 recZonas.layoutManager = linearLayoutManager
@@ -71,7 +78,7 @@ class Zonas : Fragment() {
                 zonaListAdapter = ZonaListAdapter(zonas);
 
                 recZonas.adapter = zonaListAdapter
-                zonaListAdapter.setData(zonas as ArrayList<Zona>)
+
             },
             { error ->
                 Toast.makeText(this@Zonas.requireContext(), "error" + error, Toast.LENGTH_LONG).show()
@@ -79,5 +86,23 @@ class Zonas : Fragment() {
         ,null)
     }
 
+    fun getContenedoresAsignados(requestHandler: RequestHandler, zonas : MutableList<Zona>){
+        val gson = Gson()
+        val nZonas = zonas
+        requestHandler.getArrayRequest(urlContenedoresAsignados,
+            { response ->
+                for(i in 0 until response.length()){
+                    val contenedor : Contenedor = gson.fromJson(response.getJSONObject(i).toString(),Contenedor::class.java)
+                    for(k in 0 until nZonas.size){
+                        if(contenedor.refZona?.value == nZonas[k].id){
+                            nZonas[k].contenedores.addContenedor(contenedor)
+                        }
+                    }
+                }
+                zonaListAdapter.notifyDataSetChanged()
+            },{},null)
+
+
+    }
 
 }

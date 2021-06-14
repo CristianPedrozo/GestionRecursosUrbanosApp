@@ -30,7 +30,7 @@ class ZonaListAdapter(
 
     fun setData(newData: ArrayList<Zona>) {
         this.zonaList = newData
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
 

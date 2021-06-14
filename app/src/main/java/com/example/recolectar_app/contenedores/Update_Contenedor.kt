@@ -55,9 +55,9 @@ class Update_Contenedor : Fragment() {
         val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
         contenedor = args?.contenedor!!
         tiet_id = v.findViewById(R.id.edittext_contenedor_id)
-        tiet_id.text = contenedor.id
+        tiet_id.text = contenedor.id!!.split(":")[1]
         tiet_camion = v.findViewById(R.id.edittext_contenedor_camion)
-        tiet_camion.hint = contenedor.refVehicle.value
+        tiet_camion.hint = contenedor.refVehicle?.value!!.split(":")[1]
         tiet_estado = v.findViewById(R.id.edittext_contenedor_estado)
         tiet_estado.hint = contenedor.status.value
         tiet_latitud = v.findViewById(R.id.edittext_contenedor_latitud)
@@ -65,17 +65,17 @@ class Update_Contenedor : Fragment() {
         tiet_longitud = v.findViewById(R.id.edittext_contenedor_longitud)
         tiet_longitud.hint = contenedor.location.value.coordinates[1].toString()
         tiet_ruta = v.findViewById(R.id.edittext_contenedor_ruta)
-        tiet_ruta.hint = contenedor.refRuta.value
+        tiet_ruta.hint = contenedor.refRuta?.value!!.split(":")[1]
         tiet_zona = v.findViewById(R.id.edittext_contenedor_zona)
-        tiet_zona.hint = contenedor.refZona.value
+        tiet_zona.hint = contenedor.refZona?.value!!.split(":")[1]
         tiet_temp = v.findViewById(R.id.edittext_contenedor_temperatura)
-        tiet_temp.hint = contenedor.temperature.value.toString()
+        tiet_temp.hint = contenedor.temperature?.value.toString()
         tiet_llenado = v.findViewById(R.id.edittext_contenedor_llenado)
-        tiet_llenado.hint = contenedor.fillingLevel.value.toString()
+        tiet_llenado.hint = "${contenedor.fillingLevel.value.toString().split(".")[1]}%"
         tiet_ultima_visita = v.findViewById(R.id.edittext_contenedor_ultima_visita)
-        tiet_ultima_visita.hint = contenedor.dateLastEmptying.value
+        tiet_ultima_visita.hint = contenedor.dateLastEmptying?.value
         tiet_proxima_visita = v.findViewById(R.id.edittext_contenedor_proxima_visita)
-        tiet_proxima_visita.hint = contenedor.nextActuationDeadline.value
+        tiet_proxima_visita.hint = contenedor.nextActuationDeadline?.value
 
         btn_edit = v.findViewById(R.id.boton_confirmar_editar_contenedor)
         btn_edit.setOnClickListener(){

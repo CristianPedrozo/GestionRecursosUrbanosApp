@@ -25,8 +25,8 @@ class Update_Zona : Fragment() {
     lateinit var tiet_contenedores_zona : TextInputEditText
     lateinit var tiet_camion_zona : TextInputEditText
     lateinit var thiscontext : Context
-    lateinit var btn_edit : FloatingActionButton
-    lateinit var btn_cancelar: FloatingActionButton
+    private lateinit var btn_edit : FloatingActionButton
+    private lateinit var btn_cancelar: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,26 +38,26 @@ class Update_Zona : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         v= inflater.inflate(R.layout.fragment_update_zona, container, false)
         if (container != null) {
             thiscontext = container.context
-        };
+        }
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
         tiet_id_zona = v.findViewById(R.id.text_id_edit_zona)
         tiet_id_zona.hint = "Zona n°: ${zona.id!!.split(":")[1]}"
         tiet_contenedores_zona = v.findViewById(R.id.text_contenedores_edit_zona)
-        tiet_contenedores_zona.hint = "Contenedores: ${zona.contenedores!!.value}"
+        tiet_contenedores_zona.hint = "Contenedores: ${zona.contenedores.value.size}"
         tiet_camion_zona = v.findViewById(R.id.text_camion_edit_zona)
         btn_cancelar = v.findViewById(R.id.boton_cancelar_edit_zona)
-        btn_cancelar.setOnClickListener(){
+        btn_cancelar.setOnClickListener {
             val action = Update_ZonaDirections.actionUpdateZonaToZonas()
             v.findNavController().navigate(action)
         }
         btn_edit = v.findViewById(R.id.boton_confirmar_editar_zona)
-        btn_edit.setOnClickListener(){
+        btn_edit.setOnClickListener {
             editZona(requestHandler)
             val action = Update_ZonaDirections.actionUpdateZonaToZonas()
             v.findNavController().navigate(action)
@@ -79,7 +79,7 @@ class Update_Zona : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             Update_Zona().apply {
                 arguments = Bundle().apply {
 

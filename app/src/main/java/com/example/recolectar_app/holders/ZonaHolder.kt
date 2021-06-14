@@ -16,10 +16,11 @@ class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
     private var contenedoresZona : TextView = v.findViewById(R.id.txt_contenedores_item_zona)
 
 
+
     @SuppressLint("SetTextI18n")
     fun bind(zona: Zona) = with(view){
-        idZona.text = "Zona n°: "+ (zona.id?.split(":")?.get(1) ?: null)
-        contenedoresZona.text = "Contenedores: "+zona.contenedores!!.value
+        idZona.text = "Zona n°: "+ zona.id?.split(":")?.get(1)
+        contenedoresZona.text = "Contenedores: "+zona.contenedores.value.size
         setOnClickListener {
             Navigation.findNavController(view).navigate(ZonasDirections.actionZonasToZonaDetalle(zona))
         }
