@@ -223,4 +223,9 @@
             android:name="zona"
             app:argType="com.example.recolectar_app.zonas.Zona" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_perfil"
+        android:name="com.example.recolectar_app.fragment_perfil"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>
