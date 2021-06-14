@@ -34,38 +34,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Razon social" />
+            android:hint="Razon Social"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextJefe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Jefe" />
+            android:hint="Jefe"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/login_email" />
+            android:hint="@string/login_email"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextDistrito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Distrito" />
+            android:hint="Distrito"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextHorarioEntrada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Horario de entrada"
             android:inputType="numberSigned" />
 
         <EditText
@@ -73,7 +74,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Horario de salida"
             android:inputType="numberSigned" />
+
+        <EditText
+            android:id="@+id/editTextContraseñaAdmin1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Ingrese contraseña"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/editTextContraseñaAdmin2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Repita la contraseña"
+            android:inputType="textPassword" />
 
         <CheckBox
             android:id="@+id/checkBoxEsAdmin"
