@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.R
@@ -19,17 +19,15 @@ import org.json.JSONObject
 
 class ZonaDetalle : Fragment() {
     private val TAG = "ZonaDetalle"
-    private var url = "http://46.17.108.122:1026/v2/entities/"
-    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+    private var url = "http://46.17.108.122:1026/v2/op/update"
     private lateinit var v : View
+    private lateinit var zona: Zona
     private lateinit var btn_edit_zona : FloatingActionButton
     private lateinit var btn_remove_zona : FloatingActionButton
-    private lateinit var et_id_zona : TextView
-    private lateinit var et_refVehicle_zona : EditText
+    private lateinit var tv_id_zona : TextView
+    private lateinit var tv_refVehicle_zona : TextView
+    private lateinit var tv_contenedores_zona : TextView
     lateinit var thiscontext : Context
-    lateinit var id : String
-    lateinit var refVehicle : String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,18 +46,18 @@ class ZonaDetalle : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
-        id = args?.idZona.toString()
-        refVehicle = args?.refVehicleZona.toString()
-        btn_edit_zona = v.findViewById(R.id.btn_edit_zona)
-        btn_remove_zona = v.findViewById(R.id.btn_remove_zona)
-        et_id_zona = v.findViewById(R.id.txt_id_edit_zona)
-        et_id_zona.text = id
-        et_refVehicle_zona = v.findViewById(R.id.txt_refVehicle_edit_zona)
-        et_refVehicle_zona.hint = "Coloca el id del camion"
+        zona = args?.zona!!
+        btn_edit_zona = v.findViewById(R.id.boton_editar_zona)
+        btn_remove_zona = v.findViewById(R.id.boton_eliminar_zona)
+        tv_id_zona = v.findViewById(R.id.text_id_detalle_zona)
+        tv_id_zona.text = zona.id!!.split(":")[1]
+        tv_refVehicle_zona = v.findViewById(R.id.text_camion_detalle_zona)
+        tv_refVehicle_zona.text = zona.refVehicle?.value!!.split(":")[1]
+        tv_contenedores_zona = v.findViewById(R.id.text_contenedores_detalle_zona)
+        tv_contenedores_zona.text = zona.contenedores.value.size.toString()
 
         btn_edit_zona.setOnClickListener {
-            editZona(requestHandler)
-            val action = ZonaDetalleDirections.actionZonaDetalleToZonas()
+            val action = ZonaDetalleDirections.actionZonaDetalleToUpdateZona(zona)
             v.findNavController().navigate(action)
         }
         btn_remove_zona.setOnClickListener{
@@ -72,29 +70,17 @@ class ZonaDetalle : Fragment() {
 
     private fun removeZona(requestHandler: RequestHandler) {
         val gson = Gson()
-        val zona = Zona(id)
+        val zona = Zona(zona.id!!.split(":")[1])
         val deleteObject = DeleteZonaRequest()
         deleteObject.addEntitie(zona)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
-        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
+        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
+        requestHandler.deleteRequest(url,jsonObject,{},{})
     }
 
 
-    private fun editZona(requestHandler: RequestHandler) {
-        val gson = Gson()
-        refVehicle = et_refVehicle_zona.text.toString()
-        val zona = Zona(id)
-        zona.setRefVehicleValue(refVehicle)
-        val patchObject = PatchRequestObject()
-        patchObject.addEntitie(zona)
 
-        val jsonPatchObject = gson.toJson(patchObject)
-
-        val jsonObject = JSONObject(jsonPatchObject)
-
-        requestHandler.patchRequest(urlUpdate,jsonObject,{},{})
-    }
 
     companion object {
 
