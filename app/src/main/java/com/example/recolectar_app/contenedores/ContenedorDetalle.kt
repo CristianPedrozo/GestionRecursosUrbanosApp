@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
@@ -98,11 +99,12 @@ class ContenedorDetalle : Fragment() {
 
     private fun removeContenedor(requestHandler: RequestHandler) {
         val gson = Gson()
-        val contenedor = Contenedor(contenedor.id)
+        val contenedor = Contenedor(contenedor.id!!.split(":")[1])
         val deleteObject = DeleteContenedorRequest()
         deleteObject.addEntitie(contenedor)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
+        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
         requestHandler.deleteRequest(url,jsonObject,{},{})
     }
 

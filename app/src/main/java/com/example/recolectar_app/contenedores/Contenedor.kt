@@ -13,7 +13,7 @@ class Contenedor(var id: String?) : Parcelable {
     lateinit var status: Status
     var temperature: Temperature? = null
     var dateLastEmptying: DateLastEmptying? = null
-    var fillingLevel: FillingLevel = FillingLevel(0.0)
+    lateinit var fillingLevel: FillingLevel
     lateinit var wasteType : WasteType
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
