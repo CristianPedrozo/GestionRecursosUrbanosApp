@@ -1,5 +1,6 @@
 package com.example.recolectar_app.holders
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.navigation.Navigation
@@ -11,16 +12,17 @@ import com.example.recolectar_app.zonas.Zona
 class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
 
     private var view: View = v
-    private var idZona : TextView = v.findViewById(R.id.txt_id_itemZona)
-    private var ref : TextView = v.findViewById(R.id.txt_refVehicle_itemZona)
+    private var idZona : TextView = v.findViewById(R.id.txt_id_item_zona)
+    private var contenedoresZona : TextView = v.findViewById(R.id.txt_contenedores_item_zona)
 
 
-    fun bind(zona: Zona, listener: (Zona) -> Unit) = with(view){
-        idZona.text = zona.id.split(":")[1]
-        ref.text = zona.refVehicle!!.value.split(":")[1]
+
+    @SuppressLint("SetTextI18n")
+    fun bind(zona: Zona) = with(view){
+        idZona.text = "Zona n°: "+ zona.id?.split(":")?.get(1)
+        contenedoresZona.text = "Contenedores: "+zona.contenedores.value.size
         setOnClickListener {
-            listener(zona)
-            Navigation.findNavController(view).navigate(ZonasDirections.actionZonasToZonaDetalle(idZona.text as String,ref.text as String))
+            Navigation.findNavController(view).navigate(ZonasDirections.actionZonasToZonaDetalle(zona))
         }
     }
 

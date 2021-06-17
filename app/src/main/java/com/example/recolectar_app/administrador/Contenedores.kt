@@ -15,12 +15,11 @@ import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.contenedores.Contenedor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 
 class Contenedores : Fragment() {
-    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer"
+    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&limit=100"
     lateinit var thiscontext : Context
     lateinit var v: View
     lateinit var botton_agregar: FloatingActionButton
@@ -40,7 +39,7 @@ class Contenedores : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        var requestHandler = RequestHandler.getInstance(thiscontext)
+        val requestHandler = RequestHandler.getInstance(thiscontext)
         getData(requestHandler)
         v = inflater.inflate(R.layout.fragment_list_contenedores, container, false)
         recContenedor = v.findViewById(R.id.rec_contenedores)
@@ -64,11 +63,10 @@ class Contenedores : Fragment() {
                 linearLayoutManager = LinearLayoutManager(context)
                 recContenedor.layoutManager = linearLayoutManager
 
-                contenedorListAdapter = ContenedorListAdapter(contenedores) {
-                    Toast.makeText(thiscontext, it.id, Toast.LENGTH_SHORT).show()
-                };
+                contenedorListAdapter = ContenedorListAdapter(contenedores);
 
                 recContenedor.adapter = contenedorListAdapter
+                contenedorListAdapter.setData(contenedores as ArrayList<Contenedor>)
             },
             { error ->
                 Toast.makeText(this@Contenedores.requireContext(), "error" + error, Toast.LENGTH_LONG).show()

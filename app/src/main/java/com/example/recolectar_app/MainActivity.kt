@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             login()
         }
-        var user = getUserInstance()
+        val user = getUserInstance()
         if(user != null)
             consultarUsuario(user.email.toString())
     }
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     consultarUsuario(email)
                 } else {
-                    var usuarioNoExiste = task.exception?.message?.contains("There is no user")
+                    val usuarioNoExiste = task.exception?.message?.contains("There is no user")
                     if (usuarioNoExiste != null && usuarioNoExiste == true) {
                         Toast.makeText(this, "Email no registrado, contacte a su administrador.", Toast.LENGTH_SHORT).show()
                     } else {

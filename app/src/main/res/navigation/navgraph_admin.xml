@@ -14,9 +14,8 @@
             android:id="@+id/action_contenedores_to_contenedorDetalle"
             app:destination="@id/contenedorDetalle">
             <argument
-                android:name="idContenedor"
-                app:argType="string"
-                android:defaultValue="id" />
+                android:name="contenedor"
+                app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
         </action>
         <action
             android:id="@+id/action_contenedores_to_alta_contenedor"
@@ -37,12 +36,8 @@
             android:id="@+id/action_zonas_to_zonaDetalle"
             app:destination="@id/zonaDetalle">
             <argument
-                android:name="idZona"
-                app:argType="string"
-                android:defaultValue="id" />
-            <argument
-                android:name="refVehicleZona"
-                app:argType="string"/>
+                android:name="zona"
+                app:argType="com.example.recolectar_app.zonas.Zona"/>
         </action>
     </fragment>
     <fragment
@@ -124,12 +119,8 @@
         android:label="fragment_contenedor_detalle"
         tools:layout="@layout/fragment_alta_contenedor">
         <argument
-            android:name="idContenedor"
-            app:argType="string"
-            />
-        <argument
-            android:name="statusContenedor"
-            app:argType="string"/>
+            android:name="contenedor"
+            app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
         <action
             android:id="@+id/action_contenedorDetalle_to_contenedores"
             app:destination="@id/contenedores" />
@@ -137,12 +128,8 @@
             android:id="@+id/action_contenedorDetalle_to_update_Contenedor"
             app:destination="@id/update_Contenedor">
             <argument
-                android:name="idContenedor"
-                app:argType="string"
-                />
-            <argument
-                android:name="statusContenedor"
-                app:argType="string"/>
+                android:name="contenedor"
+                app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
         </action>
     </fragment>
     <fragment
@@ -168,14 +155,14 @@
         android:name="com.example.recolectar_app.zonas.ZonaDetalle"
         android:label="ZonaDetalle" >
         <argument
-            android:name="idZona"
-            app:argType="string"/>
-        <argument
-            android:name="refVehicleZona"
-            app:argType="string"/>
+            android:name="zona"
+            app:argType="com.example.recolectar_app.zonas.Zona"/>
         <action
             android:id="@+id/action_zonaDetalle_to_zonas"
             app:destination="@id/zonas" />
+        <action
+            android:id="@+id/action_zonaDetalle_to_update_Zona"
+            app:destination="@id/update_Zona" />
     </fragment>
     <fragment
         android:id="@+id/alta_camion"
@@ -210,14 +197,11 @@
         android:id="@+id/update_Contenedor"
         android:name="com.example.recolectar_app.contenedores.Update_Contenedor"
         android:label="fragment_update__contenedor"
-        tools:layout="@layout/fragment_update__contenedor" >
+        tools:layout="@layout/fragment_update_contenedor" >
         <argument
-            android:name="idContenedor"
-            app:argType="string"
+            android:name="contenedor"
+            app:argType="com.example.recolectar_app.contenedores.Contenedor"
             />
-        <argument
-            android:name="statusContenedor"
-            app:argType="string"/>
         <action
             android:id="@+id/action_update_Contenedor_to_contenedores"
             app:destination="@id/contenedores" />
@@ -229,6 +213,18 @@
         <argument
             android:name="email"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/update_Zona"
+        android:name="com.example.recolectar_app.zonas.Update_Zona"
+        android:label="fragment_update_zona"
+        tools:layout="@layout/fragment_update_zona" >
+        <action
+            android:id="@+id/action_update_Zona_to_zonas"
+            app:destination="@id/zonas" />
+        <argument
+            android:name="zona"
+            app:argType="com.example.recolectar_app.zonas.Zona" />
     </fragment>
     <fragment
         android:id="@+id/fragment_perfil"
