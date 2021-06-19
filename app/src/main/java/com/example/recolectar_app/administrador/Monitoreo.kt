@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,6 +68,8 @@ class Monitoreo : Fragment() {
 }*/
 
 class Monitoreo : Fragment() {
+    lateinit var v: View
+    lateinit var btn_configuracion: FloatingActionButton
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -96,7 +100,15 @@ class Monitoreo : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_administrador_monitoreo, container, false)
+        v=inflater.inflate(R.layout.fragment_administrador_monitoreo, container, false)
+
+        btn_configuracion = v.findViewById(R.id.boton_configuracion)
+        btn_configuracion.setOnClickListener(){
+            val action= MonitoreoDirections.actionMonitoreoToConfiguration()
+            v.findNavController().navigate(action)
+        }
+        return v
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

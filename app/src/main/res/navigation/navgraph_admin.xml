@@ -25,7 +25,11 @@
     <fragment
         android:id="@+id/monitoreo"
         android:name="com.example.recolectar_app.administrador.Monitoreo"
-        android:label="fragment_administrador_monitoreo" />
+        android:label="fragment_administrador_monitoreo" >
+        <action
+            android:id="@+id/action_monitoreo_to_configuration"
+            app:destination="@id/configuration" />
+    </fragment>
     <fragment
         android:id="@+id/zonas"
         android:name="com.example.recolectar_app.administrador.Zonas"
@@ -229,5 +233,13 @@
         <argument
             android:name="email"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/configuration"
+        android:name="com.example.recolectar_app.administrador.configuration"
+        android:label="configuration" >
+        <action
+            android:id="@+id/action_configuration_to_monitoreo"
+            app:destination="@id/monitoreo" />
     </fragment>
 </navigation>
