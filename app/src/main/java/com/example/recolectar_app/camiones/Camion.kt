@@ -6,6 +6,7 @@ data class Camion(var id: String){
     var serviceStatus: ServiceStatus? = null
     var vehiclePlateIdentifier: VehiclePlateIdentifier? = null
     var vehicleType: VehicleType? = null
+    var fillingLevel: FillingLevel? = null
 
     init {
         this.id = "vehicle:${id}"
@@ -22,6 +23,9 @@ data class Camion(var id: String){
     }
     fun setVehicleType(type : String){
         this.vehicleType = VehicleType(type)
+    }
+    fun setFillingLevel(level : Double){
+        this.fillingLevel = FillingLevel(level)
     }
 
     data class CargoWeight(
@@ -45,6 +49,11 @@ data class Camion(var id: String){
         var value: String
     ){
         val type = "Text"
+    }
+    data class FillingLevel(
+        var value: Double
+    ){
+        val type = "Property"
     }
 
 //    data class Location(

@@ -97,6 +97,7 @@ class alta_camion : Fragment() {
         camion.setServiceStatus(estado)
         camion.setVehiclePlateIdentifier(patente.text.toString())
         camion.setVehicleType("lorry")
+        camion.setFillingLevel(0.0);
         //camion.setRefEmpleadoValue(empleado.toString())
         val string = gson.toJson(camion)
         val jsonObject = JSONObject(string)
