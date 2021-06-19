@@ -1,5 +1,7 @@
 package com.example.recolectar_app
 
+import java.io.Serializable
+
 data class Usuario (
     var razonSocial:String?,
     var email:String,
@@ -9,4 +11,4 @@ data class Usuario (
     var horarioSalida:String?,
     var esAdmin:Boolean?,
     var photo:String?
-)
+) : Serializable

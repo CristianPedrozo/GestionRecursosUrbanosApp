@@ -30,7 +30,7 @@ class Datos : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         v = inflater.inflate(R.layout.fragment_empleado_datos, container, false)
         val button = v.findViewById<Button>(R.id.btnAgregarUsuario)
         // Initialize Firebase Auth
@@ -59,9 +59,9 @@ class Datos : Fragment() {
     }
 
     fun validarDatos():Boolean{
-        var usuario = obtenerDatos()
-        var contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        var contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
+        val usuario = obtenerDatos()
+        val contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
+        val contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin2).text.toString()
 
         if(contrasenia1 != contrasenia2)
             return false
@@ -104,21 +104,21 @@ class Datos : Fragment() {
         }
     }
     fun agregarUsuario(){
-        var usuario = obtenerDatos()
+        val usuario = obtenerDatos()
         if(validarDatos()){
             guardarUsuarioFirebase(usuario)
-            actualizarContraseña()
+            actualizarPassword()
         }
         else{
             Toast.makeText(v.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
         }
     }
 
-    fun actualizarContraseña(){
-        var contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        var contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
+    fun actualizarPassword(){
+        val contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
+        val contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin2).text.toString()
 
-        if(contrasenia1 == null && contrasenia2 == null) {
+        if(contrasenia1 == "" && contrasenia2 == "") {
             if (contrasenia1.length < 8 || contrasenia2.length < 8) {
                 //
             }
@@ -139,7 +139,7 @@ class Datos : Fragment() {
             db.collection("usuarios").document(email)
                 .get()
                 .addOnSuccessListener {document->
-                    var usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    val usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
                     cargarCampos(usuario)
                 }
         }

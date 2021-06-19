@@ -18,7 +18,7 @@ import com.google.gson.Gson
 
 class Contenedores : Fragment() {
     //esto tiene q ser variable dependiendo del usuario y su vehiculo
-    var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
+    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&?q=refZona=="
     lateinit var thiscontext : Context
     lateinit var v: View
     lateinit var recContenedores : RecyclerView
@@ -33,7 +33,7 @@ class Contenedores : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         v =  inflater.inflate(R.layout.fragment_list_contenedores, container, false)
         recContenedores = v.findViewById(R.id.rec_contenedores)
         return v
