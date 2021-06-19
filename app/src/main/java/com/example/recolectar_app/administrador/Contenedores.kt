@@ -2,6 +2,7 @@ package com.example.recolectar_app.administrador
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,19 +15,21 @@ import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.databinding.FragmentAdministradorContenedoresBinding
+import com.example.recolectar_app.databinding.FragmentListContenedoresBinding
+import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import java.lang.Exception
 
 
 class Contenedores : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&limit=100"
     lateinit var thiscontext : Context
-    lateinit var v: View
-    lateinit var botton_agregar: FloatingActionButton
-    lateinit var recContenedor : RecyclerView
+    private val TAG = "Contenedores Adm Frag"
+    private var _binding: FragmentListContenedoresBinding? = null
+    private val binding get() = _binding!!
     var contenedores : MutableList<Contenedor> = ArrayList()
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var contenedorListAdapter: ContenedorListAdapter
 
     companion object {
         fun newInstance() = Contenedores()
@@ -35,20 +38,24 @@ class Contenedores : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        try {
+            _binding = FragmentListContenedoresBinding.inflate(layoutInflater,container,false)
+        }catch (e: Exception){
+            Log.e(TAG,"onCreateView",e)
+        }
         if (container != null) {
             thiscontext = container.context
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         getData(requestHandler)
-        v = inflater.inflate(R.layout.fragment_list_contenedores, container, false)
-        recContenedor = v.findViewById(R.id.rec_contenedores)
-        botton_agregar = v.findViewById(R.id.boton_agregar)
-        botton_agregar.setOnClickListener() {
+
+
+        binding.botonAgregar.setOnClickListener() {
             val action = ContenedoresDirections.actionContenedoresToAltaContenedor()
-            v.findNavController().navigate(action)
+            binding.root.findNavController().navigate(action)
         }
-        return v
+        return binding.root
     }
 
     fun getData(requestHandler: RequestHandler){
@@ -59,14 +66,11 @@ class Contenedores : Fragment() {
                     val contenedor : Contenedor = gson.fromJson(response.getJSONObject(i).toString(), Contenedor::class.java)
                     contenedores.add(contenedor)
                 }
-                recContenedor.setHasFixedSize(true)
-                linearLayoutManager = LinearLayoutManager(context)
-                recContenedor.layoutManager = linearLayoutManager
+                binding.recContenedores.setHasFixedSize(true)
 
-                contenedorListAdapter = ContenedorListAdapter(contenedores);
+                binding.recContenedores.layoutManager =  LinearLayoutManager(context)
 
-                recContenedor.adapter = contenedorListAdapter
-                contenedorListAdapter.setData(contenedores as ArrayList<Contenedor>)
+                binding.recContenedores.adapter = ContenedorListAdapter(contenedores);
             },
             { error ->
                 Toast.makeText(this@Contenedores.requireContext(), "error" + error, Toast.LENGTH_LONG).show()

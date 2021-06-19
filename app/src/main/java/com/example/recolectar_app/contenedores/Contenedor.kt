@@ -1,9 +1,8 @@
 package com.example.recolectar_app.contenedores
 
-import android.os.Parcel
-import android.os.Parcelable
+import java.io.Serializable
 
-class Contenedor(var id: String?) : Parcelable {
+class Contenedor(var id: String) : Serializable {
     val type: String = "WasteContainer"
     lateinit var location: Location
     var nextActuationDeadline: NextActuationDeadline? = null
@@ -15,11 +14,6 @@ class Contenedor(var id: String?) : Parcelable {
     var dateLastEmptying: DateLastEmptying? = null
     lateinit var fillingLevel: FillingLevel
     lateinit var wasteType : WasteType
-
-    constructor(parcel: Parcel) : this(parcel.readString()) {
-
-    }
-
 
     init {
         this.id = "wastecontainer:${id}"
@@ -121,21 +115,4 @@ class Contenedor(var id: String?) : Parcelable {
         val type: String = "Number"
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Contenedor> {
-        override fun createFromParcel(parcel: Parcel): Contenedor {
-            return Contenedor(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Contenedor?> {
-            return arrayOfNulls(size)
-        }
-    }
 }

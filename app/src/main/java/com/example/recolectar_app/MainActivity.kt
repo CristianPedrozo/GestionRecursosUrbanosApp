@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.databinding.ActivityMainBinding
@@ -17,16 +15,23 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "Main Actv"
     private lateinit var binding : ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+        }catch (e:Exception){
+            Log.e(TAG,"onCreate",e)
+        }
+
         // Initialize Firebase Auth
         auth = Firebase.auth
         binding.btnLogin.setOnClickListener {

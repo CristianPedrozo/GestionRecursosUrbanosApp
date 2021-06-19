@@ -33,12 +33,12 @@
             android:id="@+id/btnLogOut"
             android:layout_width="match_parent"
             android:layout_height="37dp"
-            android:layout_toEndOf="@+id/btnIrPantallaAgregarUsuario"
-            android:layout_toRightOf="@+id/btnIrPantallaAgregarUsuario"
-            android:background="@color/black"
-            android:text="Deslogearse"
-            android:textColor="@android:color/holo_red_light"
-            tools:text="Deslogearse " />
+            android:text="@string/deslogearse"
+            tools:text="Deslogearse "/>
+<!--            android:background="@color/black"-->
+
+<!--            android:textColor="@android:color/holo_red_light"-->
+             
 
         <Button
             android:id="@+id/btnIrPantallaAgregarUsuario"
