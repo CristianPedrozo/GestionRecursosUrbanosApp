@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.recolectar_app.MainActivity
 import com.example.recolectar_app.R
+import com.example.recolectar_app.UsuarioGlobal
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -26,16 +28,34 @@ class perfil : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_perfil, container, false)
-
+        cargarUltimosRegistros()
         val btnLogOut = v.findViewById<Button>(R.id.btnLogOut_empleado)
         btnLogOut.setOnClickListener{
             logOut()
         }
+        /*val btnEntrada = v.findViewById<Button>(R.id.btnEntrada)
+        btnLogOut.setOnClickListener{
+        }
+        val btnSalida = v.findViewById<Button>(R.id.btnSalida)
+        btnLogOut.setOnClickListener{
+        }*/
+
         return v
+    }
+
+    fun cargarUltimosRegistros(){
+        var usuario = getUserInstance()
+        usuario?.email
+
+    }
+
+    fun getUserInstance(): FirebaseUser?{
+        return FirebaseAuth.getInstance().currentUser
     }
 
     fun logOut(){
         Firebase.auth.signOut()
+        var algo = UsuarioGlobal.email
         val intent = Intent(v.context, MainActivity::class.java)
         startActivity(intent)
     }

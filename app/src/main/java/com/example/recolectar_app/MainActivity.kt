@@ -53,12 +53,15 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun consultarUsuario(email: String) {
+    fun consultarUsuario(usuario: String) {
         Log.d("TAG", "Empezando")
-        db.collection("usuarios").document(email)
+        db.collection("usuarios").document(usuario)
             .get()
             .addOnSuccessListener {
                 var esAdmin = it.getBoolean("esAdmin")
+                UsuarioGlobal.email = it.getString("email")
+                UsuarioGlobal.zona = it.getString("zona")
+                UsuarioGlobal.usuario = usuario
                 if(esAdmin == true){
                     val intent = Intent(this, AdministradorActivity::class.java)
                     startActivity(intent)

@@ -39,13 +39,13 @@ class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioHolder>() {
         val avatar = view.findViewById(R.id.ivAvatar) as ImageView
         fun bind(usuario:Usuario, context: Context){
             nombre.text = usuario.razonSocial
-            jefe.text = usuario.jefe
-            distrito.text = usuario.distrito
+            jefe.text = usuario.usuario
+            distrito.text = usuario.zona
             avatar.loadUrl(usuario.photo)
             itemView.setOnClickListener {
                 Navigation.findNavController(vista).navigate(
                     UsuariosDirections.actionUsuariosToDatos(
-                        usuario.email as String
+                        usuario.usuario as String
                 ))
             }
         }

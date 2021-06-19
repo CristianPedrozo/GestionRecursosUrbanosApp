@@ -49,13 +49,13 @@ class Datos : Fragment() {
 
     fun obtenerDatos(): Usuario {
         val razonSocial = v.findViewById<EditText>(R.id.editTextRazonSocial).text.toString()
+        val usuario = v.findViewById<EditText>(R.id.editTextUsuario).text.toString()
+        val zona = v.findViewById<EditText>(R.id.editTextZona).text.toString()
         val email = v.findViewById<EditText>(R.id.editTextEmail).text.toString()
-        val jefe = v.findViewById<EditText>(R.id.editTextJefe).text.toString()
-        val distrito = v.findViewById<EditText>(R.id.editTextDistrito).text.toString()
         val horarioEntrada = v.findViewById<EditText>(R.id.editTextHorarioEntrada).text.toString()
         val horarioSalida = v.findViewById<EditText>(R.id.editTextHorarioSalida).text.toString()
         val esAdmin = v.findViewById<CheckBox>(R.id.checkBoxEsAdmin).isChecked()
-        return Usuario(razonSocial, email ,distrito,jefe,horarioEntrada,horarioSalida,esAdmin,"")
+        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,esAdmin,"")
     }
 
     fun validarDatos():Boolean{
@@ -67,26 +67,26 @@ class Datos : Fragment() {
             return false
         if(usuario.razonSocial.toString().isEmpty())
             return false
-        if(usuario.distrito.toString().isEmpty())
+        if(usuario.zona.toString().isEmpty())
             return false
         if(usuario.horarioEntrada.toString().isEmpty())
             return false
         if(usuario.horarioSalida.toString().isEmpty())
             return false
-        if(usuario.jefe.toString().isEmpty())
+        if(usuario.usuario.toString().isEmpty())
             return false
 
         return true
     }
 
     fun guardarUsuarioFirebase(usuario: Usuario){
-        db.collection("usuarios").document(usuario.email).set(
+        db.collection("usuarios").document(usuario.usuario).set(
             hashMapOf(
-                "distrito" to usuario.distrito,
+                "zona" to usuario.zona,
                 "esAdmin" to  usuario.esAdmin,
                 "horarioEntrada" to usuario.horarioEntrada,
                 "horarioSalida" to usuario.horarioSalida,
-                "jefe" to usuario.jefe,
+                "email" to usuario.email,
                 "razonSocial" to usuario.razonSocial
             )
         ).addOnSuccessListener{
@@ -147,9 +147,9 @@ class Datos : Fragment() {
 
     fun cargarCampos(usuario : Usuario){
         v.findViewById<EditText>(R.id.editTextRazonSocial).setText(usuario.razonSocial)
+        v.findViewById<EditText>(R.id.editTextUsuario).setText(usuario.usuario)
+        v.findViewById<EditText>(R.id.editTextZona).setText(usuario.zona)
         v.findViewById<EditText>(R.id.editTextEmail).setText(usuario.email)
-        v.findViewById<EditText>(R.id.editTextJefe).setText(usuario.jefe)
-        v.findViewById<EditText>(R.id.editTextDistrito).setText(usuario.distrito)
         v.findViewById<EditText>(R.id.editTextHorarioEntrada).setText(usuario.horarioEntrada)
         v.findViewById<EditText>(R.id.editTextHorarioSalida).setText(usuario.horarioSalida)
     }
