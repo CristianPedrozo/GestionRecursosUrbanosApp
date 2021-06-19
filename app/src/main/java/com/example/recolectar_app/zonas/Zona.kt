@@ -1,18 +1,14 @@
 package com.example.recolectar_app.zonas
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.example.recolectar_app.contenedores.Contenedor
+import java.io.Serializable
 
 
-data class Zona(var id: String?) : Parcelable {
+data class Zona(var id: String) : Serializable {
     val type : String = "Zona"
     var refVehicle: RefVehicle? = null
     lateinit var contenedores : Contenedores
 
-    constructor(parcel: Parcel) : this(parcel.readString()) {
-
-    }
 
     data class RefVehicle(var value : String){
         val type: String = "Relationship"
@@ -39,23 +35,6 @@ data class Zona(var id: String?) : Parcelable {
         this.id = "zona:${id}"
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        TODO("Not yet implemented")
-    }
-
-    companion object CREATOR : Parcelable.Creator<Zona> {
-        override fun createFromParcel(parcel: Parcel): Zona {
-            return Zona(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Zona?> {
-            return arrayOfNulls(size)
-        }
-    }
 
 
 }

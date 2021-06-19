@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
+import com.example.recolectar_app.databinding.FragmentEmpleadoDatosBinding
+import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
 class Datos : Fragment() {
-    private lateinit var v: View
+    private var _binding: FragmentEmpleadoDatosBinding? = null
+    private var _bindingUsr : FragmentUsuariosDatosBinding? = null
+    private val binding get() = _binding!!
+    private val bindingUsr get() = _bindingUsr!!
     private lateinit var datos : TextView
     private lateinit var auth: FirebaseAuth
 
@@ -31,37 +36,26 @@ class Datos : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        v = inflater.inflate(R.layout.fragment_empleado_datos, container, false)
-        val button = v.findViewById<Button>(R.id.btnAgregarUsuario)
+        _binding = FragmentEmpleadoDatosBinding.inflate(layoutInflater,container,false)
+
         // Initialize Firebase Auth
-        button.setOnClickListener {
+        binding.btnAgregarUsuario.setOnClickListener {
             agregarUsuario()
         }
         // Initialize Firebase Auth
         auth = Firebase.auth
-        var email = getUserInstance()
+        val email = getUserInstance()
         if(email != null)
             obtenerUsuarioFirebase(email.toString())
 
-        return v
+        return binding.root
 
     }
 
-    fun obtenerDatos(): Usuario {
-        val razonSocial = v.findViewById<EditText>(R.id.editTextRazonSocial).text.toString()
-        val email = v.findViewById<EditText>(R.id.editTextEmail).text.toString()
-        val jefe = v.findViewById<EditText>(R.id.editTextJefe).text.toString()
-        val distrito = v.findViewById<EditText>(R.id.editTextDistrito).text.toString()
-        val horarioEntrada = v.findViewById<EditText>(R.id.editTextHorarioEntrada).text.toString()
-        val horarioSalida = v.findViewById<EditText>(R.id.editTextHorarioSalida).text.toString()
-        val esAdmin = v.findViewById<CheckBox>(R.id.checkBoxEsAdmin).isChecked()
-        return Usuario(razonSocial, email ,distrito,jefe,horarioEntrada,horarioSalida,esAdmin,"")
-    }
 
-    fun validarDatos():Boolean{
-        val usuario = obtenerDatos()
-        val contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        val contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin2).text.toString()
+    fun validarDatos(usuario: Usuario):Boolean{
+        val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
+        val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
 
         if(contrasenia1 != contrasenia2)
             return false
@@ -104,19 +98,28 @@ class Datos : Fragment() {
         }
     }
     fun agregarUsuario(){
-        val usuario = obtenerDatos()
-        if(validarDatos()){
+        val usuario = Usuario(
+            binding.editTextRazonSocial.text.toString(),
+            binding.editTextEmail.text.toString(),
+            binding.editTextDistrito.text.toString(),
+            binding.editTextJefe.text.toString(),
+            binding.editTextHorarioEntrada.text.toString(),
+            binding.editTextHorarioSalida.text.toString(),
+            bindingUsr.checkBoxEsAdmin.isChecked,
+            ""
+            )
+        if(validarDatos(usuario)){
             guardarUsuarioFirebase(usuario)
             actualizarPassword()
         }
         else{
-            Toast.makeText(v.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
+            Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
         }
     }
 
     fun actualizarPassword(){
-        val contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        val contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin2).text.toString()
+        val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
+        val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
 
         if(contrasenia1 == "" && contrasenia2 == "") {
             if (contrasenia1.length < 8 || contrasenia2.length < 8) {
@@ -146,17 +149,17 @@ class Datos : Fragment() {
     }
 
     fun cargarCampos(usuario : Usuario){
-        v.findViewById<EditText>(R.id.editTextRazonSocial).setText(usuario.razonSocial)
-        v.findViewById<EditText>(R.id.editTextEmail).setText(usuario.email)
-        v.findViewById<EditText>(R.id.editTextJefe).setText(usuario.jefe)
-        v.findViewById<EditText>(R.id.editTextDistrito).setText(usuario.distrito)
-        v.findViewById<EditText>(R.id.editTextHorarioEntrada).setText(usuario.horarioEntrada)
-        v.findViewById<EditText>(R.id.editTextHorarioSalida).setText(usuario.horarioSalida)
+        binding.editTextRazonSocial.setText(usuario.razonSocial)
+        binding.editTextEmail.setText(usuario.email)
+        binding.editTextDistrito.setText(usuario.jefe)
+        binding.editTextJefe.setText(usuario.distrito)
+        binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
+        binding.editTextHorarioSalida.setText(usuario.horarioSalida)
     }
 
     fun getUserInstance(): String?{
         var email:String? = null
-        val user = FirebaseAuth.getInstance().currentUser
+        val user : FirebaseUser? = FirebaseAuth.getInstance().currentUser
         if (user != null)
             email = user.email
 

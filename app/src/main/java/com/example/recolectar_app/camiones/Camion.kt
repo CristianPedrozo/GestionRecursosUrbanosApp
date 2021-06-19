@@ -1,6 +1,8 @@
 package com.example.recolectar_app.camiones
 
-data class Camion(var id: String){
+import java.io.Serializable
+
+data class Camion(var id: String) : Serializable{
     val type : String = "Vehicle"
     var cargoWeight: CargoWeight? = null
     var serviceStatus: ServiceStatus? = null

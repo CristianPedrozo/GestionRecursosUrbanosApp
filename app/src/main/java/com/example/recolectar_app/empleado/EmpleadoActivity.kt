@@ -5,26 +5,22 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.recolectar_app.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.recolectar_app.databinding.ActivityEmpleadoBinding
 
 class EmpleadoActivity : AppCompatActivity() {
-
-    private lateinit var bottomNavView : BottomNavigationView
+    private lateinit var binding : ActivityEmpleadoBinding
     private lateinit var navHostFragment : NavHostFragment
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_empleado)
+        binding = ActivityEmpleadoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
 
-        bottomNavView = findViewById(R.id.bottom_bar)
-
-        NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
+        NavigationUI.setupWithNavController(binding.bottomBar, navHostFragment.navController)
 
     }
 

@@ -14,14 +14,8 @@ class ZonaListAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ZonaHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_zona,parent,false)
-        return (ZonaHolder(view))
-    }
-
-
-    companion object {
-
-        private val TAG = "ZonaListAdapter"
+        val layoutInflater =  LayoutInflater.from(parent.context)
+        return ZonaHolder(layoutInflater.inflate(R.layout.fragment_item_zona,parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -33,8 +27,9 @@ class ZonaListAdapter(
         notifyDataSetChanged()
     }
 
-
     override fun onBindViewHolder(holder: ZonaHolder, position: Int) {
         holder.bind(zonaList[position])
     }
+
+
 }
