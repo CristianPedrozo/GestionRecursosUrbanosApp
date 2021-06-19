@@ -44,6 +44,12 @@
     <string name="label_ruta_contenedor">Ruta</string>
     <string name="label_camion_contenedor">Camion</string>
     <string name="label_zona_contenedor">Zona</string>
+
+    <!--Para Card Item Camion-->
+    <string name="label_card_ID_camion">Camión N°:  </string>
+    <string name="label_card_Patente_camion">Patente:  </string>
+    <string name="label_card_Estado_camion">Estado:  </string>
+
     <!--Para ABM Camiones -->
     <string name="label_Id_camion">ID</string>
     <string name="label_patente_camion">Patente</string>
