@@ -56,7 +56,7 @@ class Camino : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val rootView= inflater.inflate(R.layout.fragment_empleado_camino, container, false)
-        var mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        var mapFragment = childFragmentManager.findFragmentById(R.id.map_monitoreo) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
             updateMap()
