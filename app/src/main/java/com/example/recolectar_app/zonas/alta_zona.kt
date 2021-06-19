@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
@@ -58,10 +57,8 @@ class alta_zona : Fragment() {
         val gson = Gson()
         val zona = Zona(editText_id_alta_zona.text.toString())
         zona.setRefVehicleValue(editText_refVehicle_alta_zona.text.toString())
-        zona.setContenedores(ArrayList())
         val string = gson.toJson(zona)
         val jsonObject = JSONObject(string)
-        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
         requestHandler.postRequest(url,{},{},jsonObject)
     }
 

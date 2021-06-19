@@ -77,22 +77,6 @@
             android:hint="Horario de salida"
             android:inputType="numberSigned" />
 
-        <EditText
-            android:id="@+id/editTextContraseñaAdmin1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Ingrese contraseña"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/editTextContraseñaAdmin2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Repita la contraseña"
-            android:inputType="textPassword" />
-
         <CheckBox
             android:id="@+id/checkBoxEsAdmin"
             android:layout_width="match_parent"

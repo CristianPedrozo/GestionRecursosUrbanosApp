@@ -14,6 +14,7 @@ import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.adapters.CamionListAdapter
 import com.example.recolectar_app.camiones.Camion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class Camiones : Fragment() {
@@ -66,7 +67,9 @@ class Camiones : Fragment() {
                 linearLayoutManager = LinearLayoutManager(context)
                 recCamiones.layoutManager = linearLayoutManager
 
-                camionListAdapter = CamionListAdapter(camiones)
+                camionListAdapter = CamionListAdapter(camiones){
+                    Toast.makeText(thiscontext, it.id, Toast.LENGTH_SHORT).show()
+                }
                 recCamiones.adapter = camionListAdapter
             },
             { error ->

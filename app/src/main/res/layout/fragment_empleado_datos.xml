@@ -79,34 +79,11 @@
             android:hint="Horario de salida"
             android:inputType="numberSigned" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Si quiere modificar su contraseña actual, ingrese la nueva contraseña:"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editTextContraseñaEmpleado1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Ingrese contraseña"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/editTextContraseñaEmpleado2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Repita la contraseña"
-            android:inputType="textPassword" />
-
         <Button
             android:id="@+id/btnAgregarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Modificar mis datos" />
+            android:text="@string/agregar_usuarios" />
 
 
     </LinearLayout>

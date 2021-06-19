@@ -58,7 +58,9 @@ class Contenedores : Fragment() {
                 linearLayoutManager = LinearLayoutManager(context)
                 recContenedores.layoutManager = linearLayoutManager
 
-                contenedorListAdapter = ContenedorListAdapter(contenedores);
+                contenedorListAdapter = ContenedorListAdapter(contenedores) {
+                    android.widget.Toast.makeText(thiscontext, it.id, android.widget.Toast.LENGTH_SHORT).show()
+                };
 
 
                 recContenedores.adapter = contenedorListAdapter

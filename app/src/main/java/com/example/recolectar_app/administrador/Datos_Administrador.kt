@@ -8,20 +8,14 @@ import androidx.fragment.app.Fragment
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.empleado.Datos
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 class Datos_Administrador : Fragment() {
     private lateinit var v: View
     private lateinit var datos : TextView
-    private lateinit var auth: FirebaseAuth
 
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Initialize Firebase Auth
-        auth = Firebase.auth
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
@@ -48,40 +42,14 @@ class Datos_Administrador : Fragment() {
 
     fun agregarUsuario(){
         var usuario = obtenerDatos()
-        if(validarDatos()){
+        if(validarDatos())
             guardarUsuarioFirebase(usuario)
-            guardarUsuarioAuth(usuario)
-        }
-        else{
+        else
             Toast.makeText(v.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
-        }
-    }
-
-    fun guardarUsuarioAuth(usuario:Usuario){
-        val contrasenia = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        var email = usuario.email
-
-        auth.createUserWithEmailAndPassword(email, contrasenia)
-            .addOnCompleteListener( ) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                } else {
-                    //hacer otra cosa en error
-                }
-            }
     }
 
     fun validarDatos():Boolean{
         var usuario = obtenerDatos()
-        var contrasenia1 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-        var contrasenia2 = v.findViewById<EditText>(R.id.editTextContraseñaAdmin1).text.toString()
-
-        if(contrasenia1 != contrasenia2)
-            return false
-        if(contrasenia1 == "" || contrasenia1 == null)
-            return false
-        if(contrasenia2 == "" || contrasenia2 == null)
-            return false
         if(usuario.razonSocial.toString().isEmpty())
             return false
         if(usuario.distrito.toString().isEmpty())
@@ -92,7 +60,6 @@ class Datos_Administrador : Fragment() {
             return false
         if(usuario.jefe.toString().isEmpty())
             return false
-
         return true
     }
 

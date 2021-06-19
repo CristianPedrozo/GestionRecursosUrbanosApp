@@ -1,6 +1,7 @@
 package com.example.recolectar_app
 
 import com.example.recolectar_app.zonas.Zona
+import org.json.JSONObject
 import java.util.*
 
 class PatchRequestObject {

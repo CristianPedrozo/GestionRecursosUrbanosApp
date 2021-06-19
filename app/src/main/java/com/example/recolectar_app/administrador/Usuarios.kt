@@ -1,6 +1,5 @@
 package com.example.recolectar_app.administrador
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,15 +9,12 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.MainActivity
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.UsuarioAdapter
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 class Usuarios : Fragment() {
 
@@ -50,22 +46,12 @@ class Usuarios : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_administrador_usuarios, container, false)
-        val buttonAgregarUsuario = v.findViewById<Button>(R.id.btnIrPantallaAgregarUsuario)
-        buttonAgregarUsuario.setOnClickListener {
+        val button = v.findViewById<Button>(R.id.btnIrPantallaAgregarUsuario)
+        button.setOnClickListener {
             redireccionarAUsuarios()
-        }
-        val btnLogOut = v.findViewById<Button>(R.id.btnLogOut)
-        btnLogOut.setOnClickListener{
-            logOut()
         }
         getUsers()
         return v
-    }
-
-    fun logOut(){
-        Firebase.auth.signOut()
-        val intent = Intent(v.context, MainActivity::class.java)
-        startActivity(intent)
     }
 
     companion object {

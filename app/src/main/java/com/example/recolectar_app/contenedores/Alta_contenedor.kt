@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
+import com.example.recolectar_app.zonas.alta_zonaDirections
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
@@ -17,17 +19,17 @@ import org.json.JSONObject
 import java.util.regex.Pattern
 
 class alta_contenedor : Fragment() {
-    val url = "http://46.17.108.122:1026/v2/entities/"
+    var url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
     lateinit var v:View
-    private lateinit var codigo:TextInputLayout
-    private lateinit var latitud: TextInputLayout
-    private lateinit var longitud: TextInputLayout
-    private lateinit var actv_estado: AutoCompleteTextView
-    private lateinit var estado : String
-    private lateinit var actv_tipo: AutoCompleteTextView
+    lateinit var codigo:TextInputLayout
+    lateinit var latitud: TextInputLayout
+    lateinit var longitud: TextInputLayout
+    lateinit var actv_estado: AutoCompleteTextView
+    lateinit var estado : String
+    lateinit var actv_tipo: AutoCompleteTextView
     lateinit var tipo : String
-    private lateinit var botonCrear: FloatingActionButton
+    lateinit var botonCrear: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +39,7 @@ class alta_contenedor : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
+        var requestHandler = RequestHandler.getInstance(thiscontext)
         //Carga Combo Estados
         val estados = resources.getStringArray(R.array.estados_contenedor)
         val arrayAdapterEstado = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)
@@ -71,15 +73,15 @@ class alta_contenedor : Fragment() {
     private fun addContenedor(requestHandler : RequestHandler) {
         val gson = Gson()
         val contenedor = Contenedor(codigo.editText?.text.toString())
-        val latlong : MutableList<Double> = arrayListOf()
+        var latlong : MutableList<Double> = arrayListOf()
         latlong.add(latitud.editText?.text.toString().toDouble())
         latlong.add(longitud.editText?.text.toString().toDouble())
         contenedor.setLocation(latlong)
         contenedor.setStatus(estado)
-        contenedor.setWasteType(tipo)
-        contenedor.setFillingLevel(0.0)
+        Toast.makeText(thiscontext, "$contenedor", Toast.LENGTH_LONG).show()
         val string = gson.toJson(contenedor)
         val jsonObject = JSONObject(string)
+        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_LONG).show()
         requestHandler.postRequest(url,{},{},jsonObject)
     }
 

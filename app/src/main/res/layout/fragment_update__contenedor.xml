@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_contenedor_update"
+    android:id="@+id/fragment_contenedor_detalle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".contenedores.Update_Contenedor">
@@ -23,7 +23,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_codigo_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +45,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 app:boxBackgroundMode="outline"
-                android:hint="@string/label_tipo_contenedor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -64,7 +62,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_latitud_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +80,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_longitud_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +98,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_estado_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +116,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_ruta_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +135,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 app:boxBackgroundMode="outline"
-                android:hint="@string/label_camion_contenedor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -152,24 +145,7 @@
                     android:layout_height="wrap_content"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/label_temperatura_contenedor"
-                app:boxBackgroundMode="outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittext_contenedor_temperatura"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -178,7 +154,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 app:boxBackgroundMode="outline"
-                android:hint="@string/label_zona_contenedor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -190,8 +165,6 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -199,60 +172,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/label_llenado_contenedor"
                 app:boxBackgroundMode="outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittext_contenedor_llenado"
+                    android:id="@+id/edittext_contenedor_temperatura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/label_proxima_visita_contenedor"
-                app:boxBackgroundMode="outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittext_contenedor_proxima_visita"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/label_ultima_visita_contenedor"
-                app:boxBackgroundMode="outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittext_contenedor_ultima_visita"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
@@ -262,7 +192,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:contentDescription="@string/btn_edit"
+        android:contentDescription="Edit"
         android:src="@drawable/ic_baseline_edit"
         app:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.administrador.AdministradorActivity
 import com.example.recolectar_app.empleado.EmpleadoActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -28,9 +27,6 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             login()
         }
-        val user = getUserInstance()
-        if(user != null)
-            consultarUsuario(user.email.toString())
     }
 
     fun login() {
@@ -41,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     consultarUsuario(email)
                 } else {
-                    val usuarioNoExiste = task.exception?.message?.contains("There is no user")
+                    var usuarioNoExiste = task.exception?.message?.contains("There is no user")
                     if (usuarioNoExiste != null && usuarioNoExiste == true) {
                         Toast.makeText(this, "Email no registrado, contacte a su administrador.", Toast.LENGTH_SHORT).show()
                     } else {
@@ -50,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-
-
 
     fun consultarUsuario(email: String) {
         Log.d("TAG", "Empezando")
@@ -71,8 +65,12 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun getUserInstance():FirebaseUser?{
-        return FirebaseAuth.getInstance().currentUser
+    fun getUserInstance(){
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            // User is signed in
+        } else {
+            // No user is signed in
+        }
     }
-
 }
