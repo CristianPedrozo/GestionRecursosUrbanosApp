@@ -54,47 +54,33 @@ class Camino : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        val contexto = requireContext().applicationContext
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(contexto)
+        context?.let { obtenerUbicacionActual(it) }
         val rootView= inflater.inflate(R.layout.fragment_empleado_camino, container, false)
         var mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
-            updateMap()
+            updateMap(contexto)
         }
-        val contexto = requireContext().applicationContext
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(contexto)
-        context?.let { obtenerUbicacionActual(it) }
         val btnIniciar=rootView.findViewById<Button>(R.id.btn_Inicio)
-        val btnAux=rootView.findViewById<Button>(R.id.btnAUX)
         val tvInstruccion=rootView.findViewById<TextView>(R.id.tv_Intruccion)
         val tvSigInstruccion=rootView.findViewById<TextView>(R.id.tv_SigInstruccion)
         val ivActual=rootView.findViewById<ImageView>(R.id.iv_actual)
         val ivSig=rootView.findViewById<ImageView>(R.id.iv_Sig)
         val cvInstruccion=rootView.findViewById<CardView>(R.id.cv_Instrucciones)
-        btnAux.setOnClickListener {
-            context?.let { it1 ->
-                UtilidadesOrdenamiento.realizarOrden(LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude),
-                    it1
-                )
-            }
-        }
         btnIniciar.setOnClickListener{
-           context?.let { it1 -> UtilidadesMaps.crearRuta(it1,LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude), LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude)) }
-           UtilidadesMaps.agregarMarkers(mMap)
-           mMap.addPolyline(UtilidadesMaps.lineOptions)
-           UtilidadesMaps.actualizarIntruccion(tvInstruccion,tvSigInstruccion,ivActual,ivSig,LatLng(ultimaUbicacion.latitude,ultimaUbicacion.longitude),contexto,mMap)
-           cvInstruccion.visibility=View.VISIBLE
-           context?.let { it1 ->
-               ActualizarMapa(tvInstruccion,tvSigInstruccion,ivActual,ivSig,
-                  it1
-               )}
+            cvInstruccion.visibility=View.VISIBLE
+            UtilidadesMaps.dibujarMapa(mMap)
+            ActualizarMapa(tvInstruccion,tvSigInstruccion,ivActual,ivSig,contexto)
         }
         return rootView
     }
 
 
-    private fun updateMap() {
+    private fun updateMap(contexto:Context) {
+        UtilidadesMaps.obtenerRuta("http://192.168.0.37:3000/api/ruta/obtenerruta?id=zona:7&inicio={ \"latitude\":-34.585232,\"longitude\":-58.4039075}&fin={\"latitude\":-34.585232,\"longitude\":-58.4039075}"
+            ,contexto)
         val inicio =LatLng(-34.591283, -58.414742)
         val cameraPosition = CameraPosition.Builder()
             .target(inicio)
@@ -133,10 +119,10 @@ class Camino : Fragment() {
                 // función a ejecutar
                 var ubicacionActual= UtilidadesMaps.coordenadasDecodificadas[auxContador]
                 UtilidadesMaps.actualizarIntruccion(t1,t2,iv_actual,iv_sig,ubicacionActual,contexto,mMap)
-               // mMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionActual))
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionActual))
                 mMap.addMarker(MarkerOptions().position(ubicacionActual))
                 auxContador++
-                handler.postDelayed(this, 3000)
+                handler.postDelayed(this, 1500)
             }
         }, 3000)
     }
@@ -149,7 +135,7 @@ class Camino : Fragment() {
             if (location!=null){
                 ultimaUbicacion=location
                 val ubicacionActual=LatLng(location.latitude,location.longitude)
-                UtilidadesMaps.crearRuta(contexto,ubicacionActual,ubicacionActual)
+                //UtilidadesMaps.crearRuta(contexto,ubicacionActual,ubicacionActual)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual,15f))
                 mMap.isMyLocationEnabled=true
             }
