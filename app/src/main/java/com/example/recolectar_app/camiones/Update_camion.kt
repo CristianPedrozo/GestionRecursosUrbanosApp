@@ -1,27 +1,19 @@
 package com.example.recolectar_app.camiones
+
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
-<<<<<<< HEAD
-import android.widget.Toast
 import androidx.navigation.findNavController
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.PatchContenedorObject
-=======
->>>>>>> master
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.contenedores.Contenedor
-import com.example.recolectar_app.contenedores.Update_Contenedor
-import com.example.recolectar_app.contenedores.Update_ContenedorDirections
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
+import org.json.JSONObject
 
 class Update_camion : Fragment() {
     private val TAG = "Update Camion"
