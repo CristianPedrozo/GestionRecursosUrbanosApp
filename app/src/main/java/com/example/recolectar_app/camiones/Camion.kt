@@ -1,14 +1,17 @@
 package com.example.recolectar_app.camiones
 
-data class Camion(var id: String){
+import java.io.Serializable
+
+data class Camion(var id: String) : Serializable{
     val type : String = "Vehicle"
     var cargoWeight: CargoWeight? = null
     var serviceStatus: ServiceStatus? = null
     var vehiclePlateIdentifier: VehiclePlateIdentifier? = null
     var vehicleType: VehicleType? = null
+    var fillingLevel: FillingLevel? = null
 
     init {
-        this.id = "Vehicle:${id}"
+        this.id = "vehicle:${id}"
     }
 
     fun setCargoWeight(cargo: Double){
@@ -22,6 +25,9 @@ data class Camion(var id: String){
     }
     fun setVehicleType(type : String){
         this.vehicleType = VehicleType(type)
+    }
+    fun setFillingLevel(level : Double){
+        this.fillingLevel = FillingLevel(level)
     }
 
     data class CargoWeight(
@@ -45,6 +51,11 @@ data class Camion(var id: String){
         var value: String
     ){
         val type = "Text"
+    }
+    data class FillingLevel(
+        var value: Double
+    ){
+        val type = "Property"
     }
 
 //    data class Location(

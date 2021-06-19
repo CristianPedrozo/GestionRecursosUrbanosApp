@@ -10,19 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.R
 import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.administrador.Contenedores
 import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.databinding.FragmentEmpleadoContenedoresBinding
 import com.google.gson.Gson
 
 class Contenedores : Fragment() {
+    private var _binding: FragmentEmpleadoContenedoresBinding? = null
+    private val binding get() = _binding!!
     //esto tiene q ser variable dependiendo del usuario y su vehiculo
-    var url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:1&type=WasteContainer"
+    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&?q=refZona=="
     lateinit var thiscontext : Context
-    lateinit var v: View
     lateinit var recContenedores : RecyclerView
-    var contenedores : MutableList<Contenedor> = ArrayList<Contenedor>()
+    var contenedores : MutableList<Contenedor> = ArrayList()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var contenedorListAdapter: ContenedorListAdapter
 
@@ -33,10 +34,9 @@ class Contenedores : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        v =  inflater.inflate(R.layout.fragment_list_contenedores, container, false)
-        recContenedores = v.findViewById(R.id.rec_contenedores)
-        return v
+    ): View {
+        _binding = FragmentEmpleadoContenedoresBinding.inflate(layoutInflater,container,false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class Contenedores : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        var gson = Gson()
+        val gson = Gson()
         val queue = Volley.newRequestQueue(activity)
 
         val jsonArrayRequest = JsonArrayRequest(url,
@@ -58,9 +58,7 @@ class Contenedores : Fragment() {
                 linearLayoutManager = LinearLayoutManager(context)
                 recContenedores.layoutManager = linearLayoutManager
 
-                contenedorListAdapter = ContenedorListAdapter(contenedores) {
-                    android.widget.Toast.makeText(thiscontext, it.id, android.widget.Toast.LENGTH_SHORT).show()
-                };
+                contenedorListAdapter = ContenedorListAdapter(contenedores);
 
 
                 recContenedores.adapter = contenedorListAdapter

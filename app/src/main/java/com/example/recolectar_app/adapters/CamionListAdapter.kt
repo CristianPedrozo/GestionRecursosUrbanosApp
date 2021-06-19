@@ -6,16 +6,11 @@ import com.example.recolectar_app.R
 import com.example.recolectar_app.camiones.Camion
 import com.example.recolectar_app.holders.CamionHolder
 
-class CamionListAdapter ( private var camionList: MutableList<Camion>,val listener: (Camion) -> Unit) : RecyclerView.Adapter<CamionHolder>() {
+class CamionListAdapter ( private var camionList: MutableList<Camion>) : RecyclerView.Adapter<CamionHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CamionHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_camion,parent,false)
-        return (CamionHolder(view))
-    }
-
-    companion object {
-
-        private val TAG = "CamionListAdapter"
+        val layoutInflater =  LayoutInflater.from(parent.context)
+        return CamionHolder(layoutInflater.inflate(R.layout.fragment_item_camion,parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -29,9 +24,6 @@ class CamionListAdapter ( private var camionList: MutableList<Camion>,val listen
     }
 
     override fun onBindViewHolder(holder: CamionHolder, position: Int) {
-        //Para carga de datos en el Card de cada camión
-        holder.bind(camionList[position],listener)
-
-
+        holder.bind(camionList[position])
     }
 }
