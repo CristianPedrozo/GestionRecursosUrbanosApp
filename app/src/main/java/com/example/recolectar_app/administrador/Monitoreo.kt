@@ -124,7 +124,7 @@ class Monitoreo : Fragment() {
         var mapFragment = childFragmentManager.findFragmentById(R.id.map_monitoreo) as SupportMapFragment
         mapFragment.getMapAsync { googleMap -> mMap = googleMap
             updateMap()
-            }
+        }
 
         btn_configuracion = v.findViewById(R.id.boton_configuracion)
         btn_configuracion.setOnClickListener(){
@@ -186,4 +186,5 @@ class Monitoreo : Fragment() {
     }
 
  */
+
 }
