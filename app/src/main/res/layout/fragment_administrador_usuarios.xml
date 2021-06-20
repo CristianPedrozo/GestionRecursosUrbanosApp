@@ -17,8 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -28,17 +26,6 @@
             android:textAlignment="center"
             android:textSize="36sp"
             android:typeface="serif" />
-
-        <Button
-            android:id="@+id/btnLogOut"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:text="@string/deslogearse"
-            tools:text="Deslogearse "/>
-<!--            android:background="@color/black"-->
-
-<!--            android:textColor="@android:color/holo_red_light"-->
-             
 
         <Button
             android:id="@+id/btnIrPantallaAgregarUsuario"

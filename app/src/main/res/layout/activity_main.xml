@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ciudades_del_futuro_background_logo"
     tools:context=".MainActivity">
 
 
@@ -20,6 +19,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="583dp"
+            android:layout_height="416dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ciudades_del_futuro_background_logo" />
+
+        <ImageView
             android:id="@+id/imageView"
             android:layout_width="263dp"
             android:layout_height="88dp"
@@ -29,16 +39,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/cuidades_del_futuro_logo"
-            tools:visibility="visible"
-            android:contentDescription="@string/logo" />
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="80dp"
             android:layout_height="0dp"
-            android:background="#00FFFFFF"
             android:text="@string/login_text"
-            android:textColor="#FFFFFF"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,13 +74,11 @@
             android:ems="10"
             android:hint="@string/login_email"
             android:inputType="textEmailAddress"
-            android:textColor="#ECE9E9"
             app:layout_constraintBottom_toTopOf="@+id/login_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="Email" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/login_password"
@@ -82,13 +87,11 @@
             android:ems="10"
             android:hint="@string/login_password"
             android:inputType="textPassword"
-            android:textColor="#EDE9E9"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_email"
-            android:autofillHints="Password" />
+            app:layout_constraintTop_toBottomOf="@+id/login_email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,4 +106,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
+    <Button
+        android:id="@+id/b_Inicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

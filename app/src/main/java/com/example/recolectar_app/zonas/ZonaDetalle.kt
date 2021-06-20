@@ -6,21 +6,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.findNavController
+import com.example.recolectar_app.PatchRequestObject
+import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.databinding.FragmentZonaDetalleBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import org.json.JSONObject
 
 
 class ZonaDetalle : Fragment() {
     private val TAG = "ZonaDetalle"
-    private var url = "http://46.17.108.122:1026/v2/op/update"
-    private var _binding:FragmentZonaDetalleBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var zona: Zona
+    private var url = "http://46.17.108.122:1026/v2/entities/"
+    private var urlUpdate = "http://46.17.108.122:1026/v2/op/update"
+    private lateinit var v : View
+    private lateinit var btn_edit_zona : FloatingActionButton
+    private lateinit var btn_remove_zona : FloatingActionButton
+    private lateinit var et_id_zona : TextView
+    private lateinit var et_refVehicle_zona : EditText
     lateinit var thiscontext : Context
+    lateinit var id : String
+    lateinit var refVehicle : String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,42 +42,59 @@ class ZonaDetalle : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentZonaDetalleBinding.inflate(inflater,container,false)
+        v = inflater.inflate(R.layout.fragment_zona_detalle, container, false)
         if (container != null) {
             thiscontext = container.context
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
-        zona = args?.zona!!
-        binding.textIdDetalleZona.setText(zona.id!!.split(":")[1])
-        binding.textCamionDetalleZona.setText(zona.refVehicle?.value!!.split(":")[1])
-        binding.textContenedoresDetalleZona.setText(zona.contenedores.value.size.toString())
+        id = args?.idZona.toString()
+        refVehicle = args?.refVehicleZona.toString()
+        btn_edit_zona = v.findViewById(R.id.btn_edit_zona)
+        btn_remove_zona = v.findViewById(R.id.btn_remove_zona)
+        et_id_zona = v.findViewById(R.id.txt_id_edit_zona)
+        et_id_zona.text = id
+        et_refVehicle_zona = v.findViewById(R.id.txt_refVehicle_edit_zona)
+        et_refVehicle_zona.hint = "Coloca el id del camion"
 
-        binding.botonEditarZona.setOnClickListener {
-            val action = ZonaDetalleDirections.actionZonaDetalleToUpdateZona(zona)
-            binding.root.findNavController().navigate(action)
+        btn_edit_zona.setOnClickListener {
+            editZona(requestHandler)
+            val action = ZonaDetalleDirections.actionZonaDetalleToZonas()
+            v.findNavController().navigate(action)
         }
-        binding.botonEliminarZona.setOnClickListener{
+        btn_remove_zona.setOnClickListener{
             removeZona(requestHandler)
             val action = ZonaDetalleDirections.actionZonaDetalleToZonas()
-            binding.root.findNavController().navigate(action)
+            v.findNavController().navigate(action)
         }
-        return binding.root
+        return v
     }
 
     private fun removeZona(requestHandler: RequestHandler) {
         val gson = Gson()
-        val zona = Zona(zona.id.split(":")[1])
+        val zona = Zona(id)
         val deleteObject = DeleteZonaRequest()
         deleteObject.addEntitie(zona)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)
-        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
-        requestHandler.deleteRequest(url,jsonObject,{},{})
+        requestHandler.deleteRequest(urlUpdate,jsonObject,{},{})
     }
 
 
+    private fun editZona(requestHandler: RequestHandler) {
+        val gson = Gson()
+        refVehicle = et_refVehicle_zona.text.toString()
+        val zona = Zona(id)
+        zona.setRefVehicleValue(refVehicle)
+        val patchObject = PatchRequestObject()
+        patchObject.addEntitie(zona)
 
+        val jsonPatchObject = gson.toJson(patchObject)
+
+        val jsonObject = JSONObject(jsonPatchObject)
+
+        requestHandler.patchRequest(urlUpdate,jsonObject,{},{})
+    }
 
     companion object {
 

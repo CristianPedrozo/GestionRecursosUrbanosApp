@@ -38,19 +38,11 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextZona"
+            android:id="@+id/editTextJefe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Zona"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editTextUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Usuario"
+            android:hint="Jefe"
             android:inputType="textPersonName" />
 
         <EditText
@@ -59,6 +51,14 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_email"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextDistrito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Distrito"
             android:inputType="textPersonName" />
 
         <EditText

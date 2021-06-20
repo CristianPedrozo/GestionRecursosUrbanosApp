@@ -1,25 +1,21 @@
 package com.example.recolectar_app.contenedores
 
-import java.io.Serializable
+import java.util.*
 
-class Contenedor(var id: String) : Serializable {
+data class Contenedor(var id: String) {
     val type: String = "WasteContainer"
     lateinit var location: Location
-    var nextActuationDeadline: NextActuationDeadline? = null
-    var refRuta: RefRuta? = null
-    var refVehicle: RefVehicle? = null
-    var refZona: RefZona? = null
+    lateinit var nextActuationDeadline: NextActuationDeadline
+    lateinit var refRuta: RefRuta
+    lateinit var refVehicle: RefVehicle
+    lateinit var refZona: RefZona
     lateinit var status: Status
-    var temperature: Temperature? = null
-    var dateLastEmptying: DateLastEmptying? = null
+    lateinit var temperature: Temperature
+    lateinit var dateLastEmptying: DateLastEmptying
     lateinit var fillingLevel: FillingLevel
-    lateinit var wasteType : WasteType
 
     init {
         this.id = "wastecontainer:${id}"
-    }
-    fun setWasteType(type : String){
-        this.wasteType = WasteType(type)
     }
     fun setLocation(coords : MutableList<Double>){
         this.location = Location(Location.Value(coords))
@@ -28,13 +24,13 @@ class Contenedor(var id: String) : Serializable {
         this.nextActuationDeadline = NextActuationDeadline(date)
     }
     fun setRefRuta(ref : String){
-        this.refRuta = RefRuta("ruta:$ref")
+        this.refRuta = RefRuta(ref)
     }
     fun setRefVehicle(ref : String){
-        this.refVehicle = RefVehicle("vehicle:$ref")
+        this.refVehicle = RefVehicle(ref)
     }
     fun setRefZona(ref : String){
-        this.refZona = RefZona("zona:$ref")
+        this.refZona = RefZona(ref)
     }
     fun setStatus(status : String){
         this.status = Status(status)
@@ -49,12 +45,6 @@ class Contenedor(var id: String) : Serializable {
         this.fillingLevel = FillingLevel(lvl)
     }
 
-
-    data class WasteType(
-        var value: String
-    ){
-        val type : String = "Text"
-    }
 
     data class DateLastEmptying(
         var value: String
@@ -114,5 +104,4 @@ class Contenedor(var id: String) : Serializable {
     ){
         val type: String = "Number"
     }
-
 }

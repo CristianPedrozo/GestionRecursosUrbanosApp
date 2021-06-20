@@ -57,8 +57,18 @@
             android:id="@+id/action_camiones_to_camionDetalle"
             app:destination="@id/camionDetalle">
             <argument
-                android:name="camion"
-                app:argType="com.example.recolectar_app.camiones.Camion" />
+                android:name="idCamion"
+                app:argType="string"
+                />
+            <argument
+                android:name="patente"
+                app:argType="string"/>
+            <argument
+                android:name="carga"
+                app:argType="string"/>
+            <argument
+                android:name="statusCamion"
+                app:argType="string"/>
         </action>
         <action
             android:id="@+id/action_camiones_to_alta_camion"
@@ -78,8 +88,17 @@
         android:label="fragment_camion_detalle"
         tools:layout="@layout/fragment_camion_detalle">
         <argument
-            android:name="camion"
-            app:argType="com.example.recolectar_app.camiones.Camion" />
+            android:name="idCamion"
+            app:argType="string" />
+        <argument
+            android:name="patente"
+            app:argType="string"/>
+        <argument
+            android:name="statusCamion"
+            app:argType="string"/>
+        <argument
+            android:name="carga"
+            app:argType="string"/>
         <action
             android:id="@+id/action_camionDetalle_to_alta_camion"
             app:destination="@id/alta_camion" />
@@ -90,8 +109,17 @@
             android:id="@+id/action_camionDetalle_to_update_camion"
             app:destination="@id/update_camion">
             <argument
-                android:name="camion"
-                app:argType="com.example.recolectar_app.camiones.Camion" />
+                android:name="idCamion"
+                app:argType="string" />
+            <argument
+                android:name="patente"
+                app:argType="string"/>
+            <argument
+                android:name="carga"
+                app:argType="string"/>
+            <argument
+                android:name="statusCamion"
+                app:argType="string"/>
         </action>
     </fragment>
     <fragment
@@ -167,8 +195,17 @@
         android:label="fragment_update_camion"
         tools:layout="@layout/fragment_update_camion" >
         <argument
-            android:name="camion"
-            app:argType="com.example.recolectar_app.camiones.Camion" />
+            android:name="idCamion"
+            app:argType="string" />
+        <argument
+            android:name="patente"
+            app:argType="string"/>
+        <argument
+            android:name="statusCamion"
+            app:argType="string"/>
+        <argument
+            android:name="carga"
+            app:argType="string"/>
         <action
             android:id="@+id/action_update_camion_to_camiones"
             app:destination="@id/camiones" />

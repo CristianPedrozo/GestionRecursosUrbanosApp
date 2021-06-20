@@ -1,26 +1,23 @@
 package com.example.recolectar_app.holders
 
-import android.annotation.SuppressLint
 import android.view.View
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recolectar_app.R
 import com.example.recolectar_app.administrador.ContenedoresDirections
 import com.example.recolectar_app.contenedores.Contenedor
-import com.example.recolectar_app.databinding.FragmentItemContenedorBinding
 
 class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
-    val binding = FragmentItemContenedorBinding.bind(v)
+    private var view: View = v
+    private var idContenedor : TextView = v.findViewById(R.id.txt_id_item_contenedor)
 
-    @SuppressLint("SetTextI18n")
-    fun bind(contenedor: Contenedor){
-        binding.txtIdItemContenedor.text = "Contenedor n°: "+ contenedor.id!!.split(":")[1]
-        binding.txtTipoItemContenedor.text = "Tipo: "+contenedor.wasteType.value
-        binding.txtLlenadoItemContenedor.text = "Llenado: "+contenedor.fillingLevel.value.toString().split(".")[1]+"%"
+    fun bind(contenedor: Contenedor, listener: (Contenedor) -> Unit) = with(view){
+        idContenedor.text = contenedor.id.split(":")[1]
 
-        binding.cardPackageItemContenedor.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(
-                contenedor
-            ))
+        setOnClickListener {
+            listener(contenedor)
+            Navigation.findNavController(view).navigate(ContenedoresDirections.actionContenedoresToContenedorDetalle(idContenedor.text as String, contenedor.status.value))
         }
     }
 

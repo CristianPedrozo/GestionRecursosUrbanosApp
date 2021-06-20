@@ -5,24 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
-import com.example.recolectar_app.databinding.FragmentEmpleadoDatosBinding
-import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
+import com.example.recolectar_app.administrador.Datos_AdministradorArgs
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 
 class Datos : Fragment() {
-    private var _binding: FragmentEmpleadoDatosBinding? = null
-    private var _bindingUsr : FragmentUsuariosDatosBinding? = null
-    private val binding get() = _binding!!
-    private val bindingUsr get() = _bindingUsr!!
+    private lateinit var v: View
     private lateinit var datos : TextView
-    private lateinit var auth: FirebaseAuth
 
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,141 +33,40 @@ class Datos : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEmpleadoDatosBinding.inflate(layoutInflater,container,false)
+    ): View? {
+        v = inflater.inflate(R.layout.fragment_empleado_datos, container, false)
 
-        // Initialize Firebase Auth
-        binding.btnAgregarUsuario.setOnClickListener {
-            agregarUsuario()
-        }
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-        val email = getUserInstance()
+        var email = getUserInstance()
         if(email != null)
             obtenerUsuarioFirebase(email.toString())
 
-        return binding.root
+        return v
 
     }
-
-
-    fun obtenerDatos(): Usuario {
-        val razonSocial = binding.editTextRazonSocial.text.toString()
-        val usuario = binding.editTextUsuario .text.toString()
-        val zona = binding.editTextZona.text.toString()
-        val email = binding.editTextEmail.text.toString()
-        val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
-        val horarioSalida = binding.editTextHorarioSalida.text.toString()
-        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,false,"")
-    }
-
-    fun validarDatos(usuario: Usuario):Boolean{
-        val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
-        val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
-
-        if(contrasenia1 != contrasenia2)
-            return false
-        if(usuario.razonSocial.toString().isEmpty())
-            return false
-        if(usuario.zona.toString().isEmpty())
-            return false
-        if(usuario.horarioEntrada.toString().isEmpty())
-            return false
-        if(usuario.horarioSalida.toString().isEmpty())
-            return false
-        if(usuario.usuario.toString().isEmpty())
-            return false
-
-        return true
-    }
-
-    fun guardarUsuarioFirebase(usuario: Usuario){
-        db.collection("usuarios").document(usuario.usuario).set(
-            hashMapOf(
-                "zona" to usuario.zona,
-                "esAdmin" to  usuario.esAdmin,
-                "horarioEntrada" to usuario.horarioEntrada,
-                "horarioSalida" to usuario.horarioSalida,
-                "email" to usuario.email,
-                "razonSocial" to usuario.razonSocial
-            )
-        ).addOnSuccessListener{
-            /* if(email != null){
-                 Toast.makeText(this, "Usuario editado con exito", Toast.LENGTH_SHORT).show()
-             }else{
-                 Toast.makeText(this, "Usuario agregado con exito", Toast.LENGTH_SHORT).show()
-             }*/
-        }.addOnFailureListener{
-            /* if(email != null){
-                 Toast.makeText(this, "Error al editar el usuario", Toast.LENGTH_SHORT).show()
-             }else{
-                 Toast.makeText(this, "Error al agregar el usuario", Toast.LENGTH_SHORT).show()
-             }*/
-        }
-    }
-    fun agregarUsuario(){
-        val usuario = Usuario(
-            binding.editTextRazonSocial.text.toString(),
-            binding.editTextUsuario.text.toString(),
-            binding.editTextEmail.text.toString(),
-            binding.editTextZona.text.toString(),
-            binding.editTextHorarioEntrada.text.toString(),
-            binding.editTextHorarioSalida.text.toString(),
-            bindingUsr.checkBoxEsAdmin.isChecked,
-            ""
-            )
-        if(validarDatos(usuario)){
-            guardarUsuarioFirebase(usuario)
-            actualizarPassword()
-        }
-        else{
-            Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
-        }
-    }
-
-    fun actualizarPassword(){
-        val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
-        val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
-
-        if(contrasenia1 == "" && contrasenia2 == "") {
-            if (contrasenia1.length < 8 || contrasenia2.length < 8) {
-                //
-            }
-
-            val user = Firebase.auth.currentUser
-
-            user!!.updatePassword(contrasenia1)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                    }
-                }
-        }
-    }
-
     fun obtenerUsuarioFirebase(email:String?){
         if(email != null){
             email.toString()
             db.collection("usuarios").document(email)
                 .get()
                 .addOnSuccessListener {document->
-                    val usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    var usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
                     cargarCampos(usuario)
                 }
         }
     }
 
     fun cargarCampos(usuario : Usuario){
-        binding.editTextRazonSocial.setText(usuario.razonSocial)
-        binding.editTextEmail.setText(usuario.email)
-        binding.editTextZona.setText(usuario.zona)
-        binding.editTextUsuario.setText(usuario.usuario)
-        binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
-        binding.editTextHorarioSalida.setText(usuario.horarioSalida)
+        v.findViewById<EditText>(R.id.editTextRazonSocial).setText(usuario.razonSocial)
+        v.findViewById<EditText>(R.id.editTextEmail).setText(usuario.email)
+        v.findViewById<EditText>(R.id.editTextJefe).setText(usuario.jefe)
+        v.findViewById<EditText>(R.id.editTextDistrito).setText(usuario.distrito)
+        v.findViewById<EditText>(R.id.editTextHorarioEntrada).setText(usuario.horarioEntrada)
+        v.findViewById<EditText>(R.id.editTextHorarioSalida).setText(usuario.horarioSalida)
     }
 
     fun getUserInstance(): String?{
         var email:String? = null
-        val user : FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val user = FirebaseAuth.getInstance().currentUser
         if (user != null)
             email = user.email
 

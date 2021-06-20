@@ -84,5 +84,12 @@ class RequestHandler private constructor(context: Context) {
         addToRequestQueue(deleteRequest)
     }
 
+//    fun makeHashMap(keys: Array<String>, values: Array<String>) : HashMap<String,String>{
+//        val hash = HashMap<String,String>()
+//        for (i in keys.indices) run {
+//            hash.put(keys[i] as String, values[i] as String)
+//        }
+//        return hash
+//    }
 
 }
