@@ -14,7 +14,6 @@ import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.adapters.CamionListAdapter
 import com.example.recolectar_app.camiones.Camion
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class Camiones : Fragment() {
