@@ -154,7 +154,7 @@ class Datos_Administrador : Fragment() {
         val email = binding.editTextEmail.text.toString()
         val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
         val horarioSalida = binding.editTextHorarioSalida.text.toString()
-        val esAdmin = binding.checkBoxEsAdmin.isChecked()
+        val esAdmin = binding.checkBoxEsAdmin.isChecked
         return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,esAdmin,"")
     }
 
@@ -165,7 +165,7 @@ class Datos_Administrador : Fragment() {
         binding.editTextZona.setText(usuario.zona)
         binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
         binding.editTextHorarioSalida.setText(usuario.horarioSalida)
-        binding.checkBoxEsAdmin.isChecked = if(usuario.esAdmin != true) false else true
+        binding.checkBoxEsAdmin.isChecked = usuario.esAdmin == true
     }
 
     companion object {

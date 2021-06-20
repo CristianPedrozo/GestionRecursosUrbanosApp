@@ -61,25 +61,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-/*<<<<<<< HEAD
-    fun consultarUsuario(usuario: String) {
-        Log.d("TAG", "Empezando")
-        db.collection("usuarios").document(usuario)
-            .get()
-            .addOnSuccessListener {
-                var esAdmin = it.getBoolean("esAdmin")
-                UsuarioGlobal.email = it.getString("email")
-                UsuarioGlobal.zona = it.getString("zona")
-                UsuarioGlobal.usuario = usuario
-=======*/
     fun consultarUsuario(email: String): Task<DocumentSnapshot> {
         Log.d("TAG", "Empezando")
         return db.collection("usuarios").document(email)
             .get()
             .addOnSuccessListener {
                 val esAdmin = it.getBoolean("esAdmin")
-/*>>>>>>> e26dffbbb5558a80e008862d8820d71e60a0fca0*/
+
                 if(esAdmin == true){
                     val intent = Intent(this, AdministradorActivity::class.java)
                     intent.putExtra("userId",it.getString("id"))

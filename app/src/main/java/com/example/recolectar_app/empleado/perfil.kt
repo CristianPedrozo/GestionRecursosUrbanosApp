@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.recolectar_app.MainActivity
-import com.example.recolectar_app.R
-import com.example.recolectar_app.UsuarioGlobal
 import com.example.recolectar_app.databinding.FragmentPerfilBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,23 +25,6 @@ class perfil : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-/*<<<<<<< HEAD
-    ): View? {
-        v = inflater.inflate(R.layout.fragment_perfil, container, false)
-        cargarUltimosRegistros()
-        val btnLogOut = v.findViewById<Button>(R.id.btnLogOut_empleado)
-        btnLogOut.setOnClickListener{
-            logOut()
-        }
-        /*val btnEntrada = v.findViewById<Button>(R.id.btnEntrada)
-        btnLogOut.setOnClickListener{
-        }
-        val btnSalida = v.findViewById<Button>(R.id.btnSalida)
-        btnLogOut.setOnClickListener{
-        }*/
-
-        return v
-=======*/
     ): View {
         _binding = FragmentPerfilBinding.inflate(layoutInflater,container,false)
 
@@ -51,11 +32,11 @@ class perfil : Fragment() {
             logOut()
         }
         return binding.root
-/*>>>>>>> e26dffbbb5558a80e008862d8820d71e60a0fca0*/
+
     }
 
     fun cargarUltimosRegistros(){
-        var usuario = getUserInstance()
+        val usuario = getUserInstance()
         usuario?.email
 
     }
@@ -66,12 +47,7 @@ class perfil : Fragment() {
 
     fun logOut(){
         Firebase.auth.signOut()
-/*<<<<<<< HEAD
-        var algo = UsuarioGlobal.email
-        val intent = Intent(v.context, MainActivity::class.java)
-=======*/
         val intent = Intent(binding.root.context, MainActivity::class.java)
-/*>>>>>>> e26dffbbb5558a80e008862d8820d71e60a0fca0*/
         startActivity(intent)
     }
 }
