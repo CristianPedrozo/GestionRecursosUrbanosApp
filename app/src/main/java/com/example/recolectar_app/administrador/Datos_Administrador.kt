@@ -66,6 +66,7 @@ class Datos_Administrador : Fragment() {
             ""
         )
         if(validarDatos(usuario)){
+            usuario.usuario = asignaroCompletarUsuario(usuario.usuario)
             guardarUsuarioFirebase(usuario)
             guardarUsuarioAuth(usuario)
         }
@@ -89,11 +90,15 @@ class Datos_Administrador : Fragment() {
         val contrasenia1 = binding.editTextContraseAAdmin1.text.toString()
         val contrasenia2 = binding.editTextContraseAAdmin2.text.toString()
 
+        if(usuario.email != "" && !usuario.email?.contains("@")!!)
+            return false
+        if(usuario.usuario.contains(" "))
+            return false
         if(contrasenia1 != contrasenia2)
             return false
-        if(contrasenia1 == "")
+        if(contrasenia1 == "" || contrasenia1.contains(" "))
             return false
-        if(contrasenia2 == "")
+        if(contrasenia2 == "" || contrasenia2.contains(" "))
             return false
         if(usuario.razonSocial.toString().isEmpty())
             return false
@@ -103,7 +108,7 @@ class Datos_Administrador : Fragment() {
             return false
         if(usuario.horarioSalida.toString().isEmpty())
             return false
-        if(usuario.usuario.toString().isEmpty())
+        if(usuario.usuario.isEmpty())
             return false
 
         return true
@@ -119,6 +124,17 @@ class Datos_Administrador : Fragment() {
                     cargarCampos(usuario)
                 }
         }
+    }
+
+    fun asignaroCompletarUsuario(usuario: String):String{
+        var usuarioAsigned = ""
+        if(!usuario.contains("@")){
+            usuarioAsigned = "$usuario@fiware.com.ar"
+        }
+        else{
+            usuarioAsigned = usuario
+        }
+        return usuarioAsigned
     }
 
     fun guardarUsuarioFirebase(usuario: Usuario){

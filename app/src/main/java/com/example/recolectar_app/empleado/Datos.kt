@@ -160,9 +160,16 @@ class Datos : Fragment() {
 
     fun cargarCampos(usuario : Usuario){
         binding.editTextRazonSocial.setText(usuario.razonSocial)
+        var usuarioLimpio= ""
+        var index = usuario.usuario.indexOf('@')
+        if(index > 0)
+            usuarioLimpio = usuario.usuario.substring(0,index)
+        else
+            usuarioLimpio = usuario.usuario
+
         binding.editTextEmail.setText(usuario.email)
         binding.editTextZona.setText(usuario.zona)
-        binding.editTextUsuario.setText(usuario.usuario)
+        binding.editTextUsuario.setText(usuarioLimpio)
         binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
         binding.editTextHorarioSalida.setText(usuario.horarioSalida)
     }
