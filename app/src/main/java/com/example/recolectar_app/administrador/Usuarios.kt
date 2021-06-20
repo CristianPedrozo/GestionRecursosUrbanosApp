@@ -1,6 +1,8 @@
 package com.example.recolectar_app.administrador
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,25 +11,24 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recolectar_app.MainActivity
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.UsuarioAdapter
 import com.example.recolectar_app.adapters.ContenedorListAdapter
+import com.example.recolectar_app.databinding.FragmentAdministradorUsuariosBinding
+import com.example.recolectar_app.databinding.FragmentListZonasBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 class Usuarios : Fragment() {
-
-    lateinit var v: View
-    //Para botón flotante Agregar Contenedor
-    lateinit var botton_agregar: FloatingActionButton
-    //
-    lateinit var recContenedores : RecyclerView
-    var contenedores : MutableList<Usuario> = ArrayList<Usuario>()
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var contenedorListAdapter: ContenedorListAdapter
-
-    lateinit var mRecyclerView : RecyclerView
+    private val TAG = "Usuarios Adm Frag"
+    private var _binding: FragmentAdministradorUsuariosBinding? = null
+    private val binding get() = _binding!!
+    var contenedores : MutableList<Usuario> = ArrayList()
     val mAdapter : UsuarioAdapter = UsuarioAdapter()
     val db = FirebaseFirestore.getInstance()
 
@@ -43,15 +44,29 @@ class Usuarios : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_administrador_usuarios, container, false)
-        val button = v.findViewById<Button>(R.id.btnIrPantallaAgregarUsuario)
-        button.setOnClickListener {
+    ): View {
+        try{
+            _binding = FragmentAdministradorUsuariosBinding.inflate(layoutInflater,container,false)
+        }catch (e: Exception){
+            Log.e(TAG,"onCreateView",e)
+        }
+
+
+        binding.btnIrPantallaAgregarUsuario.setOnClickListener {
             redireccionarAUsuarios()
         }
+
+        binding.btnLogOut.setOnClickListener{
+            logOut()
+        }
         getUsers()
-        return v
+        return binding.root
+    }
+
+    fun logOut(){
+        Firebase.auth.signOut()
+        val intent = Intent(binding.root.context, MainActivity::class.java)
+        startActivity(intent)
     }
 
     companion object {
@@ -59,23 +74,22 @@ class Usuarios : Fragment() {
     }
 
     fun redireccionarAUsuarios(){
-        var action = UsuariosDirections.actionUsuariosToDatos("")
-        v.findNavController().navigate(action)
+        val action = UsuariosDirections.actionUsuariosToDatos("")
+        binding.root.findNavController().navigate(action)
     }
 
     fun setUpRecyclerView(users:MutableList<Usuario>){
-        mRecyclerView = v.findViewById<RecyclerView>(R.id.rvUsuario)
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = LinearLayoutManager(v.context)
-        mAdapter.UsuarioAdapter(users, v.context)
-        mRecyclerView.adapter = mAdapter
+        binding.rvUsuario.setHasFixedSize(true)
+        binding.rvUsuario.layoutManager = LinearLayoutManager(binding.root.context)
+        mAdapter.UsuarioAdapter(users, binding.root.context)
+        binding.rvUsuario.adapter = mAdapter
     }
 
     fun getUsers(){
         db.collection("usuarios")
             .get()
             .addOnSuccessListener { result ->
-                var users:MutableList<Usuario> = ArrayList()
+                val users:MutableList<Usuario> = ArrayList()
                 for (document in result) {
                     users.add(Usuario(document.getString("razonSocial"), document.id,  document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
                     setUpRecyclerView(users)

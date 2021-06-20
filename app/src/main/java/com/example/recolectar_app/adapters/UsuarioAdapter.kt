@@ -11,6 +11,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.administrador.ContenedoresDirections
 import com.example.recolectar_app.administrador.UsuariosDirections
+import com.example.recolectar_app.databinding.FragmentItemUsuariosBinding
+import com.example.recolectar_app.databinding.FragmentItemZonaBinding
 import com.squareup.picasso.Picasso
 
 class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioHolder>() {
@@ -31,21 +33,19 @@ class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioHolder>() {
     override fun getItemCount(): Int {
         return users.size
     }
+
     class UsuarioHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val vista = view
-        val nombre = view.findViewById(R.id.nombre) as TextView
-        val jefe = view.findViewById(R.id.jefe) as TextView
-        val distrito = view.findViewById(R.id.distrito) as TextView
-        val avatar = view.findViewById(R.id.ivAvatar) as ImageView
+        val binding = FragmentItemUsuariosBinding.bind(view)
         fun bind(usuario:Usuario, context: Context){
-            nombre.text = usuario.razonSocial
-            jefe.text = usuario.jefe
-            distrito.text = usuario.distrito
-            avatar.loadUrl(usuario.photo)
+
+            binding.nombre.text = usuario.razonSocial
+            binding.jefe.text = usuario.usuario
+            binding.distrito.text = usuario.zona
+            binding.ivAvatar.loadUrl(usuario.photo)
             itemView.setOnClickListener {
-                Navigation.findNavController(vista).navigate(
+                Navigation.findNavController(binding.root).navigate(
                     UsuariosDirections.actionUsuariosToDatos(
-                        usuario.email as String
+                        usuario.usuario as String
                 ))
             }
         }

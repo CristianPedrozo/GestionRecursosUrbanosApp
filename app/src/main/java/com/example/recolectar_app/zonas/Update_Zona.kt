@@ -6,21 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
+import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.databinding.FragmentZonaDetalleBinding
+import com.example.recolectar_app.databinding.FragmentUpdateZonaBinding
 import com.google.gson.Gson
 import org.json.JSONObject
 
 
-class ZonaDetalle : Fragment() {
-    private val TAG = "ZonaDetalle"
+class Update_Zona : Fragment() {
+    private val TAG = "Update Zona"
     private var url = "http://46.17.108.122:1026/v2/op/update"
-    private var _binding:FragmentZonaDetalleBinding? = null
+    private var _binding: FragmentUpdateZonaBinding? = null
     private val binding get() = _binding!!
     private lateinit var zona: Zona
     lateinit var thiscontext : Context
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,53 +34,48 @@ class ZonaDetalle : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentZonaDetalleBinding.inflate(inflater,container,false)
+        _binding = FragmentUpdateZonaBinding.inflate(inflater,container,false)
         if (container != null) {
             thiscontext = container.context
-        };
+        }
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
-        binding.textIdDetalleZona.setText(zona.id!!.split(":")[1])
-        binding.textCamionDetalleZona.setText(zona.refVehicle?.value!!.split(":")[1])
-        binding.textContenedoresDetalleZona.setText(zona.contenedores.value.size.toString())
 
-        binding.botonEditarZona.setOnClickListener {
-            val action = ZonaDetalleDirections.actionZonaDetalleToUpdateZona(zona)
+        binding.textIdEditZona.hint = "Zona n°: ${zona.id!!.split(":")[1]}"
+        binding.textContenedoresEditZona.hint = "Contenedores: ${zona.contenedores.value.size}"
+        binding.textCamionEditZona.setText(zona.refVehicle?.value)
+        binding.botonCancelarEditZona.setOnClickListener {
+            val action = Update_ZonaDirections.actionUpdateZonaToZonas()
             binding.root.findNavController().navigate(action)
         }
-        binding.botonEliminarZona.setOnClickListener{
-            removeZona(requestHandler)
-            val action = ZonaDetalleDirections.actionZonaDetalleToZonas()
+        binding.botonConfirmarEditarZona.setOnClickListener {
+            editZona(requestHandler)
+            val action = Update_ZonaDirections.actionUpdateZonaToZonas()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
     }
 
-    private fun removeZona(requestHandler: RequestHandler) {
+
+    private fun editZona(requestHandler: RequestHandler) {
         val gson = Gson()
-        val zona = Zona(zona.id.split(":")[1])
-        val deleteObject = DeleteZonaRequest()
-        deleteObject.addEntitie(zona)
-        val jsonDeleteObject = gson.toJson(deleteObject)
-        val jsonObject = JSONObject(jsonDeleteObject)
-        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
-        requestHandler.deleteRequest(url,jsonObject,{},{})
+        val zona = Zona(zona.id!!.split(":")[1])
+        zona.setRefVehicleValue(binding.textCamionEditZona.text.toString())
+        val patchObject = PatchRequestObject()
+        patchObject.addEntitie(zona)
+        val jsonPatchObject = gson.toJson(patchObject)
+        val jsonObject = JSONObject(jsonPatchObject)
+        requestHandler.patchRequest(url,jsonObject,{},{})
     }
 
-
-
-
     companion object {
-
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ZonaDetalle().apply {
+        fun newInstance() =
+            Update_Zona().apply {
                 arguments = Bundle().apply {
 
                 }
             }
     }
-
-
 }

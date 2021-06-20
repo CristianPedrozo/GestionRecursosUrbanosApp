@@ -1,5 +1,6 @@
 package com.example.recolectar_app.administrador
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,15 +8,25 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
+import com.example.recolectar_app.databinding.FragmentAdministradorMonitoreoBinding
+import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
 import com.example.recolectar_app.empleado.Datos
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 class Datos_Administrador : Fragment() {
-    private lateinit var v: View
-    private lateinit var datos : TextView
+    private val TAG = "Datos Adm Frag"
+    private var _binding: FragmentUsuariosDatosBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
 
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Initialize Firebase Auth
+        auth = Firebase.auth
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
@@ -24,42 +35,77 @@ class Datos_Administrador : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        v = inflater.inflate(R.layout.fragment_usuarios_datos, container, false)
+    ): View {
+        try {
+            _binding = FragmentUsuariosDatosBinding.inflate(layoutInflater,container,false)
+        }catch (e: Exception){
+            Log.e(TAG,"onCreateView",e)
+        }
         val args = arguments?.let { Datos_AdministradorArgs.fromBundle(it) }
-        val button = v.findViewById<Button>(R.id.btnAgregarUsuario)
         // Initialize Firebase Auth
-        button.setOnClickListener {
+        binding.btnAgregarUsuario.setOnClickListener {
             agregarUsuario()
         }
-        var email = args?.email
+        val email = args?.email
         if(email != null && email != "")
             obtenerUsuarioFirebase(email.toString())
 
-        return v
+        return binding.root
 
     }
 
     fun agregarUsuario(){
-        var usuario = obtenerDatos()
-        if(validarDatos())
+        val usuario = Usuario(
+            binding.editTextRazonSocial.text.toString(),
+            binding.editTextUsuario.text.toString(),
+            binding.editTextEmail.text.toString(),
+            binding.editTextZona.text.toString(),
+            binding.editTextHorarioEntrada.text.toString(),
+            binding.editTextHorarioSalida.text.toString(),
+            binding.checkBoxEsAdmin.isChecked,
+            ""
+        )
+        if(validarDatos(usuario)){
             guardarUsuarioFirebase(usuario)
-        else
-            Toast.makeText(v.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
+            guardarUsuarioAuth(usuario)
+        }
+        else{
+            Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
+        }
     }
 
-    fun validarDatos():Boolean{
-        var usuario = obtenerDatos()
+    fun guardarUsuarioAuth(usuario:Usuario){
+        auth.createUserWithEmailAndPassword(usuario.usuario, binding.editTextContraseAAdmin1.text.toString())
+            .addOnCompleteListener( ) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                } else {
+                    //hacer otra cosa en error
+                }
+            }
+    }
+
+    fun validarDatos(usuario: Usuario):Boolean{
+        val contrasenia1 = binding.editTextContraseAAdmin1.text.toString()
+        val contrasenia2 = binding.editTextContraseAAdmin2.text.toString()
+
+        if(contrasenia1 != contrasenia2)
+            return false
+        if(contrasenia1 == "")
+            return false
+        if(contrasenia2 == "")
+            return false
         if(usuario.razonSocial.toString().isEmpty())
             return false
-        if(usuario.distrito.toString().isEmpty())
+        if(usuario.zona.toString().isEmpty())
             return false
         if(usuario.horarioEntrada.toString().isEmpty())
             return false
         if(usuario.horarioSalida.toString().isEmpty())
             return false
-        if(usuario.jefe.toString().isEmpty())
+        if(usuario.usuario.toString().isEmpty())
             return false
+
         return true
     }
 
@@ -69,20 +115,20 @@ class Datos_Administrador : Fragment() {
             db.collection("usuarios").document(email)
                 .get()
                 .addOnSuccessListener {document->
-                    var usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    val usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
                     cargarCampos(usuario)
                 }
         }
     }
 
     fun guardarUsuarioFirebase(usuario: Usuario){
-        db.collection("usuarios").document(usuario.email).set(
+        db.collection("usuarios").document(usuario.usuario).set(
             hashMapOf(
-                "distrito" to usuario.distrito,
+                "zona" to usuario.zona,
                 "esAdmin" to  usuario.esAdmin,
                 "horarioEntrada" to usuario.horarioEntrada,
                 "horarioSalida" to usuario.horarioSalida,
-                "jefe" to usuario.jefe,
+                "email" to usuario.email,
                 "razonSocial" to usuario.razonSocial
             )
         ).addOnSuccessListener{
@@ -100,25 +146,26 @@ class Datos_Administrador : Fragment() {
         }
     }
 
+
     fun obtenerDatos(): Usuario {
-        val razonSocial = v.findViewById<EditText>(R.id.editTextRazonSocial).text.toString()
-        val email = v.findViewById<EditText>(R.id.editTextEmail).text.toString()
-        val jefe = v.findViewById<EditText>(R.id.editTextJefe).text.toString()
-        val distrito = v.findViewById<EditText>(R.id.editTextDistrito).text.toString()
-        val horarioEntrada = v.findViewById<EditText>(R.id.editTextHorarioEntrada).text.toString()
-        val horarioSalida = v.findViewById<EditText>(R.id.editTextHorarioSalida).text.toString()
-        val esAdmin = v.findViewById<CheckBox>(R.id.checkBoxEsAdmin).isChecked()
-        return Usuario(razonSocial, email ,distrito,jefe,horarioEntrada,horarioSalida,esAdmin,"")
+        val razonSocial = binding.editTextRazonSocial.text.toString()
+        val usuario = binding.editTextUsuario .text.toString()
+        val zona = binding.editTextZona.text.toString()
+        val email = binding.editTextEmail.text.toString()
+        val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
+        val horarioSalida = binding.editTextHorarioSalida.text.toString()
+        val esAdmin = binding.checkBoxEsAdmin.isChecked()
+        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,esAdmin,"")
     }
 
     fun cargarCampos(usuario : Usuario){
-        v.findViewById<EditText>(R.id.editTextRazonSocial).setText(usuario.razonSocial)
-        v.findViewById<EditText>(R.id.editTextEmail).setText(usuario.email)
-        v.findViewById<EditText>(R.id.editTextJefe).setText(usuario.jefe)
-        v.findViewById<EditText>(R.id.editTextDistrito).setText(usuario.distrito)
-        v.findViewById<EditText>(R.id.editTextHorarioEntrada).setText(usuario.horarioEntrada)
-        v.findViewById<EditText>(R.id.editTextHorarioSalida).setText(usuario.horarioSalida)
-        v.findViewById<CheckBox>(R.id.checkBoxEsAdmin).isChecked = if(usuario.esAdmin != true) false else true
+        binding.editTextRazonSocial.setText(usuario.razonSocial)
+        binding.editTextEmail.setText(usuario.email)
+        binding.editTextUsuario.setText(usuario.usuario)
+        binding.editTextZona.setText(usuario.zona)
+        binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
+        binding.editTextHorarioSalida.setText(usuario.horarioSalida)
+        binding.checkBoxEsAdmin.isChecked = if(usuario.esAdmin != true) false else true
     }
 
     companion object {

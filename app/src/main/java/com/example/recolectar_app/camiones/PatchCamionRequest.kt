@@ -1,6 +1,5 @@
 package com.example.recolectar_app.camiones
 
-import com.example.recolectar_app.contenedores.Contenedor
 import java.util.ArrayList
 
 class PatchCamionObject{
