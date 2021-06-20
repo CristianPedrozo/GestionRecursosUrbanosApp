@@ -32,7 +32,7 @@
             <!-- Title, secondary and supporting text -->
             <TextView
                 android:id="@+id/txt_id_item_contenedor"
-                android:text="@string/label_codigo_contenedor"
+                android:text="Id Contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
@@ -42,20 +42,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/label_tipo_contenedor"
+                android:text="Tipo"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
                 />
+
+            <TextView
+                android:id="@+id/txt_zona_item_contenedor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Zona"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
 
             <TextView
                 android:id="@+id/txt_llenado_item_contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/label_llenado_contenedor"
+                android:text="Llenado"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary" />
-
 
         </LinearLayout>
 

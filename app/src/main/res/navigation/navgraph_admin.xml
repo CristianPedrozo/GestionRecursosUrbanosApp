@@ -24,7 +24,11 @@
     <fragment
         android:id="@+id/monitoreo"
         android:name="com.example.recolectar_app.administrador.Monitoreo"
-        android:label="fragment_administrador_monitoreo" />
+        android:label="fragment_administrador_monitoreo">
+        <action
+            android:id="@+id/action_monitoreo_to_configuration"
+            app:destination="@id/configuration" />
+    </fragment>
     <fragment
         android:id="@+id/zonas"
         android:name="com.example.recolectar_app.administrador.Zonas"
@@ -194,4 +198,9 @@
         android:name="com.example.recolectar_app.fragment_perfil"
         android:label="fragment_perfil"
         tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/configuration"
+        android:name="com.example.recolectar_app.administrador.configuration"
+        android:label="fragment_configuration"
+        tools:layout="@layout/fragment_configuration" />
 </navigation>
