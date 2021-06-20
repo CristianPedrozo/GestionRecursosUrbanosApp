@@ -49,6 +49,11 @@
     <string name="label_card_ID_camion">Camión N°:  </string>
     <string name="label_card_Patente_camion">Patente:  </string>
     <string name="label_card_Estado_camion">Estado:  </string>
+    <!--Para Card Item Contenedor-->
+    <string name="label_card_ID_contenedor">Contenedor N°:  </string>
+    <string name="label_card_Tipo_contenedor">Tipo:  </string>
+    <string name="label_card_Zona_contenedor">Zona:  </string>
+    <string name="label_card_Llenado_contenedor">Llenado:  </string>
     <!--Para ABM Camiones -->
     <string name="label_Id_camion">ID</string>
     <string name="label_patente_camion">Patente</string>

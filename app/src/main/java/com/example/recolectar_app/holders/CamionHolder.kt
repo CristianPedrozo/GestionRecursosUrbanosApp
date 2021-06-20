@@ -1,6 +1,5 @@
 package com.example.recolectar_app.holders
 
-import android.annotation.SuppressLint
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +11,10 @@ class CamionHolder (v: View) : RecyclerView.ViewHolder(v) {
     val binding = FragmentItemCamionBinding.bind(v)
 
 
-    @SuppressLint("SetTextI18n")
     fun bind(camion: Camion){
-        binding.txtIdItemCamion.text = "Camion n°: "+camion.id.split(":")[1]
-        binding.txtPatenteItemCamion.text = "Patente: "+camion.vehiclePlateIdentifier?.value
-        binding.txtEstadoItemCamion.text = "Estado: "+camion.serviceStatus?.value
+        binding.txtIdItemCamion.text = camion.id.split(":")[1]
+        binding.txtPatenteItemCamion.text = camion.vehiclePlateIdentifier?.value
+        binding.txtEstadoItemCamion.text = camion.serviceStatus?.value
 
 
         binding.cardPackageItemCamion.setOnClickListener {
