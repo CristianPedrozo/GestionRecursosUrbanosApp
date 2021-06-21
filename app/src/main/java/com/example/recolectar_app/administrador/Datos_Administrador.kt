@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.databinding.FragmentAdministradorMonitoreoBinding
@@ -66,8 +67,10 @@ class Datos_Administrador : Fragment() {
             ""
         )
         if(validarDatos(usuario)){
+            usuario.usuario = asignaroCompletarUsuario(usuario.usuario)
             guardarUsuarioFirebase(usuario)
             guardarUsuarioAuth(usuario)
+            redireccionarAUsuarios()
         }
         else{
             Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
@@ -89,11 +92,15 @@ class Datos_Administrador : Fragment() {
         val contrasenia1 = binding.editTextContraseAAdmin1.text.toString()
         val contrasenia2 = binding.editTextContraseAAdmin2.text.toString()
 
+        if(usuario.email != "" && !usuario.email?.contains("@")!!)
+            return false
+        if(usuario.usuario.contains(" "))
+            return false
         if(contrasenia1 != contrasenia2)
             return false
-        if(contrasenia1 == "")
+        if(contrasenia1 == "" || contrasenia1.contains(" "))
             return false
-        if(contrasenia2 == "")
+        if(contrasenia2 == "" || contrasenia2.contains(" "))
             return false
         if(usuario.razonSocial.toString().isEmpty())
             return false
@@ -103,22 +110,46 @@ class Datos_Administrador : Fragment() {
             return false
         if(usuario.horarioSalida.toString().isEmpty())
             return false
-        if(usuario.usuario.toString().isEmpty())
+        if(usuario.usuario.isEmpty())
             return false
 
         return true
     }
 
-    fun obtenerUsuarioFirebase(email:String?){
-        if(email != null){
-            email.toString()
-            db.collection("usuarios").document(email)
+    fun obtenerUsuarioFirebase(usuario:String?){
+        if(usuario != null){
+            usuario.toString()
+            db.collection("usuarios").document(usuario)
                 .get()
                 .addOnSuccessListener {document->
-                    val usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    val usuario = Usuario(
+                        document.getString("razonSocial"),
+                        usuario,
+                        document.getString("email"),
+                        document.getString("zona"),
+                        document.getString("horarioEntrada"),
+                        document.getString("horarioSalida"),
+                        document.getBoolean("esAdmin"),
+                        "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
                     cargarCampos(usuario)
                 }
         }
+    }
+
+    fun redireccionarAUsuarios(){
+        val action = Datos_AdministradorDirections.datosToUsuario()
+        binding.root.findNavController().navigate(action)
+    }
+
+    fun asignaroCompletarUsuario(usuario: String):String{
+        var usuarioAsigned = ""
+        if(!usuario.contains("@")){
+            usuarioAsigned = "$usuario@fiware.com.ar"
+        }
+        else{
+            usuarioAsigned = usuario
+        }
+        return usuarioAsigned
     }
 
     fun guardarUsuarioFirebase(usuario: Usuario){
