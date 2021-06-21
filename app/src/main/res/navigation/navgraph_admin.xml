@@ -249,5 +249,7 @@
         <action
             android:id="@+id/action_SeleccionarZonaDialog_to_monitoreo"
             app:destination="@id/monitoreo" />
+        <argument android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>

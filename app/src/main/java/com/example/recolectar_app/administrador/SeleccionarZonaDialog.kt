@@ -12,21 +12,25 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
+
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONArray
 import org.json.JSONObject
 
-class SeleccionarZonaDialog : DialogFragment(){
+class SeleccionarZonaDialog : DialogFragment(), Communicator{
     lateinit var combo_zonas: AutoCompleteTextView
     lateinit var btn_buscar: Button
     lateinit var v:View
+    lateinit var id_zona: String
     var zonas:MutableList<String> = ArrayList()
+    private lateinit var communicator :Communicator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +44,22 @@ class SeleccionarZonaDialog : DialogFragment(){
         val arrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,zonas)
         combo_zonas.setAdapter(arrayAdapter)
 
+
+        combo_zonas.setOnItemClickListener { parent, v, position, id ->
+            id_zona= parent.getItemAtPosition(position).toString()
+
+        }
         btn_buscar =v.findViewById(R.id.btn_buscar)
-        /*
         btn_buscar.setOnClickListener() {
-            val action = SeleccionarZonaDialogDirections.actionSeleccionarZonaDialogToMonitoreo()
-            v.findNavController().navigate(action)
+
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("Id_Zona", id_zona)
+            dismiss()
+
         }
 
-         */
         return v
     }
+
 
     fun obtenerZonas() {
         val url = "http://46.17.108.122:1026/v2/entities/?type=Zona&options=keyValues&attrs=id&limit=100"
@@ -70,5 +80,12 @@ class SeleccionarZonaDialog : DialogFragment(){
             var zona = (response[i] as JSONObject) ["id"] as String
             zonas.add(zona)
         }
+    }
+
+    override fun passDataCom(id: String) {
+        val bundle = Bundle()
+        bundle.putString("message",id)
+
+
     }
 }
