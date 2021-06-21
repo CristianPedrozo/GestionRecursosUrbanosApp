@@ -30,18 +30,18 @@
             app:destination="@id/configuration" />
     </fragment>
     <fragment
-        android:id="@+id/zonas"
-        android:name="com.example.recolectar_app.administrador.Zonas"
+        android:id="@+id/list_zonas"
+        android:name="com.example.recolectar_app.ui.view.zona.List_Zonas"
         android:label="fragment_administrador_zonas" >
         <action
-            android:id="@+id/action_zonas_to_alta_zona"
+            android:id="@+id/action_list_zonas_to_alta_zona"
             app:destination="@id/alta_zona" />
         <action
-            android:id="@+id/action_zonas_to_zonaDetalle"
-            app:destination="@id/zonaDetalle">
+            android:id="@+id/action_list_zonas_to_detalle_zona"
+            app:destination="@id/detalle_zona">
             <argument
                 android:name="zona"
-                app:argType="com.example.recolectar_app.zonas.Zona"/>
+                app:argType="com.example.recolectar_app.model.zona.ZonaModel"/>
         </action>
     </fragment>
     <fragment
@@ -119,25 +119,25 @@
     </fragment>
     <fragment
         android:id="@+id/alta_zona"
-        android:name="com.example.recolectar_app.zonas.alta_zona"
+        android:name="com.example.recolectar_app.ui.view.zona.alta_zona"
         android:label="alta_zona" >
         <action
-            android:id="@+id/action_alta_zona_to_zonas"
-            app:destination="@id/zonas" />
+            android:id="@+id/action_alta_zona_to_list_zonas"
+            app:destination="@id/list_zonas" />
     </fragment>
 
     <fragment
-        android:id="@+id/zonaDetalle"
-        android:name="com.example.recolectar_app.zonas.ZonaDetalle"
-        android:label="ZonaDetalle" >
+        android:id="@+id/detalle_zona"
+        android:name="com.example.recolectar_app.ui.view.zona.Detalle_Zona"
+        android:label="detalle_zona" >
         <argument
             android:name="zona"
-            app:argType="com.example.recolectar_app.zonas.Zona"/>
+            app:argType="com.example.recolectar_app.model.zona.ZonaModel"/>
         <action
-            android:id="@+id/action_zonaDetalle_to_zonas"
-            app:destination="@id/zonas" />
+            android:id="@+id/action_detalle_zona_to_list_zonas"
+            app:destination="@id/list_zonas" />
         <action
-            android:id="@+id/action_zonaDetalle_to_update_Zona"
+            android:id="@+id/action_detalle_zona_to_update_Zona"
             app:destination="@id/update_Zona" />
     </fragment>
     <fragment
@@ -183,19 +183,19 @@
     </fragment>
     <fragment
         android:id="@+id/update_Zona"
-        android:name="com.example.recolectar_app.zonas.Update_Zona"
+        android:name="com.example.recolectar_app.ui.view.zona.Update_Zona"
         android:label="fragment_update_zona"
-        tools:layout="@layout/fragment_update_zona" >
-        <action
-            android:id="@+id/action_update_Zona_to_zonas"
-            app:destination="@id/zonas" />
+        tools:layout="@layout/fragment_update_zona">
         <argument
             android:name="zona"
-            app:argType="com.example.recolectar_app.zonas.Zona" />
+            app:argType="com.example.recolectar_app.model.zona.ZonaModel" />
+        <action
+            android:id="@+id/action_update_Zona_to_list_zonas"
+            app:destination="@id/list_zonas" />
     </fragment>
     <fragment
         android:id="@+id/fragment_perfil"
-        android:name="com.example.recolectar_app.fragment_perfil"
+        android:name="com.example.recolectar_app.empleado.perfil"
         android:label="fragment_perfil"
         tools:layout="@layout/fragment_perfil" />
     <fragment

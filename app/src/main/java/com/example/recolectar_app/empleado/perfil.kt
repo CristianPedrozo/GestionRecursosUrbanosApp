@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.recolectar_app.MainActivity
-import com.example.recolectar_app.R
-import com.example.recolectar_app.UsuarioGlobal
+import com.example.recolectar_app.ui.view.MainActivity
 import com.example.recolectar_app.databinding.FragmentPerfilBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

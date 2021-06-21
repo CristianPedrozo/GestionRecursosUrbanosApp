@@ -31,7 +31,7 @@
         <activity
             android:name=".mapa.RecorridoConductor"
             android:label="@string/title_activity_recorrido_conductor" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

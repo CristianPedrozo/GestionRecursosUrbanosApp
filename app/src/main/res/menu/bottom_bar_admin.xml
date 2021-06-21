@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_camion"
         android:title="Camiones" />
     <item
-        android:id="@+id/zonas"
+        android:id="@+id/list_zonas"
         android:icon="@drawable/ic_zona"
         android:title="Zonas" />
     <item

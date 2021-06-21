@@ -1,4 +1,4 @@
-package com.example.recolectar_app
+package com.example.recolectar_app.core
 
 object UsuarioGlobal {
     var usuario:String? = null
