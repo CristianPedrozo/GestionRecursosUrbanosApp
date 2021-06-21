@@ -1,5 +1,6 @@
 package com.example.recolectar_app.administrador
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
@@ -80,6 +84,7 @@ class Monitoreo : Fragment() {
 
 class Monitoreo : Fragment() {
     lateinit var v: View
+    lateinit var btn_buscarZona: FloatingActionButton
     lateinit var btn_configuracion: FloatingActionButton
     lateinit var mMap: GoogleMap
     lateinit var contexto :Context
@@ -125,12 +130,21 @@ class Monitoreo : Fragment() {
         mapFragment.getMapAsync { googleMap -> mMap = googleMap
             updateMap()
             }
-
+        //Botón Configuración
         btn_configuracion = v.findViewById(R.id.boton_configuracion)
         btn_configuracion.setOnClickListener(){
             val action= MonitoreoDirections.actionMonitoreoToConfiguration()
             v.findNavController().navigate(action)
         }
+
+        //Botón Buscar Zona
+        btn_buscarZona = v.findViewById(R.id.boton_buscarZona)
+        btn_buscarZona.setOnClickListener(){
+            var dialog= SeleccionarZonaDialog()
+            dialog.show(getParentFragmentManager(), "Seleccionar Zona");
+        }
+
+
         return v
 
     }
@@ -139,7 +153,7 @@ class Monitoreo : Fragment() {
 
         //val url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&options=keyValues&limit=1000"
         val url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:7&type=WasteContainer"
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
+        val jsonArrayRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             /*
             UtilidadesMaps.obtenerCoordenadasRuta(response)
             UtilidadesMaps.obtenerInstrucciones(response)
@@ -154,7 +168,7 @@ class Monitoreo : Fragment() {
         }
         )
         val request = Volley.newRequestQueue(contexto)
-        request.add(jsonObjectRequest)
+        request.add(jsonArrayRequest)
     }
 
     var contenedores:MutableList<LatLng> = ArrayList()

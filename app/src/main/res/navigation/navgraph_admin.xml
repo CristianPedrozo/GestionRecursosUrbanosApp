@@ -242,4 +242,12 @@
             android:id="@+id/action_configuration_to_monitoreo"
             app:destination="@id/monitoreo" />
     </fragment>
+    <fragment
+        android:id="@+id/SeleccionarZonaDialog"
+        android:name="com.example.recolectar_app.administrador.SeleccionarZonaDialog"
+        android:label="SeleccionarZonaDialog" >
+        <action
+            android:id="@+id/action_SeleccionarZonaDialog_to_monitoreo"
+            app:destination="@id/monitoreo" />
+    </fragment>
 </navigation>
