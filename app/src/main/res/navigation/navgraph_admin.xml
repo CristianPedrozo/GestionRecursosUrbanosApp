@@ -176,6 +176,9 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/datosToUsuario"
+            app:destination="@id/usuarios" />
     </fragment>
     <fragment
         android:id="@+id/update_Zona"

@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         var email = binding.loginEmail.text.toString()
         if(!email.contains("@"))
             email = "$email@fiware.com.ar"
+
         val password = binding.loginPassword.text.toString()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity() {
         return db.collection("usuarios").document(email)
             .get()
             .addOnSuccessListener {
+                UsuarioGlobal.usuario = it.getString("usuario")
+                UsuarioGlobal.zona = it.getString("zona")
+                UsuarioGlobal.email = it.getString("email")
+
                 val esAdmin = it.getBoolean("esAdmin")
                 if(esAdmin == true){
                     val intent = Intent(this, AdministradorActivity::class.java)
@@ -78,9 +83,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, EmpleadoActivity::class.java)
                     intent.putExtra("userId",it.getString("id"))
                     startActivity(intent)
-
                 }
-
             }
     }
 

@@ -52,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:enabled="false"
             android:hint="Usuario "
             android:inputType="textPersonName" />
 
@@ -68,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:enabled="false"
             android:hint="Horario de entrada"
             android:inputType="numberSigned" />
 
@@ -76,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:enabled="false"
             android:hint="Horario de salida"
             android:inputType="numberSigned" />
 

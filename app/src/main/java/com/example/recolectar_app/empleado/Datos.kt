@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.findNavController
 import com.example.recolectar_app.Usuario
+import com.example.recolectar_app.administrador.Datos_AdministradorDirections
 import com.example.recolectar_app.databinding.FragmentEmpleadoDatosBinding
 import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -77,7 +79,7 @@ class Datos : Fragment() {
             return false
         if(usuario.horarioSalida.toString().isEmpty())
             return false
-        if(usuario.usuario.toString().isEmpty())
+        if(usuario.usuario.isEmpty())
             return false
 
         return true
@@ -107,6 +109,7 @@ class Datos : Fragment() {
              }*/
         }
     }
+
     fun agregarUsuario(){
         val usuario = Usuario(
             binding.editTextRazonSocial.text.toString(),
@@ -116,8 +119,8 @@ class Datos : Fragment() {
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
             bindingUsr.checkBoxEsAdmin.isChecked,
-            ""
-            )
+            "")
+
         if(validarDatos(usuario)){
             guardarUsuarioFirebase(usuario)
             actualizarPassword()
@@ -146,13 +149,21 @@ class Datos : Fragment() {
         }
     }
 
-    fun obtenerUsuarioFirebase(email:String?){
-        if(email != null){
-            email.toString()
-            db.collection("usuarios").document(email)
+    fun obtenerUsuarioFirebase(usuario:String?){
+        if(usuario != null){
+            usuario.toString()
+            db.collection("usuarios").document(usuario)
                 .get()
                 .addOnSuccessListener {document->
-                    val usuario = Usuario(document.getString("razonSocial"), email, document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    val usuario = Usuario(
+                        document.getString("razonSocial"),
+                        usuario,
+                        document.getString("email"),
+                        document.getString("zona"),
+                        document.getString("horarioEntrada"),
+                        document.getString("horarioSalida"),
+                        document.getBoolean("esAdmin"),
+                        "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
                     cargarCampos(usuario)
                 }
         }
