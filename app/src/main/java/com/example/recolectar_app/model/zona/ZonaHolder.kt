@@ -3,8 +3,8 @@ package com.example.recolectar_app.model.zona
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.ui.view.zona.List_ZonasDirections
 import com.example.recolectar_app.databinding.FragmentItemZonaBinding
+import com.example.recolectar_app.ui.view.zona.ZonasListDirections
 
 class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
 
@@ -15,7 +15,7 @@ class ZonaHolder (v: View) : RecyclerView.ViewHolder(v) {
         binding.txtContenedoresItemZona.text = zonaModel.contenedores.value.size.toString()
         binding.txtNombreItemZona.text = zonaModel.nombre.value
         binding.cardPackageItemZona.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(List_ZonasDirections.actionListZonasToDetalleZona(zonaModel))
+            Navigation.findNavController(binding.root).navigate(ZonasListDirections.actionListZonasToDetalleZona(zonaModel))
         }
     }
 

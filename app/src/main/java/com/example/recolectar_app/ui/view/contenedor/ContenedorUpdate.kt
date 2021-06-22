@@ -1,4 +1,4 @@
-package com.example.recolectar_app.contenedores
+package com.example.recolectar_app.ui.view.contenedor
 
 import android.content.Context
 import android.os.Bundle
@@ -11,16 +11,17 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.PatchContenedorObject
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateContenedorBinding
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
 
-class Update_Contenedor : Fragment() {
+class ContenedorUpdate : Fragment() {
     private val TAG = "Update Contenedor"
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentUpdateContenedorBinding? = null
     private val binding get() = _binding!!
-    private lateinit var contenedor: Contenedor
+    private lateinit var contenedorModel: ContenedorModel
     lateinit var thiscontext : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,21 +42,21 @@ class Update_Contenedor : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
-        contenedor = args?.contenedor!!
-        binding.edittextContenedorId.setText(contenedor.id!!.split(":")[1])
-        binding.edittextContenedorCamion.setText(contenedor.refVehicle?.value)
-        binding.edittextContenedorEstado.setText(contenedor.status.value)
-        binding.edittextContenedorLatitud.setText(contenedor.location.value.coordinates[0].toString())
-        binding.edittextContenedorLongitud.setText(contenedor.location.value.coordinates[1].toString())
+        contenedorModel = args?.contenedor!!
+        binding.edittextContenedorId.setText(contenedorModel.id!!.split(":")[1])
+        binding.edittextContenedorCamion.setText(contenedorModel.refVehicle?.value)
+        binding.edittextContenedorEstado.setText(contenedorModel.status.value)
+        binding.edittextContenedorLatitud.setText(contenedorModel.location.value.coordinates[0].toString())
+        binding.edittextContenedorLongitud.setText(contenedorModel.location.value.coordinates[1].toString())
 //        binding.edittextContenedorRuta.setText(contenedor.refRuta?.value)
-        binding.edittextContenedorZona.setText(contenedor.refZona?.value)
-        binding.edittextContenedorTemperatura.setText(contenedor.temperature?.value.toString())
-        binding.edittextContenedorLlenado.setText(contenedor.fillingLevel.value.toString())
+        binding.edittextContenedorZona.setText(contenedorModel.refZona?.value)
+        binding.edittextContenedorTemperatura.setText(contenedorModel.temperature?.value.toString())
+        binding.edittextContenedorLlenado.setText(contenedorModel.fillingLevel.value.toString())
 //        binding.edittextContenedorUltimaVisita.setText(contenedor.dateLastEmptying?.value)
 //        binding.edittextContenedorProximaVisita.setText(contenedor.nextActuationDeadline?.value)
         binding.botonConfirmarEditarContenedor.setOnClickListener(){
             editContenedor(requestHandler)
-            val action = Update_ContenedorDirections.actionUpdateContenedorToContenedores()
+            val action = ContenedorUpdateDirections.actionUpdateContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
@@ -64,8 +65,8 @@ class Update_Contenedor : Fragment() {
 
     private fun editContenedor(requestHandler: RequestHandler) {
         val gson = Gson()
-        val contEdit = Contenedor(contenedor.id!!.split(":")[1])
-        if(binding.edittextContenedorEstado.text.toString() != contenedor.status.value && binding.edittextContenedorEstado.text.toString() != "")
+        val contEdit = ContenedorModel(contenedorModel.id!!.split(":")[1])
+        if(binding.edittextContenedorEstado.text.toString() != contenedorModel.status.value && binding.edittextContenedorEstado.text.toString() != "")
             contEdit.setStatus(binding.edittextContenedorEstado.text.toString())
 //        if(tiet_camion.text.toString() != contenedor.refVehicle?.value?.split(":")?.get(1) ?: "")
 //            contEdit.setRefVehicle(tiet_camion.text.toString())
@@ -76,13 +77,13 @@ class Update_Contenedor : Fragment() {
             latlong.add(binding.edittextContenedorLongitud.text.toString().toDouble())
             contEdit.setLocation(latlong)
         }
-        if(binding.edittextContenedorLlenado.text.toString() != contenedor.fillingLevel.value.toString() && binding.edittextContenedorLlenado.text.toString() != "")
+        if(binding.edittextContenedorLlenado.text.toString() != contenedorModel.fillingLevel.value.toString() && binding.edittextContenedorLlenado.text.toString() != "")
             contEdit.setFillingLevel(binding.edittextContenedorLlenado.text.toString().toDouble())
 //        if(tiet_proxima_visita.text.toString() != contenedor.nextActuationDeadline?.value ?: "")
 //            contEdit.setStatus(tiet_proxima_visita.text.toString())
 //        if(tiet_ultima_visita.text.toString() != contenedor.dateLastEmptying?.value ?: "")
 //            contEdit.setStatus(tiet_ultima_visita.text.toString())
-        if(binding.edittextContenedorTemperatura.text.toString() != contenedor.temperature?.value.toString() && binding.edittextContenedorTemperatura.text.toString() != "")
+        if(binding.edittextContenedorTemperatura.text.toString() != contenedorModel.temperature?.value.toString() && binding.edittextContenedorTemperatura.text.toString() != "")
             contEdit.setTemperature(binding.edittextContenedorTemperatura.text.toString().toDouble())
 //        if(tiet_zona.text.toString() != contenedor.refZona?.value?.split(":")?.get(1) ?: "")
 //            contEdit.setRefZona(tiet_zona.text.toString())
@@ -99,7 +100,7 @@ class Update_Contenedor : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Update_Contenedor().apply {
+            ContenedorUpdate().apply {
                 arguments = Bundle().apply {
 
                 }

@@ -1,12 +1,10 @@
-package com.example.recolectar_app.adapters
+package com.example.recolectar_app.model.camion
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.R
-import com.example.recolectar_app.camiones.Camion
-import com.example.recolectar_app.holders.CamionHolder
 
-class CamionListAdapter ( private var camionList: MutableList<Camion>) : RecyclerView.Adapter<CamionHolder>() {
+class CamionListAdapter ( private var camionModelList: MutableList<CamionModel>) : RecyclerView.Adapter<CamionHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CamionHolder {
         val layoutInflater =  LayoutInflater.from(parent.context)
@@ -15,15 +13,15 @@ class CamionListAdapter ( private var camionList: MutableList<Camion>) : Recycle
 
     override fun getItemCount(): Int {
 
-        return camionList.size
+        return camionModelList.size
     }
 
-    fun setData(newData: ArrayList<Camion>) {
-        this.camionList = newData
+    fun setData(newData: ArrayList<CamionModel>) {
+        this.camionModelList = newData
         this.notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: CamionHolder, position: Int) {
-        holder.bind(camionList[position])
+        holder.bind(camionModelList[position])
     }
 }

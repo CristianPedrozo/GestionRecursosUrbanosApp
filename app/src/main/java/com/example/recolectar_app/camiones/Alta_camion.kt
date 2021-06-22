@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentAltaCamionBinding
+import com.example.recolectar_app.model.camion.CamionModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -74,7 +75,7 @@ class alta_camion : Fragment() {
         val gson = Gson()
 
         //Armo el objeto camión para darlo de alta
-        val camion = Camion(binding.editTextId.text.toString())
+        val camion = CamionModel(binding.editTextId.text.toString())
         camion.setCargoWeight(binding.editTextCarga.text.toString().toDouble())
         camion.setServiceStatus(estado)
         camion.setVehiclePlateIdentifier(binding.editTextPatente.text.toString())

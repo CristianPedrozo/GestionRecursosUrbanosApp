@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.zona.List_Zonas">
+    tools:context=".ui.view.zona.ZonasList">
 
     <EditText android:id="@+id/searchEditText"
         android:layout_width="match_parent"
@@ -35,8 +35,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchEditText"
-        app:layout_constraintVertical_bias="0.008"
-        tools:ignore="NotSibling" />
+        app:layout_constraintVertical_bias="0.008" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_agregar_zona"

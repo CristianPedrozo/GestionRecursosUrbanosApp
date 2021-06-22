@@ -5,7 +5,7 @@
     android:id="@+id/fragment_zona_update"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.zona.Update_Zona">
+    tools:context=".ui.view.zona.ZonaUpdate">
     <ScrollView
         android:id="@+id/scrollView_edit_Zona"
         android:layout_width="match_parent"

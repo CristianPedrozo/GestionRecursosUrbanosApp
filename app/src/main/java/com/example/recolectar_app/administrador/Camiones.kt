@@ -9,14 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
-import com.example.recolectar_app.adapters.CamionListAdapter
-import com.example.recolectar_app.camiones.Camion
+import com.example.recolectar_app.model.camion.CamionListAdapter
+import com.example.recolectar_app.model.camion.CamionModel
 import com.example.recolectar_app.databinding.FragmentListCamionesBinding
-import com.example.recolectar_app.databinding.FragmentListContenedoresBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import java.lang.Exception
 
@@ -26,7 +22,7 @@ class Camiones : Fragment() {
     private val TAG = "Contenedores Adm Frag"
     private var _binding: FragmentListCamionesBinding? = null
     private val binding get() = _binding!!
-    var camiones: MutableList<Camion> = ArrayList()
+    var camiones: MutableList<CamionModel> = ArrayList()
 
     companion object {
         fun newInstance() = Camiones()
@@ -61,8 +57,8 @@ class Camiones : Fragment() {
         requestHandler.getArrayRequest(url,
             { response ->
                 for (i in 0 until response.length()) {
-                    val camion : Camion = gson.fromJson(response.getJSONObject(i).toString(), Camion::class.java)
-                    camiones.add(camion)
+                    val camionModel : CamionModel = gson.fromJson(response.getJSONObject(i).toString(), CamionModel::class.java)
+                    camiones.add(camionModel)
                 }
                 binding.recCamiones.setHasFixedSize(true)
 

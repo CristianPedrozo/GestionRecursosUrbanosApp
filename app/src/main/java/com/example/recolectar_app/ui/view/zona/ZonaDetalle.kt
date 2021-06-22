@@ -13,7 +13,7 @@ import com.example.recolectar_app.model.zona.ZonaModel
 //import com.example.recolectar_app.zonas.DeleteZonaRequest
 
 
-class Detalle_Zona : Fragment() {
+class ZonaDetalle : Fragment() {
     private val TAG = "ZonaDetalle"
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding:FragmentZonaDetalleBinding? = null
@@ -37,19 +37,19 @@ class Detalle_Zona : Fragment() {
             thiscontext = container.context
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
-        val args = arguments?.let { Detalle_ZonaArgs.fromBundle(it) }
+        val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
         binding.textIdDetalleZona.setText(zona.id!!.split(":")[1])
         binding.textCamionDetalleZona.setText(zona.refVehicle?.value!!.split(":")[1])
         binding.textContenedoresDetalleZona.setText(zona.contenedores.value.size.toString())
 
         binding.botonEditarZona.setOnClickListener {
-            val action = Detalle_ZonaDirections.actionDetalleZonaToUpdateZona(zona)
+            val action = ZonaDetalleDirections.actionDetalleZonaToUpdateZona(zona)
             binding.root.findNavController().navigate(action)
         }
         binding.botonEliminarZona.setOnClickListener{
 //            removeZona(requestHandler)
-            val action = Detalle_ZonaDirections.actionDetalleZonaToListZonas()
+            val action = ZonaDetalleDirections.actionDetalleZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
@@ -73,7 +73,7 @@ class Detalle_Zona : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Detalle_Zona().apply {
+            ZonaDetalle().apply {
                 arguments = Bundle().apply {
 
                 }

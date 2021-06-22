@@ -1,27 +1,41 @@
 package com.example.recolectar_app.data.network
 
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.model.zona.ZonaModel
-import com.google.gson.JsonObject
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface FiwareApiClient {
-    //GET ZONAS
-    @GET("/v2/entities/?type=Zona")
-    suspend fun getAllZonas(): Response<List<ZonaModel>>
+    //ZONAS
 
-    @POST("/v2/entities")
-    suspend fun postZona(json : JSONObject)
+        //GET ZONAS
+        @GET("/v2/entities/?type=Zona")
+        suspend fun getAllZonas(): Response<List<ZonaModel>>
+        //GET 1 ZONA POR NOMBRE
+        @GET("/v2/entities/{zona_nombre}")
+        suspend fun getZonaByName(@Path("zona_nombre") zona_nombre: String): Response<List<ZonaModel>>
+        //GET 1 ZONA POR ID
+        @GET("/v2/entities/{id}")
+        suspend fun getZonaById(@Path("id") id: String): Response<List<ZonaModel>>
+        //GET CONTENEDORES
+        @GET("/v2/entities/?type=WasteContainer&limit=1000")
+        suspend fun getAllContenedores(): Response<List<ContenedorModel>>
+        //GET CONTENEDOR POR ZONA
+        @GET("/v2/entities/{zona_id}")
+        suspend fun getContenedorByZona(@Path("zona_id") zona_id : String): Response<List<ContenedorModel>>
+        //GET CONTENDOR POR ID
+        @GET("/v2/entities/{id}")
+        suspend fun getContenedorById(@Path("id") id : String): Response<List<ContenedorModel>>
+        // ALTA ZONA
+        @POST("/v2/entities")
+        suspend fun postNewZona(@Body params : ZonaModel)
 
 //
 //    @GET("users")
 //    fun searchUsers(@Query("name") searchText: String): Call<UserList>
 
-    //GET 1 ZONA POR ID
-    @GET("/v2/entities/{zona_nombre}")
-    suspend fun getZonaByName(@Path("zona_nombre") zona_nombre: String): Response<List<ZonaModel>>
 
 
 //    @POST("users")

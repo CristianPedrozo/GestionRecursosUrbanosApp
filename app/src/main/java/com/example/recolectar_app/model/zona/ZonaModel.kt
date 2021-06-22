@@ -1,6 +1,6 @@
 package com.example.recolectar_app.model.zona
 
-import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import java.io.Serializable
 
 
@@ -9,6 +9,23 @@ data class ZonaModel(var id: String) : Serializable {
     var refVehicle: RefVehicle? = null
     lateinit var nombre : Nombre
     lateinit var contenedores : Contenedores
+
+    init {
+        this.id = "zona:${id}"
+    }
+
+    fun setNombre(nombre : String){
+        this.nombre = Nombre(nombre)
+    }
+
+    fun setContenedores(arr : ArrayList<ContenedorModel>){
+        this.contenedores = Contenedores(arr)
+    }
+
+
+    fun setRefVehicleValue(string: String){
+        this.refVehicle = RefVehicle("vehicle:${string}")
+    }
 
 
     data class Nombre(var value : String){
@@ -19,30 +36,15 @@ data class ZonaModel(var id: String) : Serializable {
         val type: String = "Relationship"
     }
 
-    data class Contenedores(val value : ArrayList<Contenedor>){
+    data class Contenedores(val value : ArrayList<ContenedorModel>){
         val type: String = "List"
 
-        fun addContenedor(contenedor : Contenedor){
-            value.add(contenedor)
+        fun addContenedor(contenedorModel : ContenedorModel){
+            value.add(contenedorModel)
         }
     }
 
-    fun setNombre(nombre : String){
-        this.nombre = Nombre(nombre)
-    }
-
-    fun setContenedores(arr : ArrayList<Contenedor>){
-        this.contenedores = Contenedores(arr)
-    }
-
-
-    fun setRefVehicleValue(string: String){
-        this.refVehicle = RefVehicle("vehicle:${string}")
-    }
-
-    init {
-        this.id = "zona:${id}"
-    }
+    data class ZonaResponse(val code: Int?, val message: String?)
 
 
 

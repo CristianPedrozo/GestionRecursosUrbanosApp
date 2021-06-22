@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/contenedores"
-        android:name="com.example.recolectar_app.administrador.Contenedores"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedoresList"
         android:label="fragment_administrador_contenedores"
         tools:layout="@layout/fragment_administrador_contenedores">
         <action
@@ -15,7 +15,7 @@
             app:destination="@id/contenedorDetalle">
             <argument
                 android:name="contenedor"
-                app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
+                app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"/>
         </action>
         <action
             android:id="@+id/action_contenedores_to_alta_contenedor"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/list_zonas"
-        android:name="com.example.recolectar_app.ui.view.zona.List_Zonas"
+        android:name="com.example.recolectar_app.ui.view.zona.ZonasList"
         android:label="fragment_administrador_zonas" >
         <action
             android:id="@+id/action_list_zonas_to_alta_zona"
@@ -53,7 +53,7 @@
             app:destination="@id/camionDetalle">
             <argument
                 android:name="camion"
-                app:argType="com.example.recolectar_app.camiones.Camion" />
+                app:argType="com.example.recolectar_app.model.camion.CamionModel" />
         </action>
         <action
             android:id="@+id/action_camiones_to_alta_camion"
@@ -74,7 +74,7 @@
         tools:layout="@layout/fragment_camion_detalle">
         <argument
             android:name="camion"
-            app:argType="com.example.recolectar_app.camiones.Camion" />
+            app:argType="com.example.recolectar_app.model.camion.CamionModel" />
         <action
             android:id="@+id/action_camionDetalle_to_alta_camion"
             app:destination="@id/alta_camion" />
@@ -86,17 +86,17 @@
             app:destination="@id/update_camion">
             <argument
                 android:name="camion"
-                app:argType="com.example.recolectar_app.camiones.Camion" />
+                app:argType="com.example.recolectar_app.model.camion.CamionModel" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/contenedorDetalle"
-        android:name="com.example.recolectar_app.contenedores.ContenedorDetalle"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
         tools:layout="@layout/fragment_alta_contenedor">
         <argument
             android:name="contenedor"
-            app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
+            app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"/>
         <action
             android:id="@+id/action_contenedorDetalle_to_contenedores"
             app:destination="@id/contenedores" />
@@ -105,12 +105,12 @@
             app:destination="@id/update_Contenedor">
             <argument
                 android:name="contenedor"
-                app:argType="com.example.recolectar_app.contenedores.Contenedor"/>
+                app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"/>
         </action>
     </fragment>
     <fragment
         android:id="@+id/alta_contenedor"
-        android:name="com.example.recolectar_app.contenedores.alta_contenedor"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedorAlta"
         android:label="fragment_alta_contenedor"
         tools:layout="@layout/fragment_alta_contenedor" >
         <action
@@ -119,7 +119,7 @@
     </fragment>
     <fragment
         android:id="@+id/alta_zona"
-        android:name="com.example.recolectar_app.ui.view.zona.alta_zona"
+        android:name="com.example.recolectar_app.ui.view.zona.ZonaAlta"
         android:label="alta_zona" >
         <action
             android:id="@+id/action_alta_zona_to_list_zonas"
@@ -128,7 +128,7 @@
 
     <fragment
         android:id="@+id/detalle_zona"
-        android:name="com.example.recolectar_app.ui.view.zona.Detalle_Zona"
+        android:name="com.example.recolectar_app.ui.view.zona.ZonaDetalle"
         android:label="detalle_zona" >
         <argument
             android:name="zona"
@@ -155,19 +155,19 @@
         tools:layout="@layout/fragment_update_camion" >
         <argument
             android:name="camion"
-            app:argType="com.example.recolectar_app.camiones.Camion" />
+            app:argType="com.example.recolectar_app.model.camion.CamionModel" />
         <action
             android:id="@+id/action_update_camion_to_camiones"
             app:destination="@id/camiones" />
     </fragment>
     <fragment
         android:id="@+id/update_Contenedor"
-        android:name="com.example.recolectar_app.contenedores.Update_Contenedor"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedorUpdate"
         android:label="fragment_update__contenedor"
         tools:layout="@layout/fragment_update_contenedor" >
         <argument
             android:name="contenedor"
-            app:argType="com.example.recolectar_app.contenedores.Contenedor"
+            app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"
             />
         <action
             android:id="@+id/action_update_Contenedor_to_contenedores"
@@ -183,7 +183,7 @@
     </fragment>
     <fragment
         android:id="@+id/update_Zona"
-        android:name="com.example.recolectar_app.ui.view.zona.Update_Zona"
+        android:name="com.example.recolectar_app.ui.view.zona.ZonaUpdate"
         android:label="fragment_update_zona"
         tools:layout="@layout/fragment_update_zona">
         <argument

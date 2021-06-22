@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentCamionDetalleBinding
+import com.example.recolectar_app.model.camion.CamionModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -17,7 +18,7 @@ class CamionDetalle : Fragment() {
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentCamionDetalleBinding? = null
     private val binding get() = _binding!!
-    private lateinit var camion : Camion
+    private lateinit var camionModel : CamionModel
     lateinit var thiscontext : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +37,11 @@ class CamionDetalle : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
-        camion = args?.camion!!
-        binding.textIdCamion.setText(camion.id)
-        binding.textPatenteCamion.setText(camion.vehiclePlateIdentifier?.value)
-        binding.textCargaCamion.setText(camion.cargoWeight?.value.toString())
-        binding.textEstadoCamion.setText(camion.serviceStatus?.value)
+        camionModel = args?.camion!!
+        binding.textIdCamion.setText(camionModel.id)
+        binding.textPatenteCamion.setText(camionModel.vehiclePlateIdentifier?.value)
+        binding.textCargaCamion.setText(camionModel.cargoWeight?.value.toString())
+        binding.textEstadoCamion.setText(camionModel.serviceStatus?.value)
 
 //        binding.textTipoCamion.setText(camion.vehicleType?.value)
 //        binding.textZonaCamion.setText(camion.refZona?.value)
@@ -48,7 +49,7 @@ class CamionDetalle : Fragment() {
 
         //Botón Editar
         binding.botonEditar.setOnClickListener(){
-            val action = CamionDetalleDirections.actionCamionDetalleToUpdateCamion(camion)
+            val action = CamionDetalleDirections.actionCamionDetalleToUpdateCamion(camionModel)
             binding.root.findNavController().navigate(action)
         }
 
@@ -64,7 +65,7 @@ class CamionDetalle : Fragment() {
 
     private fun removeCamion(requestHandler: RequestHandler) {
         val gson = Gson()
-        val camion = Camion(camion.id.split(":")[1])
+        val camion = CamionModel(camionModel.id.split(":")[1])
         val deleteObject = DeleteCamionRequest()
         deleteObject.addEntitie(camion)
         val jsonDeleteObject = gson.toJson(deleteObject)

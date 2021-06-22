@@ -19,7 +19,13 @@ class ZonasRepository {
         return api.getZonaByName(name)
     }
 
-    suspend fun postZona(jsonObject: JSONObject){
-        api.postZona(jsonObject)
+    suspend fun getZonaById(id:String): List<ZonaModel>{
+        return api.getZonaById(id)
     }
+
+    suspend fun crearZona(zona: ZonaModel){
+        return api.crearZona(zona)
+    }
+
+
 }

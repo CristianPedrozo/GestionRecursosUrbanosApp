@@ -1,8 +1,8 @@
-package com.example.recolectar_app.contenedores
+package com.example.recolectar_app.model.contenedor
 
 import java.io.Serializable
 
-class Contenedor(var id: String) : Serializable {
+class ContenedorModel(var id: String) : Serializable {
     val type: String = "WasteContainer"
     lateinit var location: Location
     var nextActuationDeadline: NextActuationDeadline? = null

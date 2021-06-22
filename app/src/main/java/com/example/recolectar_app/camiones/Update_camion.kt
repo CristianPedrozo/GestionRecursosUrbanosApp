@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateCamionBinding
+import com.example.recolectar_app.model.camion.CamionModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -20,7 +21,7 @@ class Update_camion : Fragment() {
     private val binding get() = _binding!!
     lateinit var thiscontext : Context
     private lateinit var id: String
-    private lateinit var camion : Camion
+    private lateinit var camionModel : CamionModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +47,11 @@ class Update_camion : Fragment() {
         };
         val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
-        camion = args?.camion!!
-        binding.textIdCamion.setText(camion.id)
-        binding.textPatenteCamion.setText(camion.vehiclePlateIdentifier?.value)
-        binding.textCargaCamion.setText(camion.cargoWeight?.value.toString())
-        binding.textEstadoCamion.setText(camion.serviceStatus?.value)
+        camionModel = args?.camion!!
+        binding.textIdCamion.setText(camionModel.id)
+        binding.textPatenteCamion.setText(camionModel.vehiclePlateIdentifier?.value)
+        binding.textCargaCamion.setText(camionModel.cargoWeight?.value.toString())
+        binding.textEstadoCamion.setText(camionModel.serviceStatus?.value)
         //Para setear valor determinado en el combo
         //autoCompleteTextView.threshold(3)
 
@@ -73,7 +74,7 @@ class Update_camion : Fragment() {
         val gson = Gson()
         //estado = tiet_estado.text.toString()
         //Toast.makeText(thiscontext, estado, Toast.LENGTH_SHORT).show()
-        val camion = Camion(id)
+        val camion = CamionModel(id)
         camion.setCargoWeight(binding.textCargaCamion.text.toString().toDouble())
         //camion.setServiceStatus(estado)
         camion.setVehiclePlateIdentifier(binding.textPatenteCamion.text.toString())

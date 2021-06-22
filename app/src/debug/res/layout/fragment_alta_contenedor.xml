@@ -5,7 +5,7 @@
     android:id="@+id/fragment_contenedor_detalle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contenedores.ContenedorDetalle">
+    tools:context=".ui.view.contenedor.ContenedorDetalle">
 
 
     <ScrollView
@@ -142,7 +142,7 @@
                 android:id="@+id/editText_Temperatura"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="245dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"

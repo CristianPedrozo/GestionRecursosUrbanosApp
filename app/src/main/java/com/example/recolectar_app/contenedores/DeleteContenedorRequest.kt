@@ -1,12 +1,12 @@
 
-import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import java.util.ArrayList
 
 class DeleteContenedorRequest {
     var actionType : String = "delete"
-    var entities = ArrayList<Contenedor>()
+    var entities = ArrayList<ContenedorModel>()
 
-    fun addEntitie(entitie: Contenedor){
+    fun addEntitie(entitie: ContenedorModel){
         entities.add(entitie)
     }
 }

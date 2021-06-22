@@ -1,4 +1,4 @@
-package com.example.recolectar_app.contenedores
+package com.example.recolectar_app.ui.view.contenedor
 
 import android.content.Context
 import android.os.Bundle
@@ -11,11 +11,12 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentAltaContenedorBinding
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.util.regex.Pattern
 
-class alta_contenedor : Fragment() {
+class ContenedorAlta : Fragment() {
     val url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
     private var _binding: FragmentAltaContenedorBinding? = null
@@ -26,7 +27,7 @@ class alta_contenedor : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAltaContenedorBinding.inflate(layoutInflater,container,false)
         if (container != null) {
             thiscontext = container.context
@@ -53,7 +54,7 @@ class alta_contenedor : Fragment() {
         binding.botonAgregar.setOnClickListener{
             validarCampos()
             addContenedor(requestHandler)
-            val action = alta_contenedorDirections.actionAltaContenedorToContenedores()
+            val action = ContenedorAltaDirections.actionAltaContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
@@ -61,7 +62,7 @@ class alta_contenedor : Fragment() {
 
     private fun addContenedor(requestHandler : RequestHandler) {
         val gson = Gson()
-        val contenedor = Contenedor(binding.editTextCodigo.editText?.text.toString())
+        val contenedor = ContenedorModel(binding.editTextCodigo.editText?.text.toString())
         val latlong : MutableList<Double> = arrayListOf()
         latlong.add(binding.editTextLatitud.editText?.text.toString().toDouble())
         latlong.add(binding.editTextLongitud.editText?.text.toString().toDouble())

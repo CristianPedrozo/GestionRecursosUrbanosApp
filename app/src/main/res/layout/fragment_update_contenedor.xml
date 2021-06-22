@@ -5,7 +5,7 @@
     android:id="@+id/fragment_contenedor_update"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contenedores.Update_Contenedor">
+    tools:context=".ui.view.contenedor.ContenedorUpdate">
     <ScrollView
         android:id="@+id/scrollView_edit_Camion"
         android:layout_width="match_parent"

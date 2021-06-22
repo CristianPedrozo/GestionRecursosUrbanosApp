@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.example.recolectar_app.adapters.ContenedorListAdapter
-import com.example.recolectar_app.administrador.Contenedores
-import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.model.contenedor.ContenedorListAdapter
+import com.example.recolectar_app.ui.view.contenedor.ContenedoresList
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentEmpleadoContenedoresBinding
 import com.google.gson.Gson
 
@@ -23,12 +23,12 @@ class Contenedores : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&?q=refZona=="
     lateinit var thiscontext : Context
     lateinit var recContenedores : RecyclerView
-    var contenedores : MutableList<Contenedor> = ArrayList()
+    var contenedores : MutableList<ContenedorModel> = ArrayList()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var contenedorListAdapter: ContenedorListAdapter
 
     companion object {
-        fun newInstance() = Contenedores()
+        fun newInstance() = ContenedoresList()
     }
 
     override fun onCreateView(
@@ -51,8 +51,9 @@ class Contenedores : Fragment() {
         val jsonArrayRequest = JsonArrayRequest(url,
             { response ->
                 for (i in 0 until response.length()){
-                    val contenedor : Contenedor = gson.fromJson(response.getJSONObject(i).toString(),Contenedor::class.java)
-                    contenedores.add(contenedor)
+                    val contenedorModel : ContenedorModel = gson.fromJson(response.getJSONObject(i).toString(),
+                        ContenedorModel::class.java)
+                    contenedores.add(contenedorModel)
                 }
                 recContenedores.setHasFixedSize(true)
                 linearLayoutManager = LinearLayoutManager(context)

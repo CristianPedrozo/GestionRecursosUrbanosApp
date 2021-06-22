@@ -30,7 +30,7 @@ object RetrofitHelper {
                 .newBuilder()
                 .url(request.url().toString().replace("%3F","?"))
                 .build()
-
+            print(req2)
             return@Interceptor chain.proceed(req2)
         }
 

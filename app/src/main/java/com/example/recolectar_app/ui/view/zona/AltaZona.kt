@@ -6,26 +6,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
-import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentAltaZonaBinding
-import com.example.recolectar_app.domain.PostZonaUseCase
+import com.example.recolectar_app.domain.zonasRequests.PostZonaUseCase
 import com.example.recolectar_app.model.zona.ZonaModel
+import com.example.recolectar_app.ui.viewModel.ZonaAltaVM
 import com.google.gson.Gson
 import org.json.JSONObject
 
 
-class alta_zona : Fragment() {
+class ZonaAlta : Fragment() {
 
     var url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
     private var _binding: FragmentAltaZonaBinding? = null
     private val binding get() = _binding!!
+    private val zonaAltaVM = ZonaAltaVM()
     private lateinit var zona : ZonaModel
     private val id = String
     private val refVehicle = String
     private val name = String
-    private val contenedores = ArrayList<Contenedor>()
+    private val contenedores = ArrayList<ContenedorModel>()
     private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +51,11 @@ class alta_zona : Fragment() {
         binding.editTextName.hint = "Nombre de la zona"
         binding.botonAgregar.setOnClickListener {
             addZona()
-            val action = alta_zonaDirections.actionAltaZonaToListZonas()
+            val action = ZonaAltaDirections.actionAltaZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
         binding.botonCancelar.setOnClickListener{
-            val action = alta_zonaDirections.actionAltaZonaToListZonas()
+            val action = ZonaAltaDirections.actionAltaZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
 
@@ -62,8 +65,10 @@ class alta_zona : Fragment() {
 
     private fun addZona() {
         zona = ZonaModel(binding.editTextId.editText?.text.toString())
-        val jsonObject = JSONObject(gson.toJson(zona))
-        PostZonaUseCase(jsonObject)
+        zona.setNombre(binding.editTextName.editText?.text.toString())
+        zona.setRefVehicleValue(binding.editTextRefVehicle.editText?.text.toString())
+        zona.setContenedores(ArrayList())
+        zonaAltaVM.crearZona(zona)
     }
 
 //    private fun addZona(requestHandler : RequestHandler) {
@@ -86,7 +91,7 @@ class alta_zona : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            alta_zona().apply {
+            ZonaAlta().apply {
                 arguments = Bundle().apply {
 
                 }

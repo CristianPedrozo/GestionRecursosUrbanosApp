@@ -11,11 +11,9 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateZonaBinding
 import com.example.recolectar_app.model.zona.ZonaModel
-import com.google.gson.Gson
-import org.json.JSONObject
 
 
-class Update_Zona : Fragment() {
+class ZonaUpdate : Fragment() {
     private val TAG = "Update Zona"
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentUpdateZonaBinding? = null
@@ -40,19 +38,19 @@ class Update_Zona : Fragment() {
             thiscontext = container.context
         }
         val requestHandler = RequestHandler.getInstance(thiscontext)
-        val args = arguments?.let { Detalle_ZonaArgs.fromBundle(it) }
+        val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
 
         binding.textIdEditZona.hint = "Zona n°: ${zona.id.split(":")[1]}"
         binding.textContenedoresEditZona.hint = "Contenedores: ${zona.contenedores.value.size}"
         binding.textCamionEditZona.setText(zona.refVehicle?.value)
         binding.botonCancelarEditZona.setOnClickListener {
-            val action = Update_ZonaDirections.actionUpdateZonaToListZonas()
+            val action = ZonaUpdateDirections.actionUpdateZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
         binding.botonConfirmarEditarZona.setOnClickListener {
 //            editZona(requestHandler)
-            val action = Update_ZonaDirections.actionUpdateZonaToListZonas()
+            val action = ZonaUpdateDirections.actionUpdateZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
@@ -73,7 +71,7 @@ class Update_Zona : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            Update_Zona().apply {
+            ZonaUpdate().apply {
                 arguments = Bundle().apply {
 
                 }

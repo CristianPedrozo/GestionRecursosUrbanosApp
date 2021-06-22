@@ -1,12 +1,10 @@
-package com.example.recolectar_app.adapters
+package com.example.recolectar_app.model.contenedor
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recolectar_app.R
-import com.example.recolectar_app.contenedores.Contenedor
-import com.example.recolectar_app.holders.ContenedorHolder
 
-class ContenedorListAdapter (private var contenedorList: MutableList<Contenedor>) : RecyclerView.Adapter<ContenedorHolder>() {
+class ContenedorListAdapter (private var contenedorModelList: MutableList<ContenedorModel>) : RecyclerView.Adapter<ContenedorHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContenedorHolder {
         val layoutInflater =  LayoutInflater.from(parent.context)
@@ -14,15 +12,15 @@ class ContenedorListAdapter (private var contenedorList: MutableList<Contenedor>
     }
 
     override fun getItemCount(): Int {
-        return contenedorList.size
+        return contenedorModelList.size
     }
 
-    fun setData(newData: ArrayList<Contenedor>) {
-        this.contenedorList = newData
+    fun setData(newData: ArrayList<ContenedorModel>) {
+        this.contenedorModelList = newData
         this.notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ContenedorHolder, position: Int) {
-        holder.bind(contenedorList[position])
+        holder.bind(contenedorModelList[position])
     }
 }
