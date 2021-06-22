@@ -10,9 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.databinding.FragmentZonaDetalleBinding
+import com.example.recolectar_app.model.DeleteRequestModel
 import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
 import com.example.recolectar_app.ui.viewModel.zona.ZonaDetalleVM
+import com.google.gson.Gson
 
 //import com.example.recolectar_app.zonas.DeleteZonaRequest
 
@@ -73,8 +75,8 @@ class ZonaDetalle : Fragment() {
 
     private fun removeZona() {
         val zona = ZonaModel(zona.id.split(":")[1])
-        val deleteZonaRequest = DeleteZonaRequestModel()
-        deleteZonaRequest.addEntitie(zona)
+        val deleteZonaRequest = DeleteRequestModel()
+        deleteZonaRequest.addZona(zona)
         zonaDetalleVM.deleteZona(deleteZonaRequest)
     }
 

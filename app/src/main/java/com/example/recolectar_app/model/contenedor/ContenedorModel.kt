@@ -1,6 +1,7 @@
 package com.example.recolectar_app.model.contenedor
 
 import java.io.Serializable
+import java.util.*
 
 class ContenedorModel(var id: String) : Serializable {
     val type: String = "WasteContainer"
@@ -45,7 +46,7 @@ class ContenedorModel(var id: String) : Serializable {
     fun setDateLastEmptying(date : String){
         this.dateLastEmptying = DateLastEmptying(date)
     }
-    fun setFillingLevel(lvl : Number){
+    fun setFillingLevel(lvl : Double){
         this.fillingLevel = FillingLevel(lvl)
     }
 

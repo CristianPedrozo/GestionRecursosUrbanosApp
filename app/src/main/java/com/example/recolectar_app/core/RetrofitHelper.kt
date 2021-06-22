@@ -40,9 +40,9 @@ object RetrofitHelper {
             .build()
 
         return Retrofit.Builder()
-            .client(okHttpClient)
             .baseUrl("http://46.17.108.122:1026/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
     }
 

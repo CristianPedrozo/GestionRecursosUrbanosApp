@@ -12,9 +12,11 @@ import androidx.navigation.findNavController
 //import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateZonaBinding
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
 import com.example.recolectar_app.ui.viewModel.zona.ZonaUpdateVM
+import com.google.gson.Gson
 
 
 class ZonaUpdate : Fragment() {
@@ -42,7 +44,7 @@ class ZonaUpdate : Fragment() {
         if (container != null) {
             thiscontext = container.context
         }
-        val requestHandler = RequestHandler.getInstance(thiscontext)
+
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
 
@@ -75,10 +77,15 @@ class ZonaUpdate : Fragment() {
         val zona = ZonaModel(zona.id.split(":")[1])
         zona.setRefVehicleValue(binding.textCamionEditZona.text.toString())
         zona.setNombre(binding.textNombreEditZona.text.toString())
-        val zonaUpdateObject = UpdateZonaRequestModel()
-        zonaUpdateObject.addEntitie(zona)
-        zonaUpdateVM.updateZona(zonaUpdateObject)
+        val zonaUpdateRequest = UpdateRequestModel()
+        zonaUpdateRequest.addZona(zona)
+        val gson = Gson()
+        val asd = gson.toJson(zonaUpdateRequest)
+        Toast.makeText(thiscontext, asd, Toast.LENGTH_LONG).show()
+        zonaUpdateVM.updateZona(zonaUpdateRequest)
     }
+
+
 
     companion object {
         @JvmStatic

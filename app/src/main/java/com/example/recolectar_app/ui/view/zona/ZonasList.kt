@@ -81,27 +81,4 @@ class ZonasList : Fragment() {
         }
         return binding.root
     }
-
-
-
-
-////    fun getContenedoresAsignados(requestHandler: RequestHandler, zonas : MutableList<ZonaModel>){
-////        val gso = Gson()
-//        val nZonas = zonas
-//        requestHandler.getArrayRequest(urlContenedoresAsignados,
-//            { response ->
-//                for(i in 0 until response.length()){
-//                    val contenedor : Contenedor = gson.fromJson(response.getJSONObject(i).toString(),Contenedor::class.java)
-//                    for(k in 0 until nZonas.size){
-//                        if(contenedor.refZona?.value == nZonas[k].id){
-//                            nZonas[k].contenedores.addContenedor(contenedor)
-//                        }
-//                    }
-//                }
-//                binding.recZonas.adapter?.notifyDataSetChanged()
-//            },{},null)
-//
-//
-//    }
-
 }

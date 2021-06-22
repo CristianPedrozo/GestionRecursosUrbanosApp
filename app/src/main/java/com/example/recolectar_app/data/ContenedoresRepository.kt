@@ -2,6 +2,8 @@ package com.example.recolectar_app.data
 
 import com.example.recolectar_app.data.network.ContenedorService
 import com.example.recolectar_app.data.network.ZonaService
+import com.example.recolectar_app.model.DeleteRequestModel
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.model.contenedor.ContenedorProvider
 import com.example.recolectar_app.model.contenedor.DeleteContenedorRequestModel
@@ -28,12 +30,12 @@ class ContenedoresRepository {
         return api.postNewContenedor(contenedor)
     }
 
-    suspend fun updateContenedor(updateContenedorRequestModel: UpdateContenedorRequestModel) : Boolean{
-        return api.updateContenedor(updateContenedorRequestModel)
+    suspend fun updateContenedor(updateRequestModel: UpdateRequestModel) : Boolean{
+        return api.updateContenedor(updateRequestModel)
     }
 
-    suspend fun deleteContenedor(deleteContenedorRequestModel: DeleteContenedorRequestModel) : Boolean{
-        return api.deleteContenedor(deleteContenedorRequestModel)
+    suspend fun deleteContenedor(deleteRequestModel: DeleteRequestModel) : Boolean{
+        return api.deleteContenedor(deleteRequestModel)
     }
 
 

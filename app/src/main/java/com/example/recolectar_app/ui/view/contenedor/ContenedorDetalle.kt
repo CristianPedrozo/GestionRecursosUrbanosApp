@@ -12,8 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentContenedorDetalleBinding
+import com.example.recolectar_app.model.DeleteRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorDetalleVM
+import com.google.gson.Gson
 
 class ContenedorDetalle : Fragment() {
     private val TAG = "ContenedorDetalle"
@@ -53,7 +55,7 @@ class ContenedorDetalle : Fragment() {
         binding.textRuta.setText(contenedorModel.refRuta?.value)
         binding.textCamion.setText(contenedorModel.refVehicle?.value)
         binding.textTemperatura.setText(contenedorModel.temperature?.value.toString())
-        binding.textZona.setText(contenedorModel.refZona?.value)
+        binding.textZona.setText(contenedorModel.refZona.value)
         binding.textProximaVisita.setText(contenedorModel.nextActuationDeadline?.value)
         binding.textUltimaVisita.setText(contenedorModel.dateLastEmptying?.value)
         binding.textLlenado.setText(contenedorModel.fillingLevel.value.toString())
@@ -82,9 +84,15 @@ class ContenedorDetalle : Fragment() {
 
     private fun removeContenedor() {
         val contenedor = ContenedorModel(contenedorModel.id.split(":")[1])
-        val contenedorDeleteRequest = DeleteContenedorRequestModel()
-        contenedorDeleteRequest.addEntitie(contenedor)
+        val contenedorDeleteRequest = DeleteRequestModel()
+        contenedorDeleteRequest.addContenedor(contenedor)
         contenedorDetalleVM.deleteContenedor(contenedorDeleteRequest)
+        val gson = Gson()
+        val asd = gson.toJson(contenedorDeleteRequest)
+        Toast.makeText(thiscontext, "ESTAS SON LAS ENTITIES ANTES${contenedorDeleteRequest.entities}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(thiscontext, "ESTE ES EL REQ $asd", Toast.LENGTH_SHORT).show()
+        contenedorDeleteRequest.entities.clear()
+        Toast.makeText(thiscontext, "ENTITIES DESPUES ${contenedorDeleteRequest.entities}", Toast.LENGTH_SHORT).show()
     }
 
 

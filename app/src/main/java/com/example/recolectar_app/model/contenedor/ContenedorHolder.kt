@@ -13,10 +13,14 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
     @SuppressLint("SetTextI18n")
     fun bind(contenedorModel: ContenedorModel){
         binding.txtIdItemContenedor.text = contenedorModel.id.split(":")[1]
-        binding.txtZonaItemContenedor.text = contenedorModel.refZona?.value!!.split(":")[1]
+        binding.txtZonaItemContenedor.text = contenedorModel.refZona.value.split(":")[1]
         binding.txtTipoItemContendor.text = contenedorModel.wasteType.value
-        binding.txtLlenadoItemContenedor.text = contenedorModel.fillingLevel.value.toString().split(".")[1]+"%"
-
+        if(contenedorModel.fillingLevel.value.toString() == "0"){
+         binding.txtLlenadoItemContenedor.text = "0%"
+        }else {
+            binding.txtLlenadoItemContenedor.text =
+                contenedorModel.fillingLevel.value.toString().split(".")[1] + "%"
+        }
         binding.cardPackageItemContenedor.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(ContenedoresListDirections.actionContenedoresToContenedorDetalle(
                 contenedorModel

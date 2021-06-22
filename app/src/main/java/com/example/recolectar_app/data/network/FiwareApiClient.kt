@@ -1,6 +1,8 @@
 package com.example.recolectar_app.data.network
 
 import DeleteCamionRequestModel
+import com.example.recolectar_app.model.DeleteRequestModel
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.camion.CamionModel
 import com.example.recolectar_app.model.camion.UpdateCamionRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
@@ -29,10 +31,10 @@ interface FiwareApiClient {
         suspend fun postNewZona(@Body params : ZonaModel) : Response<Unit>
         // UPDATE ZONA
         @POST("/v2/op/update")
-        suspend fun updateZona(@Body params : UpdateZonaRequestModel) : Response<Unit>
+        suspend fun updateZona(@Body params : UpdateRequestModel) : Response<Unit>
         // DELETE ZONA
         @POST("/v2/op/update")
-        suspend fun deleteZona(@Body params : DeleteZonaRequestModel) : Response<Unit>
+        suspend fun deleteZona(@Body params : DeleteRequestModel) : Response<Unit>
 
    //CONTENEDORES
 
@@ -50,15 +52,16 @@ interface FiwareApiClient {
         suspend fun postNewContenedor(@Body params : ContenedorModel) : Response<Unit>
         // UPDATE CONTENDOR
         @POST("/v2/op/update")
-        suspend fun updateContenedor(@Body params : UpdateContenedorRequestModel) : Response<Unit>
+        suspend fun updateContenedor(@Body params : UpdateRequestModel) : Response<Unit>
         // DELETE CONTENDOR
         @POST("/v2/op/update")
-        suspend fun deleteContenedor(@Body params : DeleteContenedorRequestModel) : Response<Unit>
+        suspend fun deleteContenedor(@Body params : DeleteRequestModel) : Response<Unit>
+
 
    //CAMIONES
 
         //GET CAMIONES
-        @GET("/v2/entities/?type=WasteContainer&limit=1000")
+        @GET("/v2/entities/?type=Vehicle&limit=1000")
         suspend fun getAllCamiones(): Response<List<CamionModel>>
         //GET CAMIONES POR ZONA
         @GET("/v2/entities/{zona_id}")
@@ -76,6 +79,12 @@ interface FiwareApiClient {
         @POST("/v2/op/update")
         suspend fun deleteCamion(@Body params : DeleteCamionRequestModel) : Response<Unit>
 
-
+  //GENERIC
+        //UPDATE
+          @POST("/v2/op/update")
+          suspend fun updateEntitie(@Body params : UpdateRequestModel) : Response<Unit>
+        //DELETE
+          @POST("/v2/op/update")
+          suspend fun deleteEntitie(@Body params : DeleteRequestModel) : Response<Unit>
 
 }

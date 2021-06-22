@@ -1,22 +1,24 @@
 package com.example.recolectar_app.ui.view.contenedor
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateContenedorBinding
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
-import com.example.recolectar_app.model.contenedor.UpdateContenedorRequestModel
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorUpdateVM
 import com.google.gson.Gson
-import org.json.JSONObject
-import java.lang.Double
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class ContenedorUpdate : Fragment() {
@@ -27,6 +29,7 @@ class ContenedorUpdate : Fragment() {
     private val contenedorUpdateVM : ContenedorUpdateVM  by viewModels()
     private lateinit var contenedor: ContenedorModel
     lateinit var thiscontext : Context
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,16 +90,20 @@ class ContenedorUpdate : Fragment() {
         val contenedor = ContenedorModel(edittextContenedorId.text.toString())
         contenedor.setRefZona(edittextContenedorZona.text.toString())
         contenedor.setStatus(edittextContenedorEstado.text.toString())
-        contenedor.setFillingLevel(Double.parseDouble(edittextContenedorLlenado.text.toString()))
+        contenedor.setFillingLevel(edittextContenedorLlenado.text.toString().toDouble())
         contenedor.setDateLastEmptying(edittextContenedorUltimaVisita.text.toString())
-        contenedor.setNextActuationDeadLine(edittextContenedorProximaVisita.text.toString())
+//        contenedor.setNextActuationDeadLine(edittextContenedorProximaVisita.text.toString())
 //        contenedor.setRefRuta(edittextContenedorRuta.text.toString())
         contenedor.setRefVehicle(edittextContenedorCamion.text.toString())
-        contenedor.setTemperature(Double.parseDouble(edittextContenedorTemperatura.text.toString()))
-        contenedor.setWasteType(edittextContenedorTipo.text.toString())
-        contenedor.setLocation(mutableListOf(Double.parseDouble(edittextContenedorLatitud.text.toString()),Double.parseDouble(edittextContenedorLongitud.text.toString())))
-        val contenedorUpdateRequest = UpdateContenedorRequestModel()
-        contenedorUpdateRequest.addEntitie(contenedor)
+        contenedor.setTemperature(edittextContenedorTemperatura.text.toString().toDouble())
+//        contenedor.setWasteType(edittextContenedorTipo.text.toString())
+        contenedor.setLocation(mutableListOf(edittextContenedorLatitud.text.toString().toDouble(),edittextContenedorLongitud.text.toString().toDouble()))
+        val contenedorUpdateRequest = UpdateRequestModel()
+        contenedorUpdateRequest.addContenedor(contenedor)
+//        print(contenedorUpdateRequest)
+//        val gson = Gson()
+//        val asd = gson.toJson(contenedorUpdateRequest)
+//        Toast.makeText(thiscontext, asd, Toast.LENGTH_LONG).show()
         contenedorUpdateVM.updateContenedor(contenedorUpdateRequest)
     }
 

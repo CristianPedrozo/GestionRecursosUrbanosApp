@@ -1,6 +1,8 @@
 package com.example.recolectar_app.data.network
 
 import com.example.recolectar_app.core.RetrofitHelper
+import com.example.recolectar_app.model.DeleteRequestModel
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
 import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
@@ -39,16 +41,17 @@ class ZonaService {
         }
     }
 
-    suspend fun deleteZona(deleteZonaRequestModel: DeleteZonaRequestModel) : Boolean{
+    suspend fun deleteZona(deleteRequestModel: DeleteRequestModel) : Boolean{
         return withContext(Dispatchers.IO){
-            val unit = retrofit.create(FiwareApiClient::class.java).deleteZona(deleteZonaRequestModel)
+            val unit = retrofit.create(FiwareApiClient::class.java).deleteEntitie(deleteRequestModel)
             unit.isSuccessful
         }
     }
 
-    suspend fun updateZona(updateZonaRequestModel: UpdateZonaRequestModel) : Boolean {
+    suspend fun updateZona(updateRequestModel: UpdateRequestModel) : Boolean {
         return withContext(Dispatchers.IO){
-            val unit = retrofit.create(FiwareApiClient::class.java).updateZona(updateZonaRequestModel)
+            val unit = retrofit.create(FiwareApiClient::class.java).updateEntitie(updateRequestModel)
+            print(unit)
             unit.isSuccessful
         }
     }
