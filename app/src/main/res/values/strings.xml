@@ -76,6 +76,7 @@
     <string name="label_id_zona">Zona n°:</string>
     <string name="label_contenedores_zona">Contenedores:</string>
     <string name="label_refVehicle_zona">Camion:</string>
+    <string name="label_nombre_zona">Nombre:</string>
     <!--Para Configuration-->
     <string name="lbl_Umbral_Default">Umbral Default</string>
     <string name="txt_Umbral_Defautl">0.60</string>

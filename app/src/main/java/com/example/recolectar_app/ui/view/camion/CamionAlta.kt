@@ -16,7 +16,7 @@ import com.example.recolectar_app.model.camion.CamionModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
-class alta_camion : Fragment() {
+class CamionAlta : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
 
@@ -96,7 +96,7 @@ class alta_camion : Fragment() {
 
         @JvmStatic
         fun newInstance() =
-            alta_camion().apply {
+            CamionAlta().apply {
                 arguments = Bundle().apply {
 
                 }

@@ -1,4 +1,4 @@
-package com.example.recolectar_app.camiones
+package com.example.recolectar_app.ui.view.camion
 
 import android.content.Context
 import android.os.Bundle
@@ -10,10 +10,11 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateCamionBinding
 import com.example.recolectar_app.model.camion.CamionModel
+import com.example.recolectar_app.model.camion.UpdateCamionRequestModel
 import com.google.gson.Gson
 import org.json.JSONObject
 
-class Update_camion : Fragment() {
+class CamionUpdate : Fragment() {
     private val TAG = "Update Camion"
     private var url = "http://46.17.108.122:1026/v2/op/update"
 
@@ -79,7 +80,7 @@ class Update_camion : Fragment() {
         //camion.setServiceStatus(estado)
         camion.setVehiclePlateIdentifier(binding.textPatenteCamion.text.toString())
         camion.setVehicleType("lorry")
-        val patchObject = PatchCamionObject()
+        val patchObject = UpdateCamionRequestModel()
         patchObject.addEntitie(camion)
         val jsonPatchObject = gson.toJson(patchObject)
         val jsonObject = JSONObject(jsonPatchObject)
@@ -90,7 +91,7 @@ class Update_camion : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Update_camion().apply {
+            CamionUpdate().apply {
                 arguments = Bundle().apply {
 
                 }

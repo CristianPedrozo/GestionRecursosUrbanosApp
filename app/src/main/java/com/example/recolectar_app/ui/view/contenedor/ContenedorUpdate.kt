@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.PatchContenedorObject
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateContenedorBinding
 import com.example.recolectar_app.model.contenedor.ContenedorModel
+import com.example.recolectar_app.model.contenedor.UpdateContenedorRequestModel
+import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorUpdateVM
 import com.google.gson.Gson
 import org.json.JSONObject
+import java.lang.Double
 
 
 class ContenedorUpdate : Fragment() {
@@ -21,7 +24,8 @@ class ContenedorUpdate : Fragment() {
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentUpdateContenedorBinding? = null
     private val binding get() = _binding!!
-    private lateinit var contenedorModel: ContenedorModel
+    private val contenedorUpdateVM : ContenedorUpdateVM  by viewModels()
+    private lateinit var contenedor: ContenedorModel
     lateinit var thiscontext : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,62 +43,61 @@ class ContenedorUpdate : Fragment() {
 
         if (container != null) {
             thiscontext = container.context
-        };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
+        }
         val args = arguments?.let { ContenedorDetalleArgs.fromBundle(it) }
-        contenedorModel = args?.contenedor!!
-        binding.edittextContenedorId.setText(contenedorModel.id!!.split(":")[1])
-        binding.edittextContenedorCamion.setText(contenedorModel.refVehicle?.value)
-        binding.edittextContenedorEstado.setText(contenedorModel.status.value)
-        binding.edittextContenedorLatitud.setText(contenedorModel.location.value.coordinates[0].toString())
-        binding.edittextContenedorLongitud.setText(contenedorModel.location.value.coordinates[1].toString())
-//        binding.edittextContenedorRuta.setText(contenedor.refRuta?.value)
-        binding.edittextContenedorZona.setText(contenedorModel.refZona?.value)
-        binding.edittextContenedorTemperatura.setText(contenedorModel.temperature?.value.toString())
-        binding.edittextContenedorLlenado.setText(contenedorModel.fillingLevel.value.toString())
-//        binding.edittextContenedorUltimaVisita.setText(contenedor.dateLastEmptying?.value)
-//        binding.edittextContenedorProximaVisita.setText(contenedor.nextActuationDeadline?.value)
+        contenedor = args?.contenedor!!
+        loadContenedorData(contenedor.id)
+
+        
+        contenedorUpdateVM.contenedorUpdateData.observe(viewLifecycleOwner, {result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
+        
         binding.botonConfirmarEditarContenedor.setOnClickListener(){
-            editContenedor(requestHandler)
+            editContenedor()
             val action = ContenedorUpdateDirections.actionUpdateContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
     }
 
+    private fun loadContenedorData(contenedorId: String) = with(binding){
+        contenedorUpdateVM.contenedorSelectedData.observe(viewLifecycleOwner,{data->
+            edittextContenedorId.setText(data.id.split(":")[1])
+            edittextContenedorLongitud.setText(data.location.value.coordinates[1].toString())
+            edittextContenedorLatitud.setText(data.location.value.coordinates[0].toString())
+            edittextContenedorProximaVisita.setText(data.nextActuationDeadline?.value ?: "")
+            edittextContenedorUltimaVisita.setText(data.dateLastEmptying?.value ?: "")
+            edittextContenedorLlenado.setText(data.fillingLevel.value.toString())
+            edittextContenedorTemperatura.setText(data.temperature?.value?.toString() ?: "")
+            edittextContenedorZona.setText(data.refZona.value.split(":")[1])
+//            edittextContenedorRuta.setText(data.refRuta?.value ?: "")
+            edittextContenedorEstado.setText(data.status.value)
+            edittextContenedorCamion.setText(data.refVehicle?.value ?: "")
+        })
+        val string = "?id=$contenedorId"
+        contenedorUpdateVM.getContenedorById(string)
+    }
 
-    private fun editContenedor(requestHandler: RequestHandler) {
-        val gson = Gson()
-        val contEdit = ContenedorModel(contenedorModel.id!!.split(":")[1])
-        if(binding.edittextContenedorEstado.text.toString() != contenedorModel.status.value && binding.edittextContenedorEstado.text.toString() != "")
-            contEdit.setStatus(binding.edittextContenedorEstado.text.toString())
-//        if(tiet_camion.text.toString() != contenedor.refVehicle?.value?.split(":")?.get(1) ?: "")
-//            contEdit.setRefVehicle(tiet_camion.text.toString())
-        if(binding.edittextContenedorLatitud.text.toString() != "" &&
-            binding.edittextContenedorLatitud.text.toString() != ""){
-            val latlong : MutableList<Double> = arrayListOf()
-            latlong.add(binding.edittextContenedorLatitud.text.toString().toDouble())
-            latlong.add(binding.edittextContenedorLongitud.text.toString().toDouble())
-            contEdit.setLocation(latlong)
-        }
-        if(binding.edittextContenedorLlenado.text.toString() != contenedorModel.fillingLevel.value.toString() && binding.edittextContenedorLlenado.text.toString() != "")
-            contEdit.setFillingLevel(binding.edittextContenedorLlenado.text.toString().toDouble())
-//        if(tiet_proxima_visita.text.toString() != contenedor.nextActuationDeadline?.value ?: "")
-//            contEdit.setStatus(tiet_proxima_visita.text.toString())
-//        if(tiet_ultima_visita.text.toString() != contenedor.dateLastEmptying?.value ?: "")
-//            contEdit.setStatus(tiet_ultima_visita.text.toString())
-        if(binding.edittextContenedorTemperatura.text.toString() != contenedorModel.temperature?.value.toString() && binding.edittextContenedorTemperatura.text.toString() != "")
-            contEdit.setTemperature(binding.edittextContenedorTemperatura.text.toString().toDouble())
-//        if(tiet_zona.text.toString() != contenedor.refZona?.value?.split(":")?.get(1) ?: "")
-//            contEdit.setRefZona(tiet_zona.text.toString())
-//        if(tiet_ruta.text.toString() != contenedor.refRuta?.value?.split(":")?.get(1) ?: "")
-//            contEdit.setRefRuta(tiet_zona.text.toString())
-        val patchObject = PatchContenedorObject()
-        patchObject.addEntitie(contEdit)
-        val jsonPatchObject = gson.toJson(patchObject)
-        val jsonObject = JSONObject(jsonPatchObject)
-        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
-        requestHandler.patchRequest(url,jsonObject,{},{})
+    private fun editContenedor() = with(binding) {
+        val contenedor = ContenedorModel(edittextContenedorId.text.toString())
+        contenedor.setRefZona(edittextContenedorZona.text.toString())
+        contenedor.setStatus(edittextContenedorEstado.text.toString())
+        contenedor.setFillingLevel(Double.parseDouble(edittextContenedorLlenado.text.toString()))
+        contenedor.setDateLastEmptying(edittextContenedorUltimaVisita.text.toString())
+        contenedor.setNextActuationDeadLine(edittextContenedorProximaVisita.text.toString())
+//        contenedor.setRefRuta(edittextContenedorRuta.text.toString())
+        contenedor.setRefVehicle(edittextContenedorCamion.text.toString())
+        contenedor.setTemperature(Double.parseDouble(edittextContenedorTemperatura.text.toString()))
+        contenedor.setWasteType(edittextContenedorTipo.text.toString())
+        contenedor.setLocation(mutableListOf(Double.parseDouble(edittextContenedorLatitud.text.toString()),Double.parseDouble(edittextContenedorLongitud.text.toString())))
+        val contenedorUpdateRequest = UpdateContenedorRequestModel()
+        contenedorUpdateRequest.addEntitie(contenedor)
+        contenedorUpdateVM.updateContenedor(contenedorUpdateRequest)
     }
 
     companion object {

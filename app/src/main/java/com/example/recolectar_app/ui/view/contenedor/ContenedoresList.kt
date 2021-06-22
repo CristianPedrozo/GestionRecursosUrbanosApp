@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recolectar_app.model.contenedor.ContenedorListAdapter
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentListContenedoresBinding
-import com.example.recolectar_app.ui.viewModel.ContenedorListVM
+import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorListVM
 import java.lang.Exception
 
 

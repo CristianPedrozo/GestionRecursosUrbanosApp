@@ -1,5 +1,5 @@
-package com.example.recolectar_app.camiones
-import DeleteCamionRequest
+package com.example.recolectar_app.ui.view.camion
+import DeleteCamionRequestModel
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -66,7 +66,7 @@ class CamionDetalle : Fragment() {
     private fun removeCamion(requestHandler: RequestHandler) {
         val gson = Gson()
         val camion = CamionModel(camionModel.id.split(":")[1])
-        val deleteObject = DeleteCamionRequest()
+        val deleteObject = DeleteCamionRequestModel()
         deleteObject.addEntitie(camion)
         val jsonDeleteObject = gson.toJson(deleteObject)
         val jsonObject = JSONObject(jsonDeleteObject)

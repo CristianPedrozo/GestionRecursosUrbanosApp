@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentZonaDetalleBinding
+import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
+import com.example.recolectar_app.ui.viewModel.zona.ZonaDetalleVM
+
 //import com.example.recolectar_app.zonas.DeleteZonaRequest
 
 
@@ -18,6 +22,7 @@ class ZonaDetalle : Fragment() {
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding:FragmentZonaDetalleBinding? = null
     private val binding get() = _binding!!
+    private val zonaDetalleVM : ZonaDetalleVM by viewModels()
     private lateinit var zona: ZonaModel
     lateinit var thiscontext : Context
 
@@ -36,35 +41,42 @@ class ZonaDetalle : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
-        binding.textIdDetalleZona.setText(zona.id!!.split(":")[1])
-        binding.textCamionDetalleZona.setText(zona.refVehicle?.value!!.split(":")[1])
+        binding.textIdDetalleZona.setText(zona.id.split(":")[1])
+        binding.textCamionDetalleZona.setText(zona.refVehicle.value.split(":")[1])
         binding.textContenedoresDetalleZona.setText(zona.contenedores.value.size.toString())
+        binding.textNombreDetalleZona.setText(zona.nombre.value)
+
 
         binding.botonEditarZona.setOnClickListener {
             val action = ZonaDetalleDirections.actionDetalleZonaToUpdateZona(zona)
             binding.root.findNavController().navigate(action)
         }
         binding.botonEliminarZona.setOnClickListener{
-//            removeZona(requestHandler)
+            removeZona()
             val action = ZonaDetalleDirections.actionDetalleZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
+
+        zonaDetalleVM.deleteZonaData.observe(viewLifecycleOwner, { result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        
         return binding.root
     }
 
-//    private fun removeZona(requestHandler: RequestHandler) {
-//        val gson = Gson()
-//        val zona = ZonaModel(zona.id.split(":")[1])
-//        val deleteObject = DeleteZonaRequest()
-//        deleteObject.addEntitie(zona)
-//        val jsonDeleteObject = gson.toJson(deleteObject)
-//        val jsonObject = JSONObject(jsonDeleteObject)
-//        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
-//        requestHandler.deleteRequest(url,jsonObject,{},{})
-//    }
+    private fun removeZona() {
+        val zona = ZonaModel(zona.id.split(":")[1])
+        val deleteZonaRequest = DeleteZonaRequestModel()
+        deleteZonaRequest.addEntitie(zona)
+        zonaDetalleVM.deleteZona(deleteZonaRequest)
+    }
 
 
 

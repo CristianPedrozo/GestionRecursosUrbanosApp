@@ -7,14 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentAltaZonaBinding
-import com.example.recolectar_app.domain.zonasRequests.PostZonaUseCase
 import com.example.recolectar_app.model.zona.ZonaModel
-import com.example.recolectar_app.ui.viewModel.ZonaAltaVM
+import com.example.recolectar_app.ui.viewModel.zona.ZonaAltaVM
 import com.google.gson.Gson
-import org.json.JSONObject
 
 
 class ZonaAlta : Fragment() {
@@ -23,7 +22,7 @@ class ZonaAlta : Fragment() {
     lateinit var thiscontext : Context
     private var _binding: FragmentAltaZonaBinding? = null
     private val binding get() = _binding!!
-    private val zonaAltaVM = ZonaAltaVM()
+    private val zonaAltaVM : ZonaAltaVM by viewModels()
     private lateinit var zona : ZonaModel
     private val id = String
     private val refVehicle = String
@@ -59,6 +58,13 @@ class ZonaAlta : Fragment() {
             binding.root.findNavController().navigate(action)
         }
 
+        zonaAltaVM.altaZonaData.observe(viewLifecycleOwner, { result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return binding.root
     }

@@ -8,7 +8,7 @@ class ContenedorModel(var id: String) : Serializable {
     var nextActuationDeadline: NextActuationDeadline? = null
     var refRuta: RefRuta? = null
     var refVehicle: RefVehicle? = null
-    var refZona: RefZona? = null
+    lateinit var refZona: RefZona
     lateinit var status: Status
     var temperature: Temperature? = null
     var dateLastEmptying: DateLastEmptying? = null
@@ -45,7 +45,7 @@ class ContenedorModel(var id: String) : Serializable {
     fun setDateLastEmptying(date : String){
         this.dateLastEmptying = DateLastEmptying(date)
     }
-    fun setFillingLevel(lvl : Double){
+    fun setFillingLevel(lvl : Number){
         this.fillingLevel = FillingLevel(lvl)
     }
 
@@ -63,7 +63,7 @@ class ContenedorModel(var id: String) : Serializable {
     }
 
     data class FillingLevel(
-        var value: Double
+        var value: Number
     ){
         val type: String = "Number"
     }

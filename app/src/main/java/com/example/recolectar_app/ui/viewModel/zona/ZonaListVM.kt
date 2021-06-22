@@ -1,4 +1,4 @@
-package com.example.testmvvm.ui.viewModel
+package com.example.recolectar_app.ui.viewModel.zona
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

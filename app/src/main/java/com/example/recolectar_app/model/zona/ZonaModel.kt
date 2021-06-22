@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class ZonaModel(var id: String) : Serializable {
     val type : String = "Zona"
-    var refVehicle: RefVehicle? = null
+    lateinit var refVehicle: RefVehicle
     lateinit var nombre : Nombre
     lateinit var contenedores : Contenedores
 

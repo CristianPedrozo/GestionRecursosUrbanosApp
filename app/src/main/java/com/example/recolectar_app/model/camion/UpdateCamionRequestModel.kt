@@ -1,9 +1,9 @@
+package com.example.recolectar_app.model.camion
 
-import com.example.recolectar_app.model.camion.CamionModel
 import java.util.ArrayList
 
-class DeleteCamionRequest {
-    var actionType : String = "delete"
+class UpdateCamionRequestModel{
+    var actionType : String = "append"
     var entities = ArrayList<CamionModel>()
 
     fun addEntitie(entitie: CamionModel){

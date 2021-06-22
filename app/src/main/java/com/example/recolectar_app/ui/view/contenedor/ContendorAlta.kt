@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentAltaContenedorBinding
 import com.example.recolectar_app.model.contenedor.ContenedorModel
+import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorAltaVM
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.util.regex.Pattern
@@ -21,6 +24,7 @@ class ContenedorAlta : Fragment() {
     lateinit var thiscontext : Context
     private var _binding: FragmentAltaContenedorBinding? = null
     private val binding get() = _binding!!
+    private val contenedorAltaVM : ContenedorAltaVM by viewModels()
     private lateinit var estado : String
     private lateinit var tipo : String
 
@@ -53,27 +57,35 @@ class ContenedorAlta : Fragment() {
         //Validar campos para el alta de un contenedor
         binding.botonAgregar.setOnClickListener{
             validarCampos()
-            addContenedor(requestHandler)
+            addContenedor()
             val action = ContenedorAltaDirections.actionAltaContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }
+        
+        contenedorAltaVM.altaContenedorData.observe(viewLifecycleOwner, { result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
+        
         return binding.root
     }
 
-    private fun addContenedor(requestHandler : RequestHandler) {
-        val gson = Gson()
-        val contenedor = ContenedorModel(binding.editTextCodigo.editText?.text.toString())
+    private fun addContenedor(){
+        val contenendor = ContenedorModel(binding.editTextCodigo.editText?.text.toString())
         val latlong : MutableList<Double> = arrayListOf()
         latlong.add(binding.editTextLatitud.editText?.text.toString().toDouble())
         latlong.add(binding.editTextLongitud.editText?.text.toString().toDouble())
-        contenedor.setLocation(latlong)
-        contenedor.setStatus(estado)
-        contenedor.setWasteType(tipo)
-        contenedor.setFillingLevel(0.0)
-        val string = gson.toJson(contenedor)
-        val jsonObject = JSONObject(string)
-        requestHandler.postRequest(url,{},{},jsonObject)
+        contenendor.setLocation(latlong)
+        contenendor.setFillingLevel(0.0)
+        contenendor.setWasteType(tipo)
+        contenendor.setStatus(estado)
+        contenendor.setRefZona(binding.editTextZona.editText?.text.toString())
+        contenedorAltaVM.crearContenedor(contenendor)
     }
+
 
     //Validación de los campos del Formulario ALTA CONTENEDOR
     private fun validarCampos(){

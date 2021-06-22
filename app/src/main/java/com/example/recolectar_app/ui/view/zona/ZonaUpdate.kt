@@ -6,11 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 //import com.example.recolectar_app.PatchRequestObject
 import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateZonaBinding
+import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
+import com.example.recolectar_app.ui.viewModel.zona.ZonaUpdateVM
 
 
 class ZonaUpdate : Fragment() {
@@ -18,6 +22,7 @@ class ZonaUpdate : Fragment() {
     private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentUpdateZonaBinding? = null
     private val binding get() = _binding!!
+    private val zonaUpdateVM : ZonaUpdateVM by viewModels()
     private lateinit var zona: ZonaModel
     lateinit var thiscontext : Context
 
@@ -41,32 +46,39 @@ class ZonaUpdate : Fragment() {
         val args = arguments?.let { ZonaDetalleArgs.fromBundle(it) }
         zona = args?.zona!!
 
-        binding.textIdEditZona.hint = "Zona n°: ${zona.id.split(":")[1]}"
-        binding.textContenedoresEditZona.hint = "Contenedores: ${zona.contenedores.value.size}"
-        binding.textCamionEditZona.setText(zona.refVehicle?.value)
+        binding.textIdEditZona.hint = zona.id.split(":")[1]
+        binding.textContenedoresEditZona.hint = zona.contenedores.value.size.toString()
+        binding.textCamionEditZona.setText(zona.refVehicle.value.split(":")[1])
+        binding.textNombreEditZona.setText(zona.nombre.value)
         binding.botonCancelarEditZona.setOnClickListener {
             val action = ZonaUpdateDirections.actionUpdateZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
         binding.botonConfirmarEditarZona.setOnClickListener {
-//            editZona(requestHandler)
+            editZona()
             val action = ZonaUpdateDirections.actionUpdateZonaToListZonas()
             binding.root.findNavController().navigate(action)
         }
+
+        zonaUpdateVM.zonaUpdateData.observe(viewLifecycleOwner, { result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
         return binding.root
     }
 
-//
-//    private fun editZona(requestHandler: RequestHandler) {
-//        val gson = Gson()
-//        val zona = ZonaModel(zona.id!!.split(":")[1])
-//        zona.setRefVehicleValue(binding.textCamionEditZona.text.toString())
-//        val patchObject = PatchRequestObject()
-//        patchObject.addEntitie(zona)
-//        val jsonPatchObject = gson.toJson(patchObject)
-//        val jsonObject = JSONObject(jsonPatchObject)
-//        requestHandler.patchRequest(url,jsonObject,{},{})
-//    }
+
+    private fun editZona(){
+        val zona = ZonaModel(zona.id.split(":")[1])
+        zona.setRefVehicleValue(binding.textCamionEditZona.text.toString())
+        zona.setNombre(binding.textNombreEditZona.text.toString())
+        val zonaUpdateObject = UpdateZonaRequestModel()
+        zonaUpdateObject.addEntitie(zona)
+        zonaUpdateVM.updateZona(zonaUpdateObject)
+    }
 
     companion object {
         @JvmStatic

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recolectar_app.model.zona.ZonaListAdapter
 import com.example.recolectar_app.databinding.FragmentListZonasBinding
 import com.example.recolectar_app.model.zona.ZonaModel
-import com.example.testmvvm.ui.viewModel.ZonaListVM
+import com.example.recolectar_app.ui.viewModel.zona.ZonaListVM
 import java.lang.Exception
 
 
@@ -62,6 +62,7 @@ class ZonasList : Fragment() {
         zonaListViewModel.isLoading.observe(viewLifecycleOwner, { progressBar ->
             binding.loading.isVisible = progressBar
         })
+
 
 
         binding.btnAgregarZona.setOnClickListener() {

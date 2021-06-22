@@ -1,4 +1,4 @@
-package com.example.recolectar_app.administrador
+package com.example.recolectar_app.ui.view.camion
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ import com.example.recolectar_app.databinding.FragmentListCamionesBinding
 import com.google.gson.Gson
 import java.lang.Exception
 
-class Camiones : Fragment() {
+class CamionesList : Fragment() {
     var url = "http://46.17.108.122:1026/v2/entities/?type=Vehicle"
     lateinit var thiscontext : Context
     private val TAG = "Contenedores Adm Frag"
@@ -25,7 +25,7 @@ class Camiones : Fragment() {
     var camiones: MutableList<CamionModel> = ArrayList()
 
     companion object {
-        fun newInstance() = Camiones()
+        fun newInstance() = CamionesList()
     }
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class Camiones : Fragment() {
 
         binding.botonAgregar.setOnClickListener(){
 
-            val action = CamionesDirections.actionCamionesToAltaCamion()
+            val action = CamionesListDirections.actionCamionesToAltaCamion()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
@@ -67,7 +67,7 @@ class Camiones : Fragment() {
                 binding.recCamiones.adapter = CamionListAdapter(camiones)
             },
             { error ->
-                Toast.makeText(this@Camiones.requireContext(), "error" + error, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CamionesList.requireContext(), "error" + error, Toast.LENGTH_LONG).show()
             }
             ,null)
     }

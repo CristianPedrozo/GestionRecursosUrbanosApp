@@ -7,5 +7,5 @@ import org.json.JSONObject
 
 class PostZonaUseCase {
     private val repository = ZonasRepository()
-    suspend operator fun invoke(zona:ZonaModel) = repository.crearZona(zona)
+    suspend operator fun invoke(zona:ZonaModel) : Boolean = repository.postNewZona(zona)
 }

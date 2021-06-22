@@ -1,4 +1,4 @@
-package com.example.recolectar_app.ui.viewModel
+package com.example.recolectar_app.ui.viewModel.zona
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +15,8 @@ class ZonaAltaVM : ViewModel() {
     fun crearZona(zona:ZonaModel){
         viewModelScope.launch {
             isLoading.postValue(true)
-            postZonaUseCase(zona)
-            //QUERIA HACER QUE DEVUELVA TRUE O FALSE Y SETEARLO EN altaZonaData PARA MOSTRAR UN TOAST EN EL FRAGMENT DE QUE SE CREO BIEN PERO NO PUDE.
+            val result = postZonaUseCase(zona)
+            altaZonaData.postValue(result)
             isLoading.postValue(false)
         }
 

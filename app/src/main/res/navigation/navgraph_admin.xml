@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/camiones"
-        android:name="com.example.recolectar_app.administrador.Camiones"
+        android:name="com.example.recolectar_app.ui.view.camion.CamionesList"
         android:label="fragment_administrador_camiones" >
         <action
             android:id="@+id/action_camiones_to_camionDetalle"
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/camionDetalle"
-        android:name="com.example.recolectar_app.camiones.CamionDetalle"
+        android:name="com.example.recolectar_app.ui.view.camion.CamionDetalle"
         android:label="fragment_camion_detalle"
         tools:layout="@layout/fragment_camion_detalle">
         <argument
@@ -150,7 +150,7 @@
     </fragment>
     <fragment
         android:id="@+id/update_camion"
-        android:name="com.example.recolectar_app.camiones.Update_camion"
+        android:name="com.example.recolectar_app.ui.view.camion.Update_camion"
         android:label="fragment_update_camion"
         tools:layout="@layout/fragment_update_camion" >
         <argument

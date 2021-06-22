@@ -2,8 +2,8 @@ package com.example.recolectar_app.data
 import com.example.recolectar_app.model.zona.ZonaModel
 import com.example.recolectar_app.model.zona.ZonaProvider
 import com.example.recolectar_app.data.network.ZonaService
-import com.google.gson.JsonObject
-import org.json.JSONObject
+import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
+import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 
 class ZonasRepository {
     private val api = ZonaService()
@@ -23,8 +23,16 @@ class ZonasRepository {
         return api.getZonaById(id)
     }
 
-    suspend fun crearZona(zona: ZonaModel){
-        return api.crearZona(zona)
+    suspend fun postNewZona(zona: ZonaModel) : Boolean{
+        return api.postNewZona(zona)
+    }
+
+    suspend fun deleteZona(deleteZonaRequestModel: DeleteZonaRequestModel) : Boolean{
+        return api.deleteZona(deleteZonaRequestModel)
+    }
+
+    suspend fun updateZona(updateZonaRequestModel: UpdateZonaRequestModel) : Boolean {
+        return api.updateZona(updateZonaRequestModel)
     }
 
 

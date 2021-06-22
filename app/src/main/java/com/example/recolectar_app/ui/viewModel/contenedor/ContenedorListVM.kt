@@ -1,4 +1,4 @@
-package com.example.recolectar_app.ui.viewModel
+package com.example.recolectar_app.ui.viewModel.contenedor
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
