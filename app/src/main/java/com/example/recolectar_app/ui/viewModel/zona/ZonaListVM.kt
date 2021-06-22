@@ -12,7 +12,7 @@ import com.example.recolectar_app.model.zona.ZonaProvider
 import kotlinx.coroutines.launch
 
 class ZonaListVM : ViewModel() {
-    val zonasList = MutableLiveData<List<ZonaModel>>()
+    val _zonas = MutableLiveData<List<ZonaModel>>()
     var getZonasUseCase = GetZonasUseCase()
     var getZonaByNameUseCase = GetZonaByNameUseCase()
     var getContenedoresByZonaUseCase = GetContenedoresByZonaUseCase()
@@ -24,7 +24,7 @@ class ZonaListVM : ViewModel() {
             val zonas = getZonasUseCase()
             if(!zonas.isNullOrEmpty()){
                 getContenedoresAsignados()
-                zonasList.postValue(zonas)
+                _zonas.postValue(zonas)
                 isLoading.postValue(false)
             }
         }
@@ -35,7 +35,6 @@ class ZonaListVM : ViewModel() {
             val string = "?type=WasteContainer&limit=1000&q=refZona==${ZonaProvider.zonas[i].id}"
             val contenedores = getContenedoresByZonaUseCase(string)
             ZonaProvider.zonas[i].setContenedores(contenedores as ArrayList<ContenedorModel>)
-            print(ZonaProvider.zonas[i].contenedores.value)
         }
     }
 
@@ -43,8 +42,8 @@ class ZonaListVM : ViewModel() {
         viewModelScope.launch {
             isLoading.postValue(true)
             val zona = getZonaByNameUseCase(name)
-            print(zonasList)
-            zonasList.postValue(zona)
+            print(_zonas)
+            _zonas.postValue(zona)
             isLoading.postValue(false)
         }
     }

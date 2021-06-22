@@ -10,7 +10,7 @@ import com.example.recolectar_app.model.contenedor.ContenedorModel
 import kotlinx.coroutines.launch
 
 class ContenedorListVM : ViewModel(){
-    val contenedores = MutableLiveData<List<ContenedorModel>>()
+    val _contenedores = MutableLiveData<List<ContenedorModel>>()
     val isLoading = MutableLiveData<Boolean>()
     val getContenedoresUseCase = GetContenedoresUseCase()
     val getContenedorById = GetContenedorByIdUseCase()
@@ -19,11 +19,9 @@ class ContenedorListVM : ViewModel(){
     fun onCreate(){
         viewModelScope.launch {
             isLoading.postValue(true)
-            val result = getContenedoresUseCase()
-            if(!result.isNullOrEmpty()){
-                contenedores.postValue(result)
-                isLoading.postValue(false)
-            }
+            val contenedores = getContenedoresUseCase()
+            _contenedores.postValue(contenedores)
+            isLoading.postValue(false)
         }
     }
 
@@ -31,16 +29,16 @@ class ContenedorListVM : ViewModel(){
         viewModelScope.launch {
             isLoading.postValue(true)
             val contenedor = getContenedorById(id)
-            contenedores.postValue(contenedor)
+            _contenedores.postValue(contenedor)
             isLoading.postValue(false)
         }
     }
     
-    fun buscarContenedorPorZona(zona:String){
+    fun buscarContenedorPorZona(zonaId:String){
         viewModelScope.launch {
             isLoading.postValue(true)
-            val contendoresByZona = getContenedoresByZona(zona)
-            contenedores.postValue(contendoresByZona)
+            val contendoresByZona = getContenedoresByZona(zonaId)
+            _contenedores.postValue(contendoresByZona)
             isLoading.postValue(false)
         }
     }

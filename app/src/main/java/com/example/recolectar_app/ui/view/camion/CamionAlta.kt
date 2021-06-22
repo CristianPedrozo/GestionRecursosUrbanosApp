@@ -1,4 +1,4 @@
-package com.example.recolectar_app.camiones
+package com.example.recolectar_app.ui.view.camion
 
 import android.content.Context
 import android.os.Bundle
@@ -8,32 +8,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentAltaCamionBinding
 import com.example.recolectar_app.model.camion.CamionModel
-import com.google.gson.Gson
-import org.json.JSONObject
+import com.example.recolectar_app.ui.viewModel.camion.CamionAltaVM
 
 class CamionAlta : Fragment() {
-    var url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
-
     private var _binding: FragmentAltaCamionBinding? = null
     private val binding get() = _binding!!
+    private val camionAltaVM : CamionAltaVM by viewModels()
     lateinit var estado: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAltaCamionBinding.inflate(layoutInflater,container,false)
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
-
 
         //Carga Combo Estados
         val estados = resources.getStringArray(R.array.estados_camion)
@@ -57,40 +53,39 @@ class CamionAlta : Fragment() {
         //Botón para dar de Alta Camion
         binding.botonAgregar.setOnClickListener(){
             if(validarCampos()){
-            addCamion(requestHandler)
-            val action=alta_camionDirections.actionAltaCamionToCamiones()
+            addCamion()
+            val action=CamionAltaDirections.actionAltaCamionToCamiones()
             binding.root.findNavController().navigate(action)}
         }
 
         //Botón Cancelar
         binding.botonCancelar.setOnClickListener(){
-            val action=alta_camionDirections.actionAltaCamionToCamiones()
+            val action=CamionAltaDirections.actionAltaCamionToCamiones()
             binding.root.findNavController().navigate(action)
         }
+
+        camionAltaVM.altaCamionResult.observe(viewLifecycleOwner, {result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
+        
         return binding.root
     }
 
 
-    private fun addCamion(requestHandler : RequestHandler) {
-        val gson = Gson()
-
-        //Armo el objeto camión para darlo de alta
+    private fun addCamion(){
         val camion = CamionModel(binding.editTextId.text.toString())
         camion.setCargoWeight(binding.editTextCarga.text.toString().toDouble())
         camion.setServiceStatus(estado)
         camion.setVehiclePlateIdentifier(binding.editTextPatente.text.toString())
         camion.setVehicleType("lorry")
         camion.setFillingLevel(0.0);
-        //camion.setRefEmpleadoValue(empleado.toString())
-        val string = gson.toJson(camion)
-        val jsonObject = JSONObject(string)
-        requestHandler.postRequest(url,{},{},jsonObject)
+        camionAltaVM.crearCamion(camion)
     }
 
-
-    override fun onStart() {
-        super.onStart()
-    }
 
     companion object {
 

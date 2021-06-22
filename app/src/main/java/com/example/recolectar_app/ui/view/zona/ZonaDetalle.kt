@@ -11,17 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.databinding.FragmentZonaDetalleBinding
 import com.example.recolectar_app.model.DeleteRequestModel
-import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
 import com.example.recolectar_app.model.zona.ZonaModel
 import com.example.recolectar_app.ui.viewModel.zona.ZonaDetalleVM
-import com.google.gson.Gson
-
-//import com.example.recolectar_app.zonas.DeleteZonaRequest
 
 
 class ZonaDetalle : Fragment() {
     private val TAG = "ZonaDetalle"
-    private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding:FragmentZonaDetalleBinding? = null
     private val binding get() = _binding!!
     private val zonaDetalleVM : ZonaDetalleVM by viewModels()
@@ -61,7 +56,7 @@ class ZonaDetalle : Fragment() {
             binding.root.findNavController().navigate(action)
         }
 
-        zonaDetalleVM.deleteZonaData.observe(viewLifecycleOwner, { result ->
+        zonaDetalleVM.deleteZonaResult.observe(viewLifecycleOwner, { result ->
             if(result){
                 Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
             }else{

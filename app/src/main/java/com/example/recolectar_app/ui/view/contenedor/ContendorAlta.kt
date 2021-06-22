@@ -11,16 +11,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentAltaContenedorBinding
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorAltaVM
 import com.google.gson.Gson
-import org.json.JSONObject
 import java.util.regex.Pattern
 
 class ContenedorAlta : Fragment() {
-    val url = "http://46.17.108.122:1026/v2/entities/"
     lateinit var thiscontext : Context
     private var _binding: FragmentAltaContenedorBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +33,6 @@ class ContenedorAlta : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
         //Carga Combo Estados
         val estados = resources.getStringArray(R.array.estados_contenedor)
         val arrayAdapterEstado = ArrayAdapter(requireContext(),R.layout.combo_formulario,estados)
@@ -62,7 +58,7 @@ class ContenedorAlta : Fragment() {
             binding.root.findNavController().navigate(action)
         }
         
-        contenedorAltaVM.altaContenedorData.observe(viewLifecycleOwner, { result ->
+        contenedorAltaVM.altaContenedorResult.observe(viewLifecycleOwner, { result ->
             if(result){
                 Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
             }else{

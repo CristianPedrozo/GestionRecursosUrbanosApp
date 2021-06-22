@@ -4,8 +4,6 @@ import com.example.recolectar_app.model.zona.ZonaProvider
 import com.example.recolectar_app.data.network.ZonaService
 import com.example.recolectar_app.model.DeleteRequestModel
 import com.example.recolectar_app.model.UpdateRequestModel
-import com.example.recolectar_app.model.zona.DeleteZonaRequestModel
-import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 
 class ZonasRepository {
     private val api = ZonaService()

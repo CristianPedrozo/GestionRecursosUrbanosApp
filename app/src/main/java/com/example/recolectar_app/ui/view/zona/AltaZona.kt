@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentAltaZonaBinding
 import com.example.recolectar_app.model.zona.ZonaModel
 import com.example.recolectar_app.ui.viewModel.zona.ZonaAltaVM
-import com.google.gson.Gson
 
 
 class ZonaAlta : Fragment() {
@@ -24,11 +22,6 @@ class ZonaAlta : Fragment() {
     private val binding get() = _binding!!
     private val zonaAltaVM : ZonaAltaVM by viewModels()
     private lateinit var zona : ZonaModel
-    private val id = String
-    private val refVehicle = String
-    private val name = String
-    private val contenedores = ArrayList<ContenedorModel>()
-    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +51,7 @@ class ZonaAlta : Fragment() {
             binding.root.findNavController().navigate(action)
         }
 
-        zonaAltaVM.altaZonaData.observe(viewLifecycleOwner, { result ->
+        zonaAltaVM.altaZonaResult.observe(viewLifecycleOwner, { result ->
             if(result){
                 Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
             }else{
@@ -75,22 +68,6 @@ class ZonaAlta : Fragment() {
         zona.setRefVehicleValue(binding.editTextRefVehicle.editText?.text.toString())
         zona.setContenedores(ArrayList())
         zonaAltaVM.crearZona(zona)
-    }
-
-//    private fun addZona(requestHandler : RequestHandler) {
-//        val gson = Gson()
-//        val zona = ZonaModel(binding.editTextIdAltaZona.text.toString())
-//        zona.setRefVehicleValue(binding.editTextRefVehicleAltaZona.text.toString())
-//        zona.setContenedores(ArrayList())
-//        val string = gson.toJson(zona)
-//        val jsonObject = JSONObject(string)
-//        Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_SHORT).show()
-//        requestHandler.postRequest(url,{},{},jsonObject)
-//    }
-
-
-    override fun onStart() {
-        super.onStart()
     }
 
     companion object {

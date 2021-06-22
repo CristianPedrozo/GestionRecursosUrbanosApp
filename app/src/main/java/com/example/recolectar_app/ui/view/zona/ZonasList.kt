@@ -21,15 +21,11 @@ import java.lang.Exception
 
 class ZonasList : Fragment() {
     private val TAG = "Zonas Adm Frag"
-    var url = "http://46.17.108.122:1026/v2/entities/?type=Zona"
-    private var urlContenedoresAsignados = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer"
     lateinit var thiscontext : Context
-
     private var _binding: FragmentListZonasBinding? = null
     private val binding get() = _binding!!
     private val zonaListViewModel : ZonaListVM by viewModels()
     private val _zonas = ArrayList<ZonaModel>()
-
     companion object {
         fun newInstance() = ZonasList()
     }
@@ -54,7 +50,7 @@ class ZonasList : Fragment() {
 
         zonaListViewModel.onCreate()
 
-        zonaListViewModel.zonasList.observe(viewLifecycleOwner, { zonas ->
+        zonaListViewModel._zonas.observe(viewLifecycleOwner, { zonas ->
             _zonas.removeAll(_zonas)
             _zonas.addAll(zonas)
             binding.recZonas.adapter!!.notifyDataSetChanged()

@@ -6,22 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentUpdateCamionBinding
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.camion.CamionModel
-import com.example.recolectar_app.model.camion.UpdateCamionRequestModel
+import com.example.recolectar_app.ui.viewModel.camion.CamionUpdateVM
 import com.google.gson.Gson
 import org.json.JSONObject
 
 class CamionUpdate : Fragment() {
     private val TAG = "Update Camion"
-    private var url = "http://46.17.108.122:1026/v2/op/update"
-
     private var _binding: FragmentUpdateCamionBinding? = null
     private val binding get() = _binding!!
     lateinit var thiscontext : Context
-    private lateinit var id: String
+    private val camionUpdateVM : CamionUpdateVM by viewModels()
     private lateinit var camionModel : CamionModel
 
 
@@ -34,7 +33,7 @@ class CamionUpdate : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUpdateCamionBinding.inflate(layoutInflater,container,false)
         //Carga Combo Estados
 /*
@@ -46,47 +45,51 @@ class CamionUpdate : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
         camionModel = args?.camion!!
-        binding.textIdCamion.setText(camionModel.id)
-        binding.textPatenteCamion.setText(camionModel.vehiclePlateIdentifier?.value)
-        binding.textCargaCamion.setText(camionModel.cargoWeight?.value.toString())
-        binding.textEstadoCamion.setText(camionModel.serviceStatus?.value)
+        loadCamionData(camionModel.id)
+
         //Para setear valor determinado en el combo
         //autoCompleteTextView.threshold(3)
 
         binding.botonConfirmarEditarCamion.setOnClickListener(){
             if(validarCampos()){
-                editCamion(requestHandler)
-                val action = Update_camionDirections.actionUpdateCamionToCamiones()
+                editCamion()
+                val action = CamionUpdateDirections.actionUpdateCamionToCamiones()
                 binding.root.findNavController().navigate(action)
             }
 
         }
 
         binding.botonCancelarEdit.setOnClickListener(){
-            val action = Update_camionDirections.actionUpdateCamionToCamiones()
+            val action = CamionUpdateDirections.actionUpdateCamionToCamiones()
             binding.root.findNavController().navigate(action)
         }
         return binding.root
     }
-    private fun editCamion(requestHandler: RequestHandler) {
-        val gson = Gson()
-        //estado = tiet_estado.text.toString()
-        //Toast.makeText(thiscontext, estado, Toast.LENGTH_SHORT).show()
-        val camion = CamionModel(id)
-        camion.setCargoWeight(binding.textCargaCamion.text.toString().toDouble())
-        //camion.setServiceStatus(estado)
-        camion.setVehiclePlateIdentifier(binding.textPatenteCamion.text.toString())
-        camion.setVehicleType("lorry")
-        val patchObject = UpdateCamionRequestModel()
-        patchObject.addEntitie(camion)
-        val jsonPatchObject = gson.toJson(patchObject)
-        val jsonObject = JSONObject(jsonPatchObject)
-        //Toast.makeText(thiscontext, "$jsonObject", Toast.LENGTH_LONG).show()
-        requestHandler.patchRequest(url,jsonObject,{},{})
+
+    private fun loadCamionData(camionId: String) = with(binding) {
+        camionUpdateVM.camionSelectedData.observe(viewLifecycleOwner, {data ->
+            textIdCamion.setText(data.id.split(":")[1])
+            textPatenteCamion.setText(data.vehiclePlateIdentifier?.value)
+            textCargaCamion.setText(data.cargoWeight?.value.toString())
+            textEstadoCamion.setText(data.serviceStatus?.value)
+        })
+        val string = "?id=$camionId"
+        camionUpdateVM.getCamionById(string)
     }
+
+    private fun editCamion() = with(binding){
+        val camion = CamionModel(textIdCamion.text.toString())
+        camion.setCargoWeight(textCargaCamion.text.toString().toDouble())
+        //camion.setServiceStatus(estado)
+        camion.setVehiclePlateIdentifier(textPatenteCamion.text.toString())
+        camion.setVehicleType("lorry")
+        val camionUpdateRequest = UpdateRequestModel()
+        camionUpdateRequest.addCamion(camion)
+        camionUpdateVM.updateCamion(camionUpdateRequest)
+    }
+
 
     companion object {
         @JvmStatic

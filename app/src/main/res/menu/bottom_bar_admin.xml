@@ -7,11 +7,11 @@
         android:icon="@drawable/ic_usuarios"
         android:title="Usuarios" />
     <item
-        android:id="@+id/contenedores"
+        android:id="@+id/list_contenedores"
         android:icon="@drawable/ic_contenedor"
         android:title="Contenedores" />
     <item
-        android:id="@+id/camiones"
+        android:id="@+id/list_camiones"
         android:icon="@drawable/ic_camion"
         android:title="Camiones" />
     <item

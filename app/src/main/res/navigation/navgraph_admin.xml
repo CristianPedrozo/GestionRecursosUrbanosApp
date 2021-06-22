@@ -6,7 +6,7 @@
     app:startDestination="@id/usuarios">
 
     <fragment
-        android:id="@+id/contenedores"
+        android:id="@+id/list_contenedores"
         android:name="com.example.recolectar_app.ui.view.contenedor.ContenedoresList"
         android:label="fragment_administrador_contenedores"
         tools:layout="@layout/fragment_administrador_contenedores">
@@ -45,7 +45,7 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/camiones"
+        android:id="@+id/list_camiones"
         android:name="com.example.recolectar_app.ui.view.camion.CamionesList"
         android:label="fragment_administrador_camiones" >
         <action
@@ -80,7 +80,7 @@
             app:destination="@id/alta_camion" />
         <action
             android:id="@+id/action_camionDetalle_to_camiones"
-            app:destination="@id/camiones" />
+            app:destination="@id/list_camiones" />
         <action
             android:id="@+id/action_camionDetalle_to_update_camion"
             app:destination="@id/update_camion">
@@ -99,7 +99,7 @@
             app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"/>
         <action
             android:id="@+id/action_contenedorDetalle_to_contenedores"
-            app:destination="@id/contenedores" />
+            app:destination="@id/list_contenedores" />
         <action
             android:id="@+id/action_contenedorDetalle_to_update_Contenedor"
             app:destination="@id/update_Contenedor">
@@ -115,7 +115,7 @@
         tools:layout="@layout/fragment_alta_contenedor" >
         <action
             android:id="@+id/action_alta_contenedor_to_contenedores"
-            app:destination="@id/contenedores" />
+            app:destination="@id/list_contenedores" />
     </fragment>
     <fragment
         android:id="@+id/alta_zona"
@@ -142,15 +142,15 @@
     </fragment>
     <fragment
         android:id="@+id/alta_camion"
-        android:name="com.example.recolectar_app.camiones.alta_camion"
+        android:name="com.example.recolectar_app.ui.view.camion.CamionAlta"
         android:label="alta_camion" >
         <action
             android:id="@+id/action_alta_camion_to_camiones"
-            app:destination="@id/camiones" />
+            app:destination="@id/list_camiones" />
     </fragment>
     <fragment
         android:id="@+id/update_camion"
-        android:name="com.example.recolectar_app.ui.view.camion.Update_camion"
+        android:name="com.example.recolectar_app.ui.view.camion.CamionUpdate"
         android:label="fragment_update_camion"
         tools:layout="@layout/fragment_update_camion" >
         <argument
@@ -158,7 +158,7 @@
             app:argType="com.example.recolectar_app.model.camion.CamionModel" />
         <action
             android:id="@+id/action_update_camion_to_camiones"
-            app:destination="@id/camiones" />
+            app:destination="@id/list_camiones" />
     </fragment>
     <fragment
         android:id="@+id/update_Contenedor"
@@ -171,7 +171,7 @@
             />
         <action
             android:id="@+id/action_update_Contenedor_to_contenedores"
-            app:destination="@id/contenedores" />
+            app:destination="@id/list_contenedores" />
     </fragment>
     <fragment
         android:id="@+id/usuario_datos"

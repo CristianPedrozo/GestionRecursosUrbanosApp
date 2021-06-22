@@ -1,29 +1,22 @@
 package com.example.recolectar_app.ui.view.contenedor
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.databinding.FragmentUpdateContenedorBinding
 import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorUpdateVM
-import com.google.gson.Gson
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class ContenedorUpdate : Fragment() {
     private val TAG = "Update Contenedor"
-    private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentUpdateContenedorBinding? = null
     private val binding get() = _binding!!
     private val contenedorUpdateVM : ContenedorUpdateVM  by viewModels()
@@ -52,7 +45,7 @@ class ContenedorUpdate : Fragment() {
         loadContenedorData(contenedor.id)
 
         
-        contenedorUpdateVM.contenedorUpdateData.observe(viewLifecycleOwner, {result ->
+        contenedorUpdateVM.contenedorUpdateResult.observe(viewLifecycleOwner, { result ->
             if(result){
                 Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
             }else{
@@ -100,10 +93,6 @@ class ContenedorUpdate : Fragment() {
         contenedor.setLocation(mutableListOf(edittextContenedorLatitud.text.toString().toDouble(),edittextContenedorLongitud.text.toString().toDouble()))
         val contenedorUpdateRequest = UpdateRequestModel()
         contenedorUpdateRequest.addContenedor(contenedor)
-//        print(contenedorUpdateRequest)
-//        val gson = Gson()
-//        val asd = gson.toJson(contenedorUpdateRequest)
-//        Toast.makeText(thiscontext, asd, Toast.LENGTH_LONG).show()
         contenedorUpdateVM.updateContenedor(contenedorUpdateRequest)
     }
 

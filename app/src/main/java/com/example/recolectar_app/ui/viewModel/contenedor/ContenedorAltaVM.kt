@@ -8,7 +8,7 @@ import com.example.recolectar_app.model.contenedor.ContenedorModel
 import kotlinx.coroutines.launch
 
 class ContenedorAltaVM: ViewModel()  {
-    val altaContenedorData = MutableLiveData<Boolean>()
+    val altaContenedorResult = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
     val postContenedorUseCase = PostContenedorUseCase()
 
@@ -16,7 +16,7 @@ class ContenedorAltaVM: ViewModel()  {
         viewModelScope.launch {
             isLoading.postValue(true)
             val result = postContenedorUseCase(contenedor)
-            altaContenedorData.postValue(result)
+            altaContenedorResult.postValue(result)
             isLoading.postValue(false)
         }
 

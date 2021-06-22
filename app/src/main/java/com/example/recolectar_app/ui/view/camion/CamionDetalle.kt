@@ -1,23 +1,23 @@
 package com.example.recolectar_app.ui.view.camion
-import DeleteCamionRequestModel
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.example.recolectar_app.RequestHandler
 import com.example.recolectar_app.databinding.FragmentCamionDetalleBinding
+import com.example.recolectar_app.model.DeleteRequestModel
 import com.example.recolectar_app.model.camion.CamionModel
-import com.google.gson.Gson
-import org.json.JSONObject
+import com.example.recolectar_app.ui.viewModel.camion.CamionDetalleVM
 
 class CamionDetalle : Fragment() {
     private val TAG = "CamionDetalle"
-    private var url = "http://46.17.108.122:1026/v2/op/update"
     private var _binding: FragmentCamionDetalleBinding? = null
     private val binding get() = _binding!!
+    private val camionDetalleVM : CamionDetalleVM by viewModels()
     private lateinit var camionModel : CamionModel
     lateinit var thiscontext : Context
 
@@ -35,7 +35,6 @@ class CamionDetalle : Fragment() {
         if (container != null) {
             thiscontext = container.context
         };
-        val requestHandler = RequestHandler.getInstance(thiscontext)
         val args = arguments?.let { CamionDetalleArgs.fromBundle(it) }
         camionModel = args?.camion!!
         binding.textIdCamion.setText(camionModel.id)
@@ -55,22 +54,27 @@ class CamionDetalle : Fragment() {
 
         //Botón Eliminar
         binding.botonEliminar.setOnClickListener(){
-            removeCamion(requestHandler)
+            removeCamion()
             val action = CamionDetalleDirections.actionCamionDetalleToCamiones()
             binding.root.findNavController().navigate(action)
-
         }
+        
+        camionDetalleVM.deleteCamionResult.observe(viewLifecycleOwner, {result ->
+            if(result){
+                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
+            }
+        })
+        
         return binding.root
     }
 
-    private fun removeCamion(requestHandler: RequestHandler) {
-        val gson = Gson()
+    private fun removeCamion() {
         val camion = CamionModel(camionModel.id.split(":")[1])
-        val deleteObject = DeleteCamionRequestModel()
-        deleteObject.addEntitie(camion)
-        val jsonDeleteObject = gson.toJson(deleteObject)
-        val jsonObject = JSONObject(jsonDeleteObject)
-        requestHandler.deleteRequest(url,jsonObject,{},{})
+        val camionDeteleRequest = DeleteRequestModel()
+        camionDeteleRequest.addCamion(camion)
+        camionDetalleVM.deleteCamion(camionDeteleRequest)
     }
 
     companion object {

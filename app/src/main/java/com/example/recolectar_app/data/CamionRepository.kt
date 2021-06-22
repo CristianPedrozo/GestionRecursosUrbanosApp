@@ -1,10 +1,11 @@
 package com.example.recolectar_app.data
 
-import DeleteCamionRequestModel
+
 import com.example.recolectar_app.data.network.CamionService
+import com.example.recolectar_app.model.DeleteRequestModel
+import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.camion.CamionModel
 import com.example.recolectar_app.model.camion.CamionProvider
-import com.example.recolectar_app.model.camion.UpdateCamionRequestModel
 
 class CamionRepository {
     private val api = CamionService()
@@ -27,11 +28,11 @@ class CamionRepository {
         return api.postNewCamion(camion)
     }
 
-    suspend fun updateCamion(updateCamionRequestModel: UpdateCamionRequestModel) : Boolean{
-        return api.updateContenedor(updateCamionRequestModel)
+    suspend fun updateCamion(updateRequestModel: UpdateRequestModel) : Boolean{
+        return api.updateContenedor(updateRequestModel)
     }
 
-    suspend fun deleteCamion(deleteCamionRequestModel: DeleteCamionRequestModel) : Boolean{
-        return api.deleteContenedor(deleteCamionRequestModel)
+    suspend fun deleteCamion(deleteRequestModel: DeleteRequestModel) : Boolean{
+        return api.deleteContenedor(deleteRequestModel)
     }
 }

@@ -45,14 +45,13 @@ class ContenedoresList : Fragment() {
             thiscontext = container.context
         };
 
-
         binding.recContenedores.setHasFixedSize(true)
         binding.recContenedores.layoutManager =  LinearLayoutManager(context)
         binding.recContenedores.adapter = ContenedorListAdapter(_contenedores);
 
         contenedorListVM.onCreate()
 
-        contenedorListVM.contenedores.observe(viewLifecycleOwner, { contenedores ->
+        contenedorListVM._contenedores.observe(viewLifecycleOwner, { contenedores ->
             _contenedores.removeAll(_contenedores)
             _contenedores.addAll(contenedores)
             binding.recContenedores.adapter!!.notifyDataSetChanged()

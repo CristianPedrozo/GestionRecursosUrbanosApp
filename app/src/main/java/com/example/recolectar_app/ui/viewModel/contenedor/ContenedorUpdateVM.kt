@@ -5,16 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recolectar_app.domain.contenedoresRequests.GetContenedorByIdUseCase
 import com.example.recolectar_app.domain.contenedoresRequests.UpdateContenedorUseCase
-import com.example.recolectar_app.domain.zonasRequests.UpdateZonaUseCase
 import com.example.recolectar_app.model.UpdateRequestModel
-import com.example.recolectar_app.model.camion.UpdateCamionRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
-import com.example.recolectar_app.model.contenedor.UpdateContenedorRequestModel
-import com.example.recolectar_app.model.zona.UpdateZonaRequestModel
 import kotlinx.coroutines.launch
 
 class ContenedorUpdateVM : ViewModel() {
-    val contenedorUpdateData = MutableLiveData<Boolean>()
+    val contenedorUpdateResult = MutableLiveData<Boolean>()
     val contenedorSelectedData = MutableLiveData<ContenedorModel>()
     val isLoading = MutableLiveData<Boolean>()
     val updateContenedorUseCase = UpdateContenedorUseCase()
@@ -24,7 +20,7 @@ class ContenedorUpdateVM : ViewModel() {
         viewModelScope.launch {
             isLoading.postValue(true)
             val result = updateContenedorUseCase(updateRequestModel)
-            contenedorUpdateData.postValue(result)
+            contenedorUpdateResult.postValue(result)
             isLoading.postValue(false)
         }
     }

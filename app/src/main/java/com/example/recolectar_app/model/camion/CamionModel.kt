@@ -9,6 +9,8 @@ data class CamionModel(var id: String) : Serializable{
     var vehiclePlateIdentifier: VehiclePlateIdentifier? = null
     var vehicleType: VehicleType? = null
     var fillingLevel: FillingLevel? = null
+    var tolvaFillingLevel : TolvaFillingLevel? = null
+    var refZona : RefZona? = null
 
     init {
         this.id = "vehicle:${id}"
@@ -29,6 +31,18 @@ data class CamionModel(var id: String) : Serializable{
     fun setFillingLevel(level : Double){
         this.fillingLevel = FillingLevel(level)
     }
+    fun setTolveFillingLevel(level : Double){
+        this.tolvaFillingLevel = TolvaFillingLevel(level)
+    }
+    fun setRefZona(idZona : String){
+        this.refZona = RefZona(idZona)
+    }
+
+    data class RefZona(
+        var value: String
+    ){
+        val type = "Relationship"
+    }
 
     data class CargoWeight(
         var value: Double
@@ -39,6 +53,12 @@ data class CamionModel(var id: String) : Serializable{
         var value: String
     ){
         val type = "Text"
+    }
+
+    data class TolvaFillingLevel(
+        var value : Number
+    ){
+        val type = "Property"
     }
 
     data class VehiclePlateIdentifier(

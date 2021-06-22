@@ -8,7 +8,7 @@ import com.example.recolectar_app.model.zona.ZonaModel
 import kotlinx.coroutines.launch
 
 class ZonaAltaVM : ViewModel() {
-    val altaZonaData = MutableLiveData<Boolean>()
+    val altaZonaResult = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
     val postZonaUseCase = PostZonaUseCase()
 
@@ -16,7 +16,7 @@ class ZonaAltaVM : ViewModel() {
         viewModelScope.launch {
             isLoading.postValue(true)
             val result = postZonaUseCase(zona)
-            altaZonaData.postValue(result)
+            altaZonaResult.postValue(result)
             isLoading.postValue(false)
         }
 
