@@ -24,4 +24,31 @@
         android:id="@+id/perfil"
         android:name="com.example.recolectar_app.empleado.perfil"
         android:label="perfil" />
+    <fragment
+        android:id="@+id/contenedoresListEmpleado"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedoresListEmpleado"
+        android:label="contenedores_list_empleado_fragment"
+        tools:layout="@layout/contenedores_list_empleado_fragment" >
+        <argument
+            android:name="contenedor"
+            app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"
+            />
+        <action
+            android:id="@+id/action_contenedoresListEmpleado_to_contenedorDetalleEmpleado"
+            app:destination="@id/contenedorDetalleEmpleado" >
+            <argument
+                android:name="contenedor"
+                app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"
+                />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/contenedorDetalleEmpleado"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedorDetalleEmpleado"
+        android:label="fragment_contenedor_empleado_detalle"
+        tools:layout="@layout/fragment_contenedor_empleado_detalle" >
+        <action
+            android:id="@+id/action_contenedorDetalleEmpleado_to_contenedoresListEmpleado"
+            app:destination="@id/contenedoresListEmpleado" />
+    </fragment>
 </navigation>

@@ -5,5 +5,5 @@ import com.example.recolectar_app.model.contenedor.ContenedorModel
 
 class GetContenedoresByZonaUseCase {
     private val repository = ContenedoresRepository()
-    suspend operator fun invoke(zona: String): List<ContenedorModel> = repository.getContenedorByZona(zona)
+    suspend operator fun invoke(req: String): List<ContenedorModel> = repository.getContenedorByZona(req)
 }

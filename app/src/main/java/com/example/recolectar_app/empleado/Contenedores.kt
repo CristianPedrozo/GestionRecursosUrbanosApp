@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.model.contenedor.ContenedorListAdapter
-import com.example.recolectar_app.ui.view.contenedor.ContenedoresList
+import com.example.recolectar_app.ui.view.contenedor.ContenedoresListAdmin
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.databinding.FragmentEmpleadoContenedoresBinding
 import com.google.gson.Gson
@@ -28,7 +28,7 @@ class Contenedores : Fragment() {
     private lateinit var contenedorListAdapter: ContenedorListAdapter
 
     companion object {
-        fun newInstance() = ContenedoresList()
+        fun newInstance() = ContenedoresListAdmin()
     }
 
     override fun onCreateView(

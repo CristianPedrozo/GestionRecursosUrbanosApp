@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/list_contenedores"
-        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedoresList"
+        android:name="com.example.recolectar_app.ui.view.contenedor.ContenedoresListAdmin"
         android:label="fragment_administrador_contenedores"
-        tools:layout="@layout/fragment_administrador_contenedores">
+        tools:layout="@layout/fragment_list_contenedores">
         <action
             android:id="@+id/action_contenedores_to_contenedorDetalle"
             app:destination="@id/contenedorDetalle">
