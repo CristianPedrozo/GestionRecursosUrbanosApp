@@ -58,6 +58,7 @@ class Datos_Administrador : Fragment() {
         if(email != null && email != ""){
             esEdicion = true
             binding.titulo.text = "Editar Usuario"
+            binding.editTextUsuario.isEnabled = false
             binding.btnAgregarUsuario.text = "Editar Usuario"
             obtenerUsuarioFirebase(email.toString())
         }

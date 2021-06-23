@@ -80,7 +80,7 @@ class ContenedorAlta : Fragment() {
         latlong.add(binding.editTextLatitud.editText?.text.toString().toDouble())
         latlong.add(binding.editTextLongitud.editText?.text.toString().toDouble())
         contenendor.setLocation(latlong)
-        contenendor.setFillingLevel(0.0)
+        contenendor.setFillingLevel(0.5)
         contenendor.setWasteType(tipo)
         contenendor.setStatus(estado)
         contenendor.setRefZona(binding.editTextZona.editText?.text.toString())
