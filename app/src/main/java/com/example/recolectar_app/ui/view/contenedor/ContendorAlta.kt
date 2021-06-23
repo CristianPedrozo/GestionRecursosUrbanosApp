@@ -57,6 +57,11 @@ class ContenedorAlta : Fragment() {
             val action = ContenedorAltaDirections.actionAltaContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }
+
+        binding.botonCancelar.setOnClickListener{
+            val action = ContenedorAltaDirections.actionAltaContenedorToContenedores()
+            binding.root.findNavController().navigate(action)
+        }
         
         contenedorAltaVM.altaContenedorResult.observe(viewLifecycleOwner, { result ->
             if(result){
