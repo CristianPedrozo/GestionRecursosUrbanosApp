@@ -68,13 +68,16 @@ class datosRuta:ViewModel() {
         tolvaFillLevel = 0.0
         fillLevel = 0.0
     }
-    fun obtenerRuta(URL:String,contexto:Context){
+    fun obtenerRuta(URL:String,contexto:Context,finalizar:Boolean){
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, URL, null, { response ->
             datosruta.postValue(response)
             ruta=response
             instrucciones=obtenerInstrucciones(response)
-            ubicacionContenedores=obtenerUbicacionContenedores(response)
-            kmTotales= response["kmTotales"] as Int
+            if(finalizar)
+            {
+                ubicacionContenedores = obtenerUbicacionContenedores(response)
+                kmTotales = response["kmTotales"] as Int
+            }
             cargarInstrucciones()
             Log.d("asd",ruta.toString())
         }, { error ->

@@ -20,6 +20,8 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.recolectar_app.R
+import com.example.recolectar_app.core.UsuarioGlobal
+import com.example.recolectar_app.mapa.models.ContenedorDato
 import com.example.recolectar_app.mapa.models.datosRuta
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,6 +42,11 @@ class Camino : Fragment() {
     val datosRuta: datosRuta by viewModels()
     var pausa = false
     var auxContador=0
+    var finalizarViaje = true
+    var inicio = LatLng(-34.591831, -58.415096)
+    var fin = LatLng(-34.594102, -58.418722)
+    var zona = UsuarioGlobal.zona
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +58,7 @@ class Camino : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        finalizarViaje=true
         datosRuta.borrarDatos()
         pausa=false
         auxContador=0
@@ -82,6 +90,8 @@ class Camino : Fragment() {
         val tvWarning = rootView.findViewById<TextView>(R.id.tv_Warning)
         val btnRecolectar = rootView.findViewById<Button>(R.id.btn_Recolectar)
         val btnFinalizar=rootView.findViewById<Button>(R.id.btn_FinalizarViaje)
+
+
 
         datosRuta.datosruta.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             datosRuta.dibujarMapa(mMap)
@@ -135,6 +145,12 @@ class Camino : Fragment() {
             pausa=false
         }
 
+        btnFinalizar.setOnClickListener {
+            pausa=false
+            cvRecoleccion.visibility=View.INVISIBLE
+            datosRuta.obtenerRuta("https://recolectar-api.herokuapp.com/api/ruta/finalizarviaje?inicio={%20%22latitude%22:"+inicio.latitude+",%22longitude%22: "+inicio.longitude+"}&fin={%20%22latitude%22:"+fin.latitude+",%22longitude%22: "+fin.longitude+"}",contexto,finalizarViaje)
+        }
+
         btnIniciar.setOnClickListener{
             cvResumen.visibility=View.INVISIBLE
             cvInstruccion.visibility=View.VISIBLE
@@ -145,8 +161,8 @@ class Camino : Fragment() {
 
 
     private fun updateMap(contexto:Context) {
-        datosRuta.obtenerRuta("https://recolectar-api.herokuapp.com/api/ruta/obtenerruta?id=zona:10&inicio={%20%22latitude%22:-34.593755,%22longitude%22:-58.415265}&fin={%22latitude%22:-34.597905,%22longitude%22:-58.414200}"
-            ,contexto)
+        datosRuta.obtenerRuta("https://recolectar-api.herokuapp.com/api/ruta/obtenerruta?id=zona:10&inicio={%20%22latitude%22:"+inicio.latitude+",%22longitude%22:"+inicio.longitude+"}&fin={%22latitude%22:"+fin.latitude+",%22longitude%22:"+fin.longitude+"}"
+            ,contexto,finalizarViaje)
         val inicio =LatLng(-34.591283, -58.414742)
         val cameraPosition = CameraPosition.Builder()
             .target(inicio)
@@ -175,11 +191,12 @@ class Camino : Fragment() {
                 // función a ejecutar
                 if (!pausa)
                 {
-                    var ubicacionActual = datosRuta.coordenadasDecodificadas[auxContador]
-                    if (datosRuta.buscarContenedor(ubicacionActual)) {
-                        pausa = true
-                        datosRuta.obtenerVehiculo(datosRuta.idVehiculo,contexto)
-                    }
+                    var ubicacionActual =datosRuta.coordenadasDecodificadas[auxContador]
+                    if(finalizarViaje)
+                        if (datosRuta.buscarContenedor(ubicacionActual)) {
+                            pausa = true
+                            datosRuta.obtenerVehiculo(datosRuta.idVehiculo,contexto)
+                        }
                     if (datosRuta.auxInstruccion.estoyCerca(ubicacionActual))
                         datosRuta.actualizarInstrucciones()
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionActual))
