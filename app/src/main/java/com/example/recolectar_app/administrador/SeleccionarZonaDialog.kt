@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONArray
 import org.json.JSONObject
 
-class SeleccionarZonaDialog : DialogFragment(), Communicator{
+class SeleccionarZonaDialog : DialogFragment(){
     lateinit var combo_zonas: AutoCompleteTextView
     lateinit var btn_buscar: Button
     lateinit var v:View
@@ -55,6 +55,7 @@ class SeleccionarZonaDialog : DialogFragment(), Communicator{
             findNavController().previousBackStackEntry?.savedStateHandle?.set("Id_Zona", id_zona)
             dismiss()
 
+
         }
 
         return v
@@ -81,11 +82,13 @@ class SeleccionarZonaDialog : DialogFragment(), Communicator{
             zonas.add(zona)
         }
     }
-
+/*
     override fun passDataCom(id: String) {
         val bundle = Bundle()
         bundle.putString("message",id)
 
 
     }
+
+ */
 }
