@@ -67,10 +67,10 @@
     <string name="btn_agregar">Agregar</string>
     <string name="configuration">Configuration</string>
     <string-array name="estados_camion">
-        <item>parked</item>
-        <item>onRoute</item>
-        <item>broken</item>
-        <item>outOfService</item>
+        <item>Estacionado</item>
+        <item>En Ruta</item>
+        <item>En Reparación</item>
+        <item>Fuera de Servicio</item>
     </string-array>
     <!--Para ABM Zonas -->
     <string name="label_id_zona">Zona n°:</string>
@@ -81,4 +81,5 @@
     <string name="lbl_Umbral_Default">Umbral Default</string>
     <string name="txt_Umbral_Defautl">0.60</string>
     <string name="lbl_Umbral_Minimo">Umbral Mínimo</string>
+
 </resources>

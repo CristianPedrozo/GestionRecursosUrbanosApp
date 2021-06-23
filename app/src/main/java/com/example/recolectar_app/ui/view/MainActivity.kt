@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.recolectar_app.administrador.AdministradorActivity
+import com.example.recolectar_app.core.UsuarioGlobal
 import com.example.recolectar_app.databinding.ActivityMainBinding
 import com.example.recolectar_app.empleado.EmpleadoActivity
 import com.google.android.gms.tasks.Task
@@ -15,6 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import wu.seal.jsontokotlin.utils.containsAnyOf
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +45,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun login() {
-        val email = binding.loginEmail.text.toString()
+        var email = binding.loginEmail.text.toString()
+        if(!email.contains("@"))
+            email = "$email@fiware.com.ar"
+
         val password = binding.loginPassword.text.toString()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -60,26 +65,16 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-
-
-/*<<<<<<< HEAD
-    fun consultarUsuario(usuario: String) {
-        Log.d("TAG", "Empezando")
-        db.collection("usuarios").document(usuario)
-            .get()
-            .addOnSuccessListener {
-                var esAdmin = it.getBoolean("esAdmin")
-                UsuarioGlobal.email = it.getString("email")
-                UsuarioGlobal.zona = it.getString("zona")
-                UsuarioGlobal.usuario = usuario
-=======*/
     fun consultarUsuario(email: String): Task<DocumentSnapshot> {
         Log.d("TAG", "Empezando")
         return db.collection("usuarios").document(email)
             .get()
             .addOnSuccessListener {
+                UsuarioGlobal.usuario = it.getString("usuario")
+                UsuarioGlobal.zona = it.getString("zona")
+                UsuarioGlobal.email = it.getString("email")
+
                 val esAdmin = it.getBoolean("esAdmin")
-/*>>>>>>> e26dffbbb5558a80e008862d8820d71e60a0fca0*/
                 if(esAdmin == true){
                     val intent = Intent(this, AdministradorActivity::class.java)
                     intent.putExtra("userId",it.getString("id"))
@@ -89,9 +84,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, EmpleadoActivity::class.java)
                     intent.putExtra("userId",it.getString("id"))
                     startActivity(intent)
-
                 }
-
             }
     }
 

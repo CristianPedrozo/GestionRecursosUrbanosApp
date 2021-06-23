@@ -1,5 +1,6 @@
 package com.example.recolectar_app.administrador
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
@@ -24,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.NumberFormatException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,10 +86,12 @@ class Monitoreo : Fragment() {
 
 class Monitoreo : Fragment() {
     lateinit var v: View
+    lateinit var btn_buscarZona: FloatingActionButton
     lateinit var btn_configuracion: FloatingActionButton
     lateinit var mMap: GoogleMap
     lateinit var contexto :Context
-
+    lateinit var zona_seleccionada: String
+    var TAG ="MonitoreoFragment"
 /*
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -124,28 +132,42 @@ class Monitoreo : Fragment() {
         var mapFragment = childFragmentManager.findFragmentById(R.id.map_monitoreo) as SupportMapFragment
         mapFragment.getMapAsync { googleMap -> mMap = googleMap
             updateMap()
-        }
-
+            }
+        //Botón Configuración
         btn_configuracion = v.findViewById(R.id.boton_configuracion)
         btn_configuracion.setOnClickListener(){
             val action= MonitoreoDirections.actionMonitoreoToConfiguration()
             v.findNavController().navigate(action)
         }
+
+        //Botón Buscar Zona
+        btn_buscarZona = v.findViewById(R.id.boton_buscarZona)
+        btn_buscarZona.setOnClickListener(){
+            var dialog= SeleccionarZonaDialog()
+            dialog.show(getParentFragmentManager(), "Seleccionar Zona");
+        }
+
+
         return v
 
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+        }
+    }
 
-    fun crearRuta() {
-
+    fun mostrarContenedores() {
+        observerZona()
+        if(zona_seleccionada.isEmpty()){
+            zona_seleccionada = "zona:2"
+        }
+        val url = "http://46.17.108.122:1026/v2/entities/?q=refZona==$zona_seleccionada&type=WasteContainer&options=keyValues&attrs=id,location&limit=100"
         //val url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&options=keyValues&limit=1000"
-        val url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:7&type=WasteContainer"
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, { response ->
-            /*
-            UtilidadesMaps.obtenerCoordenadasRuta(response)
-            UtilidadesMaps.obtenerInstrucciones(response)
-             */
+        //val url = "http://46.17.108.122:1026/v2/entities/?q=refZona==zona:2&type=WasteContainer&options=keyValues&attrs=id,location&limit=100"
+        val jsonArrayRequest = JsonArrayRequest( url, { response ->
 
-            cargarMarkers(response as JSONArray,mMap)
+            cargarMarkers(response,mMap)
             Log.d("Coordenadas", response.toString())
         }, { error ->
             Toast.makeText(contexto, "No se puede conectar $error", Toast.LENGTH_LONG).show()
@@ -154,29 +176,43 @@ class Monitoreo : Fragment() {
         }
         )
         val request = Volley.newRequestQueue(contexto)
-        request.add(jsonObjectRequest)
+        request.add(jsonArrayRequest)
     }
 
     var contenedores:MutableList<LatLng> = ArrayList()
 
     fun cargarMarkers(response: JSONArray, mMap:GoogleMap){
         for (i in 0 until response.length()){
+            Log.d("Response 0", response[0].toString())
             var coordenadas = ((response[i] as JSONObject) ["location"] as JSONObject)["coordinates"] as JSONArray
             Log.d("Coordenadas Prueba",coordenadas.toString())
             var lat = coordenadas[0] as Double
             var lng = coordenadas[1] as Double
+
             var locacion = LatLng(lat,lng)
+            if(i==0){
+                val cameraPosition = CameraPosition.Builder().target(locacion).zoom(18f).build()
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                mMap.addMarker(MarkerOptions().position(locacion))
+            }
             mMap.addMarker(MarkerOptions().position(locacion))
             contenedores.add(locacion)
         }
+
     }
 
+
     private fun updateMap() {
-        val inicio =LatLng(-34.591283, -58.414742)
+        //val inicio =LatLng(-34.591283, -58.414742)
+        mostrarContenedores()
+        //val inicio = contenedores[0]
+        /*
         val cameraPosition = CameraPosition.Builder().target(inicio).zoom(18f).build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         mMap.addMarker(MarkerOptions().position(inicio))
-        crearRuta()
+           mostrarContenedores()
+         */
+
     }
 /*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -186,5 +222,16 @@ class Monitoreo : Fragment() {
     }
 
  */
+    fun observerZona(){
+        findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData("Id_Zona", "")
+            ?.observe(viewLifecycleOwner){
+                result ->
+                    print(result)
+                    zona_seleccionada = result
 
+            }
+    }
 }

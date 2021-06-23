@@ -98,7 +98,7 @@ class ContenedorUpdate : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             ContenedorUpdate().apply {
                 arguments = Bundle().apply {
 

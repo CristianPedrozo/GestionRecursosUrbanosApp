@@ -180,6 +180,9 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/datosToUsuario"
+            app:destination="@id/usuarios" />
     </fragment>
     <fragment
         android:id="@+id/update_Zona"
@@ -201,6 +204,19 @@
     <fragment
         android:id="@+id/configuration"
         android:name="com.example.recolectar_app.administrador.configuration"
-        android:label="fragment_configuration"
-        tools:layout="@layout/fragment_configuration" />
+        android:label="configuration" >
+        <action
+            android:id="@+id/action_configuration_to_monitoreo"
+            app:destination="@id/monitoreo" />
+    </fragment>
+    <fragment
+        android:id="@+id/SeleccionarZonaDialog"
+        android:name="com.example.recolectar_app.administrador.SeleccionarZonaDialog"
+        android:label="SeleccionarZonaDialog" >
+        <action
+            android:id="@+id/action_SeleccionarZonaDialog_to_monitoreo"
+            app:destination="@id/monitoreo" />
+        <argument android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -88,7 +88,7 @@ class ContenedorDetalle : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             ContenedorDetalle().apply {
                 arguments = Bundle().apply {
 
