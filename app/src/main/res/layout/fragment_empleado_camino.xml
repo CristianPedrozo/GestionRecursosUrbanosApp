@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <fragment
         android:id="@+id/map"
@@ -17,20 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_Inicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mostrar Ruta"
-        app:layout_constraintBottom_toTopOf="@+id/cv_Instrucciones"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        tools:layout_conversion_absoluteHeight="48dp"
-        tools:layout_conversion_absoluteWidth="138dp" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_Instrucciones"
         android:layout_width="match_parent"
@@ -39,7 +25,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:visibility="invisible"
-        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardBackgroundColor="#E8424242"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,8 +48,10 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
 
                 <LinearLayout
                     android:id="@+id/lineaInstruccion"
@@ -115,4 +103,250 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_Resumen"
+        android:layout_width="387dp"
+        android:layout_height="288dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#E2424242"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_TituloResumen"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="Resumen de viaje"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.062" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="310dp"
+                android:layout_height="171dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="310dp"
+                    android:layout_height="37dp"
+                    android:layout_marginTop="34dp">
+
+                    <TextView
+                        android:id="@+id/tv_ZonaTitulo"
+                        android:layout_width="152dp"
+                        android:layout_height="wrap_content"
+                        android:text="Zona: "
+                        android:textAlignment="viewEnd"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_Zona"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ContenedorTitulo"
+                        android:layout_width="79dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Contenedores: "
+                        android:textAlignment="viewEnd"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_Contenedores"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_DistanciaTitulo"
+                        android:layout_width="78dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Distancia: "
+                        android:textAlignment="viewEnd"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_Distancia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_Iniciar"
+                android:layout_width="139dp"
+                android:layout_height="37dp"
+                android:text="Mostrar Ruta"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="138dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_Recoleccion"
+        android:layout_width="387dp"
+        android:layout_height="288dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#E4424242"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_TituloRecoleccion"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="WasteContainer"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.062" />
+
+            <LinearLayout
+                android:id="@+id/lnrecoleccion1"
+                android:layout_width="310dp"
+                android:layout_height="171dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="310dp"
+                    android:layout_height="37dp"
+                    android:layout_marginTop="34dp">
+
+                    <TextView
+                        android:id="@+id/tv_LlenadoTitulo"
+                        android:layout_width="152dp"
+                        android:layout_height="wrap_content"
+                        android:text="Capacidad: "
+                        android:textAlignment="viewEnd"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_Llenado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_Recolectar"
+                android:layout_width="139dp"
+                android:layout_height="37dp"
+                android:text="Recolectar"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnrecoleccion1"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="138dp" />
+
+            <TextView
+                android:id="@+id/tv_Warning"
+                android:layout_width="239dp"
+                android:layout_height="87dp"
+                android:textAlignment="center"
+                android:textColor="#B62C2C"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.64" />
+
+            <Button
+                android:id="@+id/btn_FinalizarViaje"
+                android:layout_width="139dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="11dp"
+                android:text="Finalizar"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.86"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnrecoleccion1"
+                app:layout_constraintVertical_bias="0.0"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="138dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

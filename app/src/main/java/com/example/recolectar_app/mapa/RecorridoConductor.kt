@@ -10,7 +10,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 
 class RecorridoConductor : AppCompatActivity(), OnMapReadyCallback {
@@ -20,7 +19,7 @@ class RecorridoConductor : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recorrido_conductor)
-        val btnIniciar=findViewById<Button>(R.id.btn_Inicio)
+        val btnIniciar=findViewById<Button>(R.id.btn_Iniciar)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
