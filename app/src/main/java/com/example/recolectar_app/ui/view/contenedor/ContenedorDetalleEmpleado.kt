@@ -10,13 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.recolectar_app.databinding.FragmentContenedorDetalleBinding
+import com.example.recolectar_app.databinding.FragmentContenedorEmpleadoDetalleBinding
 import com.example.recolectar_app.model.DeleteRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorDetalleVM
 
-class ContenedorDetalle : Fragment() {
+class ContenedorDetalleEmpleado : Fragment() {
     private val TAG = "ContenedorDetalle"
-    private var _binding: FragmentContenedorDetalleBinding? = null
+    private var _binding: FragmentContenedorEmpleadoDetalleBinding? = null
     private val binding get() = _binding!!
     private val contenedorDetalleVM : ContenedorDetalleVM by viewModels()
     private lateinit var contenedorModel: ContenedorModel
@@ -27,7 +28,6 @@ class ContenedorDetalle : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -35,7 +35,7 @@ class ContenedorDetalle : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentContenedorDetalleBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentContenedorEmpleadoDetalleBinding.inflate(layoutInflater,container,false)
         if (container != null) {
             thiscontext = container.context
         };
@@ -48,42 +48,16 @@ class ContenedorDetalle : Fragment() {
         binding.textLongitud.setText(contenedorModel.location.value.coordinates[1].toString())
         binding.textEstado.setText(contenedorModel.status.value)
         binding.textRuta.setText(contenedorModel.refRuta?.value)
-        binding.textCamion.setText(contenedorModel.refVehicle?.value?.split(":")?.get(1) ?: "")
+        binding.textCamion.setText(contenedorModel.refVehicle?.value)
         binding.textTemperatura.setText(contenedorModel.temperature?.value.toString())
         binding.textZona.setText(contenedorModel.refZona.value.split(":")[1])
         binding.textProximaVisita.setText(contenedorModel.nextActuationDeadline?.value)
         binding.textUltimaVisita.setText(contenedorModel.dateLastEmptying?.value)
         binding.textLlenado.setText(contenedorModel.fillingLevel.value.toString())
 
-        binding.botonEditarContenedor.setOnClickListener(){
-            val action = ContenedorDetalleDirections.actionContenedorDetalleToUpdateContenedor(contenedorModel)
-            binding.root.findNavController().navigate(action)
-        }
-
-        binding.botonRemoverContenedor.setOnClickListener(){
-            removeContenedor()
-            val action = ContenedorDetalleDirections.actionContenedorDetalleToContenedores()
-            binding.root.findNavController().navigate(action)
-        }
-        
-        contenedorDetalleVM.deleteContenedorResult.observe(viewLifecycleOwner,{ result ->
-            if(result){
-                Toast.makeText(thiscontext, "EXITO", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(thiscontext, "FAIL", Toast.LENGTH_SHORT).show()
-            }
-        })
 
         return binding.root
     }
-
-    private fun removeContenedor() {
-        val contenedor = ContenedorModel(contenedorModel.id.split(":")[1])
-        val contenedorDeleteRequest = DeleteRequestModel()
-        contenedorDeleteRequest.addContenedor(contenedor)
-        contenedorDetalleVM.deleteContenedor(contenedorDeleteRequest)
-    }
-
 
     companion object {
 

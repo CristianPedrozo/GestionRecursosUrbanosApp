@@ -19,8 +19,7 @@ import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorListVM
 import java.lang.Exception
 
 
-class ContenedoresList : Fragment() {
-    var url = "http://46.17.108.122:1026/v2/entities/?type=WasteContainer&limit=100"
+class ContenedoresListAdmin : Fragment() {
     lateinit var thiscontext : Context
     private val TAG = "Contenedores Adm Frag"
     private var _binding: FragmentListContenedoresBinding? = null
@@ -29,7 +28,7 @@ class ContenedoresList : Fragment() {
     private val _contenedores = ArrayList<ContenedorModel>()
 
     companion object {
-        fun newInstance() = ContenedoresList()
+        fun newInstance() = ContenedoresListAdmin()
     }
 
     override fun onCreateView(
@@ -58,10 +57,11 @@ class ContenedoresList : Fragment() {
         })
         contenedorListVM.isLoading.observe(viewLifecycleOwner, { progressBar ->
             binding.loading.isVisible = progressBar
+            binding.btnAgregarContenedor.isVisible = !progressBar
         })
 
         binding.btnAgregarContenedor.setOnClickListener {
-            val action = ContenedoresListDirections.actionContenedoresToAltaContenedor()
+            val action = ContenedoresListAdminDirections.actionContenedoresToAltaContenedor()
             binding.root.findNavController().navigate(action)
         }
 

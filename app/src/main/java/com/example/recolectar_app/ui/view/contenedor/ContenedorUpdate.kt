@@ -73,7 +73,7 @@ class ContenedorUpdate : Fragment() {
             edittextContenedorZona.setText(data.refZona.value.split(":")[1])
 //            edittextContenedorRuta.setText(data.refRuta?.value ?: "")
             edittextContenedorEstado.setText(data.status.value)
-            edittextContenedorCamion.setText(data.refVehicle?.value ?: "")
+            edittextContenedorCamion.setText(data.refVehicle?.value?.split(":")?.get(1) ?: "")
         })
         val string = "?id=$contenedorId"
         contenedorUpdateVM.getContenedorById(string)

@@ -11,17 +11,14 @@ class EmpleadoActivity : AppCompatActivity() {
     private lateinit var binding : ActivityEmpleadoBinding
     private lateinit var navHostFragment : NavHostFragment
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmpleadoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
 
         NavigationUI.setupWithNavController(binding.bottomBar, navHostFragment.navController)
-
     }
 
 

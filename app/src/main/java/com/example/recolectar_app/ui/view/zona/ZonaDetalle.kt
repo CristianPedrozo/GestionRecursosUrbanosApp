@@ -44,6 +44,7 @@ class ZonaDetalle : Fragment() {
         binding.textCamionDetalleZona.setText(zona.refVehicle.value.split(":")[1])
         binding.textContenedoresDetalleZona.setText(zona.contenedores.value.size.toString())
         binding.textNombreDetalleZona.setText(zona.nombre.value)
+        binding.textEmpleadoDetalleZona.setText(zona.empleado?.value)
 
 
         binding.botonEditarZona.setOnClickListener {
