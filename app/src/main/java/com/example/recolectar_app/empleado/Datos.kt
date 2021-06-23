@@ -25,7 +25,7 @@ class Datos : Fragment() {
     private val bindingUsr get() = _bindingUsr!!
     private lateinit var datos : TextView
     private lateinit var auth: FirebaseAuth
-
+    var estadoActualUsuario:Boolean? = false
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class Datos : Fragment() {
         val email = binding.editTextEmail.text.toString()
         val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
         val horarioSalida = binding.editTextHorarioSalida.text.toString()
-        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,false,"")
+        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,false,estadoActualUsuario,"")
     }
 
     fun validarDatos(usuario: Usuario):Boolean{
@@ -93,6 +93,7 @@ class Datos : Fragment() {
                 "horarioEntrada" to usuario.horarioEntrada,
                 "horarioSalida" to usuario.horarioSalida,
                 "email" to usuario.email,
+                "estaActivo" to estadoActualUsuario,
                 "razonSocial" to usuario.razonSocial
             )
         ).addOnSuccessListener{
@@ -118,10 +119,12 @@ class Datos : Fragment() {
             binding.editTextZona.text.toString(),
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
-            bindingUsr.checkBoxEsAdmin.isChecked,
+            false,
+            estadoActualUsuario,
             "")
 
         if(validarDatos(usuario)){
+            usuario.usuario = asignaroCompletarUsuario(usuario.usuario)
             guardarUsuarioFirebase(usuario)
             actualizarPassword()
         }
@@ -130,15 +133,22 @@ class Datos : Fragment() {
         }
     }
 
+    fun asignaroCompletarUsuario(usuario: String):String{
+        var usuarioAsigned = ""
+        if(!usuario.contains("@")){
+            usuarioAsigned = "$usuario@fiware.com.ar"
+        }
+        else{
+            usuarioAsigned = usuario
+        }
+        return usuarioAsigned
+    }
+
     fun actualizarPassword(){
         val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
         val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
 
-        if(contrasenia1 == "" && contrasenia2 == "") {
-            if (contrasenia1.length < 8 || contrasenia2.length < 8) {
-                //
-            }
-
+        if(contrasenia1 != "" && contrasenia2 != "") {
             val user = Firebase.auth.currentUser
 
             user!!.updatePassword(contrasenia1)
@@ -163,17 +173,24 @@ class Datos : Fragment() {
                         document.getString("horarioEntrada"),
                         document.getString("horarioSalida"),
                         document.getBoolean("esAdmin"),
+                        document.getBoolean("estaActivo"),
                         "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    estadoActualUsuario = usuario.estaActivo
                     cargarCampos(usuario)
                 }
         }
+    }
+
+    fun redireccionarAUsuarios(){
+        val action = Datos_AdministradorDirections.datosToUsuario()
+        binding.root.findNavController().navigate(action)
     }
 
     fun cargarCampos(usuario : Usuario){
         binding.editTextRazonSocial.setText(usuario.razonSocial)
         var usuarioLimpio= ""
         var index = usuario.usuario.indexOf('@')
-        if(index > 0)
+        if(index > 0 && usuario.usuario.contains("fiware"))
             usuarioLimpio = usuario.usuario.substring(0,index)
         else
             usuarioLimpio = usuario.usuario

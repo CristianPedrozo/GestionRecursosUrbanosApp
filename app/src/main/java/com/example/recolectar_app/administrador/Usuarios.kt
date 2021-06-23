@@ -7,18 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.MainActivity
-import com.example.recolectar_app.R
+import com.example.recolectar_app.ui.view.MainActivity
 import com.example.recolectar_app.Usuario
 import com.example.recolectar_app.UsuarioAdapter
-import com.example.recolectar_app.adapters.ContenedorListAdapter
 import com.example.recolectar_app.databinding.FragmentAdministradorUsuariosBinding
-import com.example.recolectar_app.databinding.FragmentListZonasBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -91,7 +85,16 @@ class Usuarios : Fragment() {
             .addOnSuccessListener { result ->
                 val users:MutableList<Usuario> = ArrayList()
                 for (document in result) {
-                    users.add(Usuario(document.getString("razonSocial"), document.id,  document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
+                    users.add(Usuario(
+                        document.getString("razonSocial"),
+                        document.id,
+                        document.getString("email"),
+                        document.getString("zona"),
+                        document.getString("horarioEntrada"),
+                        document.getString("horarioSalida"),
+                        document.getBoolean("esAdmin"),
+                        document.getBoolean("estaActivo"),
+                        "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
                     setUpRecyclerView(users)
                 }
             }

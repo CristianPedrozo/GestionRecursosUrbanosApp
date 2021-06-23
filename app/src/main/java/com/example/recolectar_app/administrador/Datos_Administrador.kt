@@ -1,4 +1,5 @@
 package com.example.recolectar_app.administrador
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,8 +24,9 @@ class Datos_Administrador : Fragment() {
     private var _binding: FragmentUsuariosDatosBinding? = null
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
-
+    var estadoActualUsuario:Boolean? = false
     val db = FirebaseFirestore.getInstance()
+    private lateinit var thiscontext:Context
     override fun onCreate(savedInstanceState: Bundle?) {
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -47,9 +49,14 @@ class Datos_Administrador : Fragment() {
         binding.btnAgregarUsuario.setOnClickListener {
             agregarUsuario()
         }
+        if (container != null) {
+            thiscontext = container.context
+        };
         val email = args?.email
-        if(email != null && email != "")
+        if(email != null && email != ""){
+            binding.titulo.text = "Editar Usuario"
             obtenerUsuarioFirebase(email.toString())
+        }
 
         return binding.root
 
@@ -64,6 +71,7 @@ class Datos_Administrador : Fragment() {
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
             binding.checkBoxEsAdmin.isChecked,
+            estadoActualUsuario,
             ""
         )
         if(validarDatos(usuario)){
@@ -73,7 +81,7 @@ class Datos_Administrador : Fragment() {
             redireccionarAUsuarios()
         }
         else{
-            Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
+            Toast.makeText(thiscontext,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
         }
     }
 
@@ -130,7 +138,9 @@ class Datos_Administrador : Fragment() {
                         document.getString("horarioEntrada"),
                         document.getString("horarioSalida"),
                         document.getBoolean("esAdmin"),
+                        document.getBoolean("estaActivo"),
                         "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    estadoActualUsuario = usuario.estaActivo
                     cargarCampos(usuario)
                 }
         }
@@ -160,6 +170,7 @@ class Datos_Administrador : Fragment() {
                 "horarioEntrada" to usuario.horarioEntrada,
                 "horarioSalida" to usuario.horarioSalida,
                 "email" to usuario.email,
+                "estaActivo" to estadoActualUsuario,
                 "razonSocial" to usuario.razonSocial
             )
         ).addOnSuccessListener{
@@ -180,19 +191,25 @@ class Datos_Administrador : Fragment() {
 
     fun obtenerDatos(): Usuario {
         val razonSocial = binding.editTextRazonSocial.text.toString()
-        val usuario = binding.editTextUsuario .text.toString()
+        val usuario = binding.editTextUsuario.text.toString()
         val zona = binding.editTextZona.text.toString()
         val email = binding.editTextEmail.text.toString()
         val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
         val horarioSalida = binding.editTextHorarioSalida.text.toString()
         val esAdmin = binding.checkBoxEsAdmin.isChecked()
-        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,esAdmin,"")
+        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,esAdmin,estadoActualUsuario,"")
     }
 
     fun cargarCampos(usuario : Usuario){
         binding.editTextRazonSocial.setText(usuario.razonSocial)
         binding.editTextEmail.setText(usuario.email)
-        binding.editTextUsuario.setText(usuario.usuario)
+        var usuarioLimpio= ""
+        var index = usuario.usuario.indexOf('@')
+        if(index > 0 && usuario.usuario.contains("fiware"))
+            usuarioLimpio = usuario.usuario.substring(0,index)
+        else
+            usuarioLimpio = usuario.usuario
+        binding.editTextUsuario.setText(usuarioLimpio)
         binding.editTextZona.setText(usuario.zona)
         binding.editTextHorarioEntrada.setText(usuario.horarioEntrada)
         binding.editTextHorarioSalida.setText(usuario.horarioSalida)

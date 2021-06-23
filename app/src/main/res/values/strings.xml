@@ -45,6 +45,15 @@
     <string name="label_ultima_visita_contenedor">Ultima visita:</string>
     <string name="label_proxima_visita_contenedor">Proxima visita:</string>
     <string name="label_llenado_contenedor">Llenado:</string>
+    <!--Para Card Item Camion-->
+    <string name="label_card_ID_camion">Camión N°:  </string>
+    <string name="label_card_Patente_camion">Patente:  </string>
+    <string name="label_card_Estado_camion">Estado:  </string>
+    <!--Para Card Item Contenedor-->
+    <string name="label_card_ID_contenedor">Contenedor N°:  </string>
+    <string name="label_card_Tipo_contenedor">Tipo:  </string>
+    <string name="label_card_Zona_contenedor">Zona:  </string>
+    <string name="label_card_Llenado_contenedor">Llenado:  </string>
     <!--Para ABM Camiones -->
     <string name="label_Id_camion">ID</string>
     <string name="label_patente_camion">Patente</string>
@@ -56,15 +65,21 @@
     <string name="label_longitud_camion">Longitud</string>
     <string name="label_carga_camion">Carga</string>
     <string name="btn_agregar">Agregar</string>
+    <string name="configuration">Configuration</string>
     <string-array name="estados_camion">
-        <item>parked</item>
-        <item>onRoute</item>
-        <item>broken</item>
-        <item>outOfService</item>
+        <item>Estacionado</item>
+        <item>En Ruta</item>
+        <item>En Reparación</item>
+        <item>Fuera de Servicio</item>
     </string-array>
     <!--Para ABM Zonas -->
     <string name="label_id_zona">Zona n°:</string>
     <string name="label_contenedores_zona">Contenedores:</string>
     <string name="label_refVehicle_zona">Camion:</string>
+    <string name="label_nombre_zona">Nombre:</string>
+    <!--Para Configuration-->
+    <string name="lbl_Umbral_Default">Umbral Default</string>
+    <string name="txt_Umbral_Defautl">0.60</string>
+    <string name="lbl_Umbral_Minimo">Umbral Mínimo</string>
 
 </resources>

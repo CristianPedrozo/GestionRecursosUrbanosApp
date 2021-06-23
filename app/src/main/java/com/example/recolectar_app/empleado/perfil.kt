@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.recolectar_app.MainActivity
+import com.example.recolectar_app.core.UsuarioGlobal
+import com.example.recolectar_app.ui.view.MainActivity
 import com.example.recolectar_app.databinding.FragmentPerfilBinding
 import com.example.recolectar_app.entities.HorarioRegistro
 import com.google.firebase.auth.FirebaseAuth
@@ -84,11 +85,13 @@ class perfil : Fragment() {
             binding.btnEntrada.isEnabled = false
             binding.btnSalida.isEnabled = true
             mostrarEntrada("$currentDate  $currentHourIn24Format:$currentMinute hs")
+            actualizarEstadoUsuario(usuario?.email.toString(),true)
         }
         else{
             binding.btnSalida.isEnabled = false
             binding.btnEntrada.isEnabled = true
             mostrarSalida("$currentDate  $currentHourIn24Format:$currentMinute hs")
+            actualizarEstadoUsuario(usuario?.email.toString(),false)
         }
     }
 
@@ -102,6 +105,31 @@ class perfil : Fragment() {
             binding.viewSalidas.text = binding.viewSalidas.text.toString() + "\n"+ registro
     }
 
+    fun actualizarEstadoUsuario(usuario: String, estado:Boolean){
+        db.collection("usuarios").document(usuario).set(
+            hashMapOf(
+                "zona" to UsuarioGlobal.zona,
+                "esAdmin" to  UsuarioGlobal.esAdmin,
+                "horarioEntrada" to UsuarioGlobal.horarioEntrada,
+                "horarioSalida" to UsuarioGlobal.horarioSalida,
+                "email" to UsuarioGlobal.email,
+                "estaActivo" to estado,
+                "razonSocial" to UsuarioGlobal.razonSocial
+            )
+        ).addOnSuccessListener{
+            /* if(email != null){
+                 Toast.makeText(this, "Usuario editado con exito", Toast.LENGTH_SHORT).show()
+             }else{
+                 Toast.makeText(this, "Usuario agregado con exito", Toast.LENGTH_SHORT).show()
+             }*/
+        }.addOnFailureListener{
+            /* if(email != null){
+                 Toast.makeText(this, "Error al editar el usuario", Toast.LENGTH_SHORT).show()
+             }else{
+                 Toast.makeText(this, "Error al agregar el usuario", Toast.LENGTH_SHORT).show()
+             }*/
+        }
+    }
     fun obtenerEntrada(){
         var usuarioActual = getUserInstance()
          db.collection("horarios_"+ TIPO_REGISTRO_ENTRADA).document(usuarioActual?.email.toString())
