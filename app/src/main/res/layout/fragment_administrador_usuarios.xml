@@ -16,29 +16,29 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
-
+<!--
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="@string/text_usuarios"
             android:textAlignment="center"
             android:textSize="36sp"
             android:typeface="serif" />
-
+            -->
+<!--
         <Button
             android:id="@+id/btnLogOut"
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:text="@string/deslogearse"
             tools:text="Deslogearse "/>
+        -->
 <!--            android:background="@color/black"-->
 
 <!--            android:textColor="@android:color/holo_red_light"-->
-             
+        <!--
 
         <Button
             android:id="@+id/btnIrPantallaAgregarUsuario"
@@ -50,7 +50,43 @@
             android:id="@+id/rvUsuario"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        -->
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:contentDescription="Cancelar"
+        android:src="@drawable/ic_baseline_power_settings_new_24"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:layout_constraintBottom_toTopOf="@+id/btnIrPantallaAgregarUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnIrPantallaAgregarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Agregar"
+        android:src="@drawable/ic_baseline_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.863"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
