@@ -1,6 +1,8 @@
 package com.example.recolectar_app.core
 
-object UsuarioGlobal {
+import java.io.Serializable
+
+object UsuarioGlobal : Serializable {
     var razonSocial:String? = null
     var usuario:String? = null
     var email:String? = null

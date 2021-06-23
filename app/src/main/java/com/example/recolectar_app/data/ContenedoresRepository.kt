@@ -19,8 +19,8 @@ class ContenedoresRepository {
         return api.getContenedorById(id)
     }
 
-    suspend fun getContenedorByZona(zona:String): List<ContenedorModel>{
-        return api.getContenedorByZona(zona)
+    suspend fun getContenedorByZona(req:String): List<ContenedorModel>{
+        return api.getContenedorByZona(req)
     }
 
     suspend fun postNewContenedor(contenedor : ContenedorModel) : Boolean{

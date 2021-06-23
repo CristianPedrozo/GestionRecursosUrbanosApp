@@ -20,6 +20,9 @@ interface FiwareApiClient {
         //GET 1 ZONA POR ID
         @GET("/v2/entities/{id}")
         suspend fun getZonaById(@Path("id") id: String): Response<List<ZonaModel>>
+        //GET ZONA POR EMAIL
+        @GET("/v2/entities/{email}")
+        suspend fun getZonaByEmail(@Path("email") id: String): Response<List<ZonaModel>>
         // ALTA ZONA
         @POST("/v2/entities")
         suspend fun postNewZona(@Body params : ZonaModel) : Response<Unit>
@@ -31,8 +34,8 @@ interface FiwareApiClient {
         @GET("/v2/entities/?type=WasteContainer&limit=1000")
         suspend fun getAllContenedores(): Response<List<ContenedorModel>>
         //GET CONTENEDOR POR ZONA
-        @GET("/v2/entities/{zona_id}")
-        suspend fun getContenedorByZona(@Path("zona_id") zona_id : String): Response<List<ContenedorModel>>
+        @GET("/v2/entities/{req}")
+        suspend fun getContenedorByZona(@Path("req") zona_id : String): Response<List<ContenedorModel>>
         //GET CONTENDOR POR ID
         @GET("/v2/entities/{id}")
         suspend fun getContenedorById(@Path("id") id : String): Response<List<ContenedorModel>>

@@ -38,6 +38,13 @@ class ZonaService {
         }
     }
 
+    suspend fun getZonaByEmail(email : String) : List<ZonaModel>{
+        return withContext(Dispatchers.IO){
+            val response = retrofit.create(FiwareApiClient::class.java).getZonaByEmail(email)
+            response.body() ?: emptyList()
+        }
+    }
+
     suspend fun deleteZona(deleteRequestModel: DeleteRequestModel) : Boolean{
         return withContext(Dispatchers.IO){
             val response = retrofit.create(FiwareApiClient::class.java).deleteEntitie(deleteRequestModel)
