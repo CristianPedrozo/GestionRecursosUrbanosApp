@@ -1,6 +1,10 @@
 package com.example.recolectar_app.mapa
 
+import android.content.Context
 import android.location.Location
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import com.example.recolectar_app.R
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -37,5 +41,20 @@ class Instruccion {
                 latitude1
             ) * cos(latitude2) * cos(longDiff)
         return (Math.toDegrees(atan2(y, x)) + 360.0) % 360.0
+    }
+    fun seleccionarImagen(iv: ImageView, contexto: Context){
+        when (accion) {
+            "turn-left" -> iv.setImageDrawable(
+                ContextCompat.getDrawable(contexto,
+                    R.drawable.izquierda
+                ))
+            "turn-right" -> iv.setImageDrawable(
+                ContextCompat.getDrawable(contexto,
+                    R.drawable.derecha
+                ))
+            else -> { // Note the block
+                iv.setImageDrawable(ContextCompat.getDrawable(contexto, R.drawable.derecho))
+            }
+        }
     }
 }
