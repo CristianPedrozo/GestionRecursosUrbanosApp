@@ -48,7 +48,7 @@ class ContenedorDetalle : Fragment() {
         binding.textLongitud.setText(contenedorModel.location.value.coordinates[1].toString())
         binding.textEstado.setText(contenedorModel.status.value)
         binding.textRuta.setText(contenedorModel.refRuta?.value)
-        binding.textCamion.setText(contenedorModel.refVehicle?.value?.split(":")?.get(1) ?: "")
+        binding.textCamion.setText(contenedorModel.refVehicle?.value ?: "")
         binding.textTemperatura.setText(contenedorModel.temperature?.value.toString())
         binding.textZona.setText(contenedorModel.refZona.value.split(":")[1])
         binding.textProximaVisita.setText(contenedorModel.nextActuationDeadline?.value)

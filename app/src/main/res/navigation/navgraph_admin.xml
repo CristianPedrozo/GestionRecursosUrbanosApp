@@ -93,7 +93,7 @@
         android:id="@+id/contenedorDetalle"
         android:name="com.example.recolectar_app.ui.view.contenedor.ContenedorDetalle"
         android:label="fragment_contenedor_detalle"
-        tools:layout="@layout/fragment_alta_contenedor">
+        tools:layout="@layout/fragment_contenedor_detalle">
         <argument
             android:name="contenedor"
             app:argType="com.example.recolectar_app.model.contenedor.ContenedorModel"/>
