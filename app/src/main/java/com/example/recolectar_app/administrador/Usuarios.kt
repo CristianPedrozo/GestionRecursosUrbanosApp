@@ -85,7 +85,16 @@ class Usuarios : Fragment() {
             .addOnSuccessListener { result ->
                 val users:MutableList<Usuario> = ArrayList()
                 for (document in result) {
-                    users.add(Usuario(document.getString("razonSocial"), document.id,  document.getString("distrito"), document.getString("jefe"), document.getString("horarioEntrada"),document.getString("horarioSalida"), document.getBoolean("esAdmin"),"https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
+                    users.add(Usuario(
+                        document.getString("razonSocial"),
+                        document.id,
+                        document.getString("email"),
+                        document.getString("zona"),
+                        document.getString("horarioEntrada"),
+                        document.getString("horarioSalida"),
+                        document.getBoolean("esAdmin"),
+                        document.getBoolean("estaActivo"),
+                        "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"))
                     setUpRecyclerView(users)
                 }
             }

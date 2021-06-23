@@ -34,8 +34,12 @@ class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioHolder>() {
         val binding = FragmentItemUsuariosBinding.bind(view)
         fun bind(usuario:Usuario, context: Context){
 
+            var estado = "No esta trabajando"
+            if(usuario.estaActivo == true)
+                estado = "Esta trabajando"
+
             binding.nombre.text = usuario.razonSocial
-            binding.jefe.text = usuario.usuario
+            binding.jefe.text = estado
             binding.distrito.text = usuario.zona
             binding.ivAvatar.loadUrl(usuario.photo)
             itemView.setOnClickListener {

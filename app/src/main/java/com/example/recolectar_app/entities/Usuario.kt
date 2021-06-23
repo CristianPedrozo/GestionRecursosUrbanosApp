@@ -10,5 +10,6 @@ data class Usuario (
     var horarioEntrada:String?,
     var horarioSalida:String?,
     var esAdmin:Boolean?,
+    var estaActivo:Boolean?,
     var photo:String?
 ) : Serializable

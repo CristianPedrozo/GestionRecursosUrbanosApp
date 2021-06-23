@@ -25,7 +25,7 @@ class Datos : Fragment() {
     private val bindingUsr get() = _bindingUsr!!
     private lateinit var datos : TextView
     private lateinit var auth: FirebaseAuth
-
+    var estadoActualUsuario:Boolean? = false
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class Datos : Fragment() {
         val email = binding.editTextEmail.text.toString()
         val horarioEntrada = binding.editTextHorarioEntrada.text.toString()
         val horarioSalida = binding.editTextHorarioSalida.text.toString()
-        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,false,"")
+        return Usuario(razonSocial, usuario ,email, zona,horarioEntrada,horarioSalida,false,estadoActualUsuario,"")
     }
 
     fun validarDatos(usuario: Usuario):Boolean{
@@ -93,6 +93,7 @@ class Datos : Fragment() {
                 "horarioEntrada" to usuario.horarioEntrada,
                 "horarioSalida" to usuario.horarioSalida,
                 "email" to usuario.email,
+                "estaActivo" to estadoActualUsuario,
                 "razonSocial" to usuario.razonSocial
             )
         ).addOnSuccessListener{
@@ -119,6 +120,7 @@ class Datos : Fragment() {
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
             bindingUsr.checkBoxEsAdmin.isChecked,
+            estadoActualUsuario,
             "")
 
         if(validarDatos(usuario)){
@@ -163,7 +165,9 @@ class Datos : Fragment() {
                         document.getString("horarioEntrada"),
                         document.getString("horarioSalida"),
                         document.getBoolean("esAdmin"),
+                        document.getBoolean("estaActivo"),
                         "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-")
+                    estadoActualUsuario = usuario.estaActivo
                     cargarCampos(usuario)
                 }
         }
@@ -173,7 +177,7 @@ class Datos : Fragment() {
         binding.editTextRazonSocial.setText(usuario.razonSocial)
         var usuarioLimpio= ""
         var index = usuario.usuario.indexOf('@')
-        if(index > 0)
+        if(index > 0 && usuario.usuario.contains("fiware"))
             usuarioLimpio = usuario.usuario.substring(0,index)
         else
             usuarioLimpio = usuario.usuario
