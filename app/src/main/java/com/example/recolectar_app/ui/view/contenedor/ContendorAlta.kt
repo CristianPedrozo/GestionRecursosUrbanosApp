@@ -84,9 +84,7 @@ class ContenedorAlta : Fragment() {
         contenendor.setWasteType(tipo)
         contenendor.setStatus(estado)
         contenendor.setRefZona(binding.editTextZona.editText?.text.toString())
-        val gson = Gson()
-        val asd = gson.toJson(contenendor)
-        Toast.makeText(thiscontext, asd, Toast.LENGTH_SHORT).show()
+
         contenedorAltaVM.crearContenedor(contenendor)
     }
 

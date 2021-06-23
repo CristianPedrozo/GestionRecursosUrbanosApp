@@ -41,6 +41,7 @@ class ZonaAlta : Fragment() {
         binding.editTextId.hint = "Coloca un id"
         binding.editTextRefVehicle.hint = "Coloca el id del camion"
         binding.editTextName.hint = "Nombre de la zona"
+        binding.editTextEmpleado.hint = "Email del empleado"
         binding.botonAgregar.setOnClickListener {
             addZona()
             val action = ZonaAltaDirections.actionAltaZonaToListZonas()
@@ -66,6 +67,7 @@ class ZonaAlta : Fragment() {
         zona = ZonaModel(binding.editTextId.editText?.text.toString())
         zona.setNombre(binding.editTextName.editText?.text.toString())
         zona.setRefVehicleValue(binding.editTextRefVehicle.editText?.text.toString())
+        zona.setEmpleado(binding.editTextEmpleado.editText?.text.toString())
         zona.setContenedores(ArrayList())
         zonaAltaVM.crearZona(zona)
     }

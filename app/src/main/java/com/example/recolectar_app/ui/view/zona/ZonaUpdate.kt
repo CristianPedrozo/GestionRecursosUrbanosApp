@@ -71,6 +71,7 @@ class ZonaUpdate : Fragment() {
             textContenedoresEditZona.setText(data.contenedores.value.size.toString())
             textCamionEditZona.setText(zona.refVehicle.value.split(":")[1])
             textNombreEditZona.setText(zona.nombre.value)
+            textEmpleadoEditZona.setText(zona.empleado?.value)
         })
         val string = "?id=$zonaId"
         zonaUpdateVM.getZonaById(string)
@@ -80,6 +81,7 @@ class ZonaUpdate : Fragment() {
         val zona = ZonaModel(zona.id.split(":")[1])
         zona.setRefVehicleValue(textCamionEditZona.text.toString())
         zona.setNombre(textNombreEditZona.text.toString())
+        zona.setEmpleado(textEmpleadoEditZona.text.toString())
         val zonaUpdateRequest = UpdateRequestModel()
         zonaUpdateRequest.addZona(zona)
         zonaUpdateVM.updateZona(zonaUpdateRequest)

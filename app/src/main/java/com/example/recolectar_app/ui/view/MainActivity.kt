@@ -80,12 +80,10 @@ class MainActivity : AppCompatActivity() {
 
                 if(UsuarioGlobal.esAdmin == true){
                     val intent = Intent(this, AdministradorActivity::class.java)
-                    intent.putExtra("userId",it.getString("id"))
                     startActivity(intent)
                 }
                 else{
                     val intent = Intent(this, EmpleadoActivity::class.java)
-                    intent.putExtra("userId",it.getString("id"))
                     startActivity(intent)
                 }
             }

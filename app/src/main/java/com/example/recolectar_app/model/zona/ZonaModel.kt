@@ -9,6 +9,7 @@ data class ZonaModel(var id: String) : Serializable {
     lateinit var refVehicle: RefVehicle
     lateinit var nombre : Nombre
     lateinit var contenedores : Contenedores
+    var empleado : Empleado? = null
 
     init {
         this.id = "zona:${id}"
@@ -27,6 +28,13 @@ data class ZonaModel(var id: String) : Serializable {
         this.refVehicle = RefVehicle("vehicle:${string}")
     }
 
+    fun setEmpleado(email : String){
+        this.empleado = Empleado(email)
+    }
+
+    data class Empleado(var value : String){
+        val type : String = "Relationship"
+    }
 
     data class Nombre(var value : String){
         val type : String = "Text"

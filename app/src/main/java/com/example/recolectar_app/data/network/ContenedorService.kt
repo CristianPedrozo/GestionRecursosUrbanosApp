@@ -25,9 +25,9 @@ class ContenedorService {
         }
     }
 
-    suspend fun getContenedorByZona(zona:String) : List<ContenedorModel>{
+    suspend fun getContenedorByZona(req:String) : List<ContenedorModel>{
         return withContext(Dispatchers.IO){
-            val response = retrofit.create(FiwareApiClient::class.java).getContenedorByZona(zona)
+            val response = retrofit.create(FiwareApiClient::class.java).getContenedorByZona(req)
             response.body() ?: emptyList()
         }
     }

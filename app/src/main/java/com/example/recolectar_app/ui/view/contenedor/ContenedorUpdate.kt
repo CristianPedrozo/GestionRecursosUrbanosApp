@@ -14,6 +14,7 @@ import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.example.recolectar_app.ui.view.camion.CamionUpdateDirections
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorUpdateVM
+import com.google.gson.Gson
 
 
 class ContenedorUpdate : Fragment() {
@@ -75,7 +76,7 @@ class ContenedorUpdate : Fragment() {
             edittextContenedorProximaVisita.setText(data.nextActuationDeadline?.value ?: "")
             edittextContenedorUltimaVisita.setText(data.dateLastEmptying?.value ?: "")
             edittextContenedorLlenado.setText(data.fillingLevel.value.toString())
-            edittextContenedorTemperatura.setText(data.temperature?.value?.toString() ?: "")
+//            edittextContenedorTemperatura.setText(data.temperature?.value?.toString() ?: "")
             edittextContenedorZona.setText(data.refZona.value.split(":")[1])
 //            edittextContenedorRuta.setText(data.refRuta?.value ?: "")
             edittextContenedorEstado.setText(data.status.value)
@@ -94,11 +95,14 @@ class ContenedorUpdate : Fragment() {
 //        contenedor.setNextActuationDeadLine(edittextContenedorProximaVisita.text.toString())
 //        contenedor.setRefRuta(edittextContenedorRuta.text.toString())
         contenedor.setRefVehicle(edittextContenedorCamion.text.toString())
-        contenedor.setTemperature(edittextContenedorTemperatura.text.toString().toDouble())
+//        contenedor.setTemperature(edittextContenedorTemperatura.text.toString().toDouble())
 //        contenedor.setWasteType(edittextContenedorTipo.text.toString())
         contenedor.setLocation(mutableListOf(edittextContenedorLatitud.text.toString().toDouble(),edittextContenedorLongitud.text.toString().toDouble()))
         val contenedorUpdateRequest = UpdateRequestModel()
         contenedorUpdateRequest.addContenedor(contenedor)
+        val gson = Gson()
+        val asd = gson.toJson(contenedorUpdateRequest)
+        Toast.makeText(thiscontext, asd, Toast.LENGTH_SHORT).show()
         contenedorUpdateVM.updateContenedor(contenedorUpdateRequest)
     }
 

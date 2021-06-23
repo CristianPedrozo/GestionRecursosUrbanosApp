@@ -23,6 +23,10 @@ class ZonasRepository {
         return api.getZonaById(id)
     }
 
+    suspend fun getZonaByEmail(email:String) : List<ZonaModel>{
+        return api.getZonaByEmail(email)
+    }
+
     suspend fun postNewZona(zona: ZonaModel) : Boolean{
         return api.postNewZona(zona)
     }
