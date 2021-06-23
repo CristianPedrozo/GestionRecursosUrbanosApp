@@ -4,22 +4,18 @@
 
     <item
         android:id="@+id/perfil"
-        android:icon="@drawable/ic_usuarios"
-        android:title="perfil" />
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Perfil" />
     <item
         android:id="@+id/contenedores"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="contenedores" />
+        android:icon="@drawable/ic_contenedor"
+        android:title="Contenedores" />
     <item
         android:id="@+id/camino"
-        android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="camino" />
+        android:icon="@drawable/ic_baseline_alt_route_24"
+        android:title="Ruta" />
     <item
         android:id="@+id/datos"
-        android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="datos" />
-    <item
-        android:id="@+id/horarios"
-        android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="horarios" />
+        android:icon="@drawable/ic_baseline_assignment_ind_24"
+        android:title="Datos" />
 </menu>

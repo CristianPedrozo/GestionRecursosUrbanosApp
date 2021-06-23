@@ -21,11 +21,6 @@
         android:label="fragment_datos"
         tools:layout="@layout/fragment_empleado_datos" />
     <fragment
-        android:id="@+id/horarios"
-        android:name="com.example.recolectar_app.empleado.Horarios"
-        android:label="fragment_horarios"
-        tools:layout="@layout/fragment_empleado_horarios" />
-    <fragment
         android:id="@+id/perfil"
         android:name="com.example.recolectar_app.empleado.perfil"
         android:label="perfil" />
