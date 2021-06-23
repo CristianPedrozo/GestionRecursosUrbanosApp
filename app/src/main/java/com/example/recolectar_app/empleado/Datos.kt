@@ -119,11 +119,12 @@ class Datos : Fragment() {
             binding.editTextZona.text.toString(),
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
-            bindingUsr.checkBoxEsAdmin.isChecked,
+            false,
             estadoActualUsuario,
             "")
 
         if(validarDatos(usuario)){
+            usuario.usuario = asignaroCompletarUsuario(usuario.usuario)
             guardarUsuarioFirebase(usuario)
             actualizarPassword()
         }
@@ -132,15 +133,22 @@ class Datos : Fragment() {
         }
     }
 
+    fun asignaroCompletarUsuario(usuario: String):String{
+        var usuarioAsigned = ""
+        if(!usuario.contains("@")){
+            usuarioAsigned = "$usuario@fiware.com.ar"
+        }
+        else{
+            usuarioAsigned = usuario
+        }
+        return usuarioAsigned
+    }
+
     fun actualizarPassword(){
         val contrasenia1 = binding.editTextContraseAEmpleado1.text.toString()
         val contrasenia2 = binding.editTextContraseAEmpleado2.text.toString()
 
-        if(contrasenia1 == "" && contrasenia2 == "") {
-            if (contrasenia1.length < 8 || contrasenia2.length < 8) {
-                //
-            }
-
+        if(contrasenia1 != "" && contrasenia2 != "") {
             val user = Firebase.auth.currentUser
 
             user!!.updatePassword(contrasenia1)
@@ -171,6 +179,11 @@ class Datos : Fragment() {
                     cargarCampos(usuario)
                 }
         }
+    }
+
+    fun redireccionarAUsuarios(){
+        val action = Datos_AdministradorDirections.datosToUsuario()
+        binding.root.findNavController().navigate(action)
     }
 
     fun cargarCampos(usuario : Usuario){

@@ -1,4 +1,5 @@
 package com.example.recolectar_app.administrador
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class Datos_Administrador : Fragment() {
     private lateinit var auth: FirebaseAuth
     var estadoActualUsuario:Boolean? = false
     val db = FirebaseFirestore.getInstance()
+    private lateinit var thiscontext:Context
     override fun onCreate(savedInstanceState: Bundle?) {
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -47,6 +49,9 @@ class Datos_Administrador : Fragment() {
         binding.btnAgregarUsuario.setOnClickListener {
             agregarUsuario()
         }
+        if (container != null) {
+            thiscontext = container.context
+        };
         val email = args?.email
         if(email != null && email != ""){
             binding.titulo.text = "Editar Usuario"
@@ -76,7 +81,7 @@ class Datos_Administrador : Fragment() {
             redireccionarAUsuarios()
         }
         else{
-            Toast.makeText(binding.root.context,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
+            Toast.makeText(thiscontext,"Datos invalidos, no se pudo guardar el usuario", Toast.LENGTH_LONG ).show()
         }
     }
 
