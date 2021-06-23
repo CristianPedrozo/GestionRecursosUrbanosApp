@@ -5,7 +5,7 @@
     android:id="@+id/fragment_zona_detalle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".zonas.ZonaDetalle">
+    tools:context=".ui.view.zona.ZonaDetalle">
     <ScrollView
         android:id="@+id/scrollView_detalle_Zona"
         android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                     android:cursorVisible="false"
                     android:clickable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -58,7 +59,27 @@
                     android:cursorVisible="false"
                     android:clickable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/label_nombre_zona"
+                app:boxBackgroundMode="outline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_nombre_detalle_zona"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:cursorVisible="false"
+                    android:clickable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"

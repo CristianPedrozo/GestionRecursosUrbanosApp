@@ -12,7 +12,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
-import com.example.recolectar_app.contenedores.Contenedor
+import com.example.recolectar_app.model.contenedor.ContenedorModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 
 object UtilidadesMaps1 {
     var coordenadasDecodificadas: MutableList<LatLng> = ArrayList() //guardo todas las ubicaciones decodificadas para simular ubicacion
-    var contenedores: MutableList<Contenedor> = ArrayList() //guardo todos los contenedores asignados al cliente
+    var contenedores: MutableList<ContenedorModel> = ArrayList() //guardo todos los contenedores asignados al cliente
     var coordenadasContenedores: MutableList<LatLng> = ArrayList() //guardo todas las coordenadas que se deber recolectar
     var instrucciones : MutableList<Instruccion> = ArrayList() //guardo todas las intrucciones para el viaje
     var lineOptions =PolylineOptions() //guardo todas las opciones para trajar la polyline en el mapa
@@ -100,7 +100,7 @@ object UtilidadesMaps1 {
         listaContenedores.add(LatLng(-34.592755, -58.419770))
 
         for (i in 0 until listaContenedores.size){
-            var con: Contenedor= Contenedor("")
+            var con: ContenedorModel = ContenedorModel("")
             con.location.value.coordinates.add(listaContenedores[i].latitude.toDouble())
             con.location.value.coordinates.add(listaContenedores[i].longitude.toDouble())
             contenedores.add(con)

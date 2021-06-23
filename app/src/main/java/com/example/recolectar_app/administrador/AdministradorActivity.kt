@@ -20,7 +20,7 @@ class AdministradorActivity : AppCompatActivity() {
             binding = ActivityAdministradorBinding.inflate(layoutInflater)
             setContentView(binding.root)
         }catch(e : Exception){
-            Log.e(TAG, "onCreateeee", e)
+            Log.e(TAG, "onCreate", e)
         }
 
 

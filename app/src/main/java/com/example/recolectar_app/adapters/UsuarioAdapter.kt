@@ -5,14 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recolectar_app.administrador.ContenedoresDirections
 import com.example.recolectar_app.administrador.UsuariosDirections
 import com.example.recolectar_app.databinding.FragmentItemUsuariosBinding
-import com.example.recolectar_app.databinding.FragmentItemZonaBinding
 import com.squareup.picasso.Picasso
 
 class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioHolder>() {

@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.recolectar_app.MainActivity
-import com.example.recolectar_app.Usuario
-import com.example.recolectar_app.UsuarioGlobal
+import com.example.recolectar_app.core.UsuarioGlobal
+import com.example.recolectar_app.ui.view.MainActivity
 import com.example.recolectar_app.databinding.FragmentPerfilBinding
 import com.example.recolectar_app.entities.HorarioRegistro
 import com.google.firebase.auth.FirebaseAuth
@@ -131,7 +130,6 @@ class perfil : Fragment() {
              }*/
         }
     }
-
     fun obtenerEntrada(){
         var usuarioActual = getUserInstance()
          db.collection("horarios_"+ TIPO_REGISTRO_ENTRADA).document(usuarioActual?.email.toString())
