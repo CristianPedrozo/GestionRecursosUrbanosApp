@@ -71,7 +71,7 @@ class Datos_Administrador : Fragment() {
             binding.editTextRazonSocial.text.toString(),
             binding.editTextUsuario.text.toString(),
             binding.editTextEmail.text.toString(),
-            binding.editTextZona.text.toString(),
+            completarZona(binding.editTextZona.text.toString()),
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
             binding.checkBoxEsAdmin.isChecked,
@@ -89,6 +89,13 @@ class Datos_Administrador : Fragment() {
         }
     }
 
+    fun completarZona(zona:String?):String?{
+        var zonaAux:String? = null
+        if(zona!= null && !zona.contains("zona:")){
+            zonaAux = "zona:$zona"
+        }
+        return zonaAux
+    }
     fun guardarUsuarioAuth(usuario:Usuario){
         var contraseña = binding.editTextContraseAAdmin1.text.toString()
         if(contraseña != ""){
