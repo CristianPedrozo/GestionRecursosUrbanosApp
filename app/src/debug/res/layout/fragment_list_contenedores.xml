@@ -76,13 +76,14 @@
         android:layout_alignParentBottom="true"
         android:contentDescription="@string/btn_agregar"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.909"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.808" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

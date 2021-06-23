@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.example.recolectar_app.databinding.FragmentUpdateContenedorBinding
 import com.example.recolectar_app.model.UpdateRequestModel
 import com.example.recolectar_app.model.contenedor.ContenedorModel
+import com.example.recolectar_app.ui.view.camion.CamionUpdateDirections
 import com.example.recolectar_app.ui.viewModel.contenedor.ContenedorUpdateVM
 
 
@@ -55,6 +56,11 @@ class ContenedorUpdate : Fragment() {
         
         binding.botonConfirmarEditarContenedor.setOnClickListener(){
             editContenedor()
+            val action = ContenedorUpdateDirections.actionUpdateContenedorToContenedores()
+            binding.root.findNavController().navigate(action)
+        }
+
+        binding.botonCancelarEdit.setOnClickListener(){
             val action = ContenedorUpdateDirections.actionUpdateContenedorToContenedores()
             binding.root.findNavController().navigate(action)
         }

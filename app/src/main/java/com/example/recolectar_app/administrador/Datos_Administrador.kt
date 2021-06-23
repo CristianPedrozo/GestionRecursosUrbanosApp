@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.recolectar_app.R
 import com.example.recolectar_app.Usuario
+import com.example.recolectar_app.core.UsuarioGlobal
 import com.example.recolectar_app.databinding.FragmentAdministradorMonitoreoBinding
 import com.example.recolectar_app.databinding.FragmentUsuariosDatosBinding
 import com.example.recolectar_app.empleado.Datos
@@ -26,6 +27,7 @@ class Datos_Administrador : Fragment() {
     private lateinit var auth: FirebaseAuth
     var estadoActualUsuario:Boolean? = false
     val db = FirebaseFirestore.getInstance()
+    var esEdicion: Boolean = false
     private lateinit var thiscontext:Context
     override fun onCreate(savedInstanceState: Bundle?) {
         // Initialize Firebase Auth
@@ -54,7 +56,9 @@ class Datos_Administrador : Fragment() {
         };
         val email = args?.email
         if(email != null && email != ""){
+            esEdicion = true
             binding.titulo.text = "Editar Usuario"
+            binding.btnAgregarUsuario.text = "Editar Usuario"
             obtenerUsuarioFirebase(email.toString())
         }
 
@@ -67,7 +71,7 @@ class Datos_Administrador : Fragment() {
             binding.editTextRazonSocial.text.toString(),
             binding.editTextUsuario.text.toString(),
             binding.editTextEmail.text.toString(),
-            binding.editTextZona.text.toString(),
+            completarZona(binding.editTextZona.text.toString()),
             binding.editTextHorarioEntrada.text.toString(),
             binding.editTextHorarioSalida.text.toString(),
             binding.checkBoxEsAdmin.isChecked,
@@ -85,15 +89,25 @@ class Datos_Administrador : Fragment() {
         }
     }
 
+    fun completarZona(zona:String?):String?{
+        var zonaAux:String? = null
+        if(zona!= null && !zona.contains("zona:")){
+            zonaAux = "zona:$zona"
+        }
+        return zonaAux
+    }
     fun guardarUsuarioAuth(usuario:Usuario){
-        auth.createUserWithEmailAndPassword(usuario.usuario, binding.editTextContraseAAdmin1.text.toString())
-            .addOnCompleteListener( ) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                } else {
-                    //hacer otra cosa en error
+        var contraseña = binding.editTextContraseAAdmin1.text.toString()
+        if(contraseña != ""){
+            auth.createUserWithEmailAndPassword(usuario.usuario, contraseña)
+                .addOnCompleteListener( ) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                    } else {
+                        //hacer otra cosa en error
+                    }
                 }
-            }
+        }
     }
 
     fun validarDatos(usuario: Usuario):Boolean{
@@ -106,10 +120,16 @@ class Datos_Administrador : Fragment() {
             return false
         if(contrasenia1 != contrasenia2)
             return false
-        if(contrasenia1 == "" || contrasenia1.contains(" "))
-            return false
-        if(contrasenia2 == "" || contrasenia2.contains(" "))
-            return false
+        if(esEdicion){
+            if(contrasenia1 != contrasenia2)
+                return false
+        }
+        else{
+            if(contrasenia1 == "" || contrasenia1.contains(" "))
+                return false
+            if(contrasenia2 == "" || contrasenia2.contains(" "))
+                return false
+        }
         if(usuario.razonSocial.toString().isEmpty())
             return false
         if(usuario.zona.toString().isEmpty())
