@@ -67,7 +67,7 @@ class ZonaAlta : Fragment() {
         zona = ZonaModel(binding.editTextId.editText?.text.toString())
         zona.setNombre(binding.editTextName.editText?.text.toString())
         zona.setRefVehicleValue(binding.editTextRefVehicle.editText?.text.toString())
-        zona.setEmpleado(binding.editTextRefVehicle.editText?.text.toString())
+        zona.setEmpleado(binding.editTextEmpleado.editText?.text.toString())
         zona.setContenedores(ArrayList())
         zonaAltaVM.crearZona(zona)
     }

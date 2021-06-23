@@ -19,7 +19,6 @@ class ContenedorDetalleEmpleado : Fragment() {
     private val TAG = "ContenedorDetalle"
     private var _binding: FragmentContenedorEmpleadoDetalleBinding? = null
     private val binding get() = _binding!!
-    private val contenedorDetalleVM : ContenedorDetalleVM by viewModels()
     private lateinit var contenedorModel: ContenedorModel
     lateinit var thiscontext : Context
 
