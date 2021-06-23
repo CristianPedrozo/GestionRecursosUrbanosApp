@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.recolectar_app.R
@@ -31,7 +33,9 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.net.URL
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class datosRuta:ViewModel() {
@@ -42,15 +46,28 @@ class datosRuta:ViewModel() {
     var instrucciones : MutableList<Instruccion> = ArrayList()
     var instruccion=MutableLiveData<Instruccion>()
     var SigInstruccion=MutableLiveData<Instruccion>()
-    var contenedorActual = MutableLiveData<ContenedorDato>()
+    var contenedorActual = ContenedorDato("",0.0)
     lateinit var auxInstruccion:Instruccion
     lateinit var auxSigInstruccion:Instruccion
     var kmTotales = 0
     var controlRecoleccion=MutableLiveData<Boolean>()
-    val getCamionesByZonaUseCase = GetCamionesByZonaUseCase()
-    val _camiones = MutableLiveData<List<CamionModel>>()
+    var idVehiculo=""
+    var tolvaFillLevel = 0.0
+    var fillLevel = 0.0
+    var vehiculoJSON = MutableLiveData<JSONObject>()
 
 
+    fun borrarDatos(){
+        ubicacionContenedores=ArrayList()
+        ruta= JSONObject()
+        coordenadasDecodificadas=ArrayList()
+        instrucciones=ArrayList()
+        contenedorActual= ContenedorDato("",0.0)
+        kmTotales = 0
+        idVehiculo=""
+        tolvaFillLevel = 0.0
+        fillLevel = 0.0
+    }
     fun obtenerRuta(URL:String,contexto:Context){
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, URL, null, { response ->
             datosruta.postValue(response)
@@ -141,7 +158,6 @@ class datosRuta:ViewModel() {
             mMap.addMarker(MarkerOptions().position(ubicacionContenedores[i]))
         }
     }
-
     fun buscarContenedor(ubicacion:LatLng): Boolean {
         var retorno=false
         var cont = 0
@@ -152,18 +168,102 @@ class datosRuta:ViewModel() {
                 var auxContenedorActual=contenedorJson[cont] as JSONObject
                 var contenedorDato:ContenedorDato= ContenedorDato(auxContenedorActual["id"] as String,
                     auxContenedorActual["fillingLevel"] as Double)
-                contenedorActual.postValue(contenedorDato)
+                contenedorActual=contenedorDato
                 ubicacionContenedores.removeAt(cont)
             }
             cont++
         }
         return retorno
     }
-    fun buscarCamionByZona(zonaId : String){
-        viewModelScope.launch {
-            val camionesByZona = getCamionesByZonaUseCase(zonaId)
-            _camiones.postValue(camionesByZona)
+    fun obtenerZona(zonaId : String,contexto: Context){
+        var URL = "http://46.17.108.122:1026/v2/entities/?id="+zonaId+"&options=keyValues"
+        val jsonObjectRequest = JsonArrayRequest(Request.Method.GET, URL, null, { response ->
+            idVehiculo=(response[0] as JSONObject)["refVehicle"] as String
+        }, { error ->
+            Toast.makeText(contexto, "No se puede conectar $error", Toast.LENGTH_LONG).show()
+            println(error.toString())
+            Log.d("ERROR: ", error.toString())
         }
+        )
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            20000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        val request = Volley.newRequestQueue(contexto)
+        request.add(jsonObjectRequest)
+    }
+    fun obtenerVehiculo(idVehiculo:String,contexto: Context){
+        var URL = "http://46.17.108.122:1026/v2/entities/?id=$idVehiculo&options=keyValues"
+        val jsonObjectRequest = JsonArrayRequest(Request.Method.GET, URL, null, { response ->
+            tolvaFillLevel=(response[0] as JSONObject)["tolvaFillingLevel"] as Double
+            fillLevel=(response[0] as JSONObject)["fillingLevel"] as Double
+            vehiculoJSON.postValue(response[0] as JSONObject )
+        }, { error ->
+            Toast.makeText(contexto, "No se puede conectar $error", Toast.LENGTH_LONG).show()
+            println(error.toString())
+            Log.d("ERROR: ", error.toString())
+        }
+        )
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            20000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        val request = Volley.newRequestQueue(contexto)
+        request.add(jsonObjectRequest)
+    }
+    fun actualizarVehiculo(fillingLevel: Double,contexto: Context){
+        var auxActualizacion = JSONObject("""{
+	"actionType":"append",
+        "entities":[{"id":""""+idVehiculo+"""",
+			"fillingLevel": {
+			"type": "Property",
+			"value":"""+ fillingLevel+
+                """}}]}""")
+
+        // Instantiate the RequestQueue.
+        val queue = Volley.newRequestQueue(contexto)
+        val url = "http://46.17.108.122:1026/v2/op/update"
+        // Request a JSONObject response from the provided URL.
+        val jsonObjectRequest = JsonObjectRequest(url, auxActualizacion,
+            { response ->
+                Log.i("LOG_TAG", "Response is: $response")
+            },
+            { error ->
+                error.printStackTrace()
+                Log.e("LOG_TAG", "That didn't work!")
+            }
+        )
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest)
+    }
+    fun actualizarContenedor(idContenedor:String,contexto: Context){
+        var auxActualizacion = JSONObject("""{
+	"actionType":"append",
+        "entities":[{"id":""""+idContenedor+"""",
+			"fillingLevel": {
+			"type": "Property",
+			"value":"""+ 0.0001+
+                """}}]}""")
+
+        // Instantiate the RequestQueue.
+        val queue = Volley.newRequestQueue(contexto)
+        val url = "http://46.17.108.122:1026/v2/op/update"
+        // Request a JSONObject response from the provided URL.
+        val jsonObjectRequest = JsonObjectRequest(url, auxActualizacion,
+            { response ->
+                Log.i("LOG_TAG", "Response is: $response")
+            },
+            { error ->
+                error.printStackTrace()
+                Log.e("LOG_TAG", "That didn't work!")
+            }
+        )
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest)
     }
     fun estoyCerca(ubicacion:LatLng,fin:LatLng): Boolean {
         val locationA = Location("punto A")

@@ -28,10 +28,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.util.*
-
-private var auxContador=0
 
 class Camino : Fragment() {
     private lateinit var mMap: GoogleMap
@@ -40,7 +39,7 @@ class Camino : Fragment() {
     private lateinit var ultimaUbicacion: Location
     val datosRuta: datosRuta by viewModels()
     var pausa = false
-
+    var auxContador=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +51,12 @@ class Camino : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        datosRuta.borrarDatos()
+        pausa=false
+        auxContador=0
         val contexto = requireContext().applicationContext
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(contexto)
-        context?.let { obtenerUbicacionActual(it) }
+        //context?.let { obtenerUbicacionActual(it) }
         val rootView= inflater.inflate(R.layout.fragment_empleado_camino, container, false)
         var mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
@@ -84,6 +86,7 @@ class Camino : Fragment() {
         datosRuta.datosruta.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             datosRuta.dibujarMapa(mMap)
             datosRuta.cargarMarkers(mMap)
+            datosRuta.obtenerZona("zona:10",contexto)
             tvZona.text="10"
             tvContenedores.text=datosRuta.ubicacionContenedores.size.toString()
             tvDistancia.text="${(datosRuta.kmTotales/1000).toDouble().format(2)}Km"
@@ -107,21 +110,35 @@ class Camino : Fragment() {
             it.seleccionarImagen(ivSig,contexto)
         })
 
-        datosRuta.contenedorActual.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            tvTituloRecoleccion.text=it.id
-            tvFillingLevel.text = "${(it.fillingLevel*100).toDouble().format(2)}%"
+
+        datosRuta.vehiculoJSON.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            var m3contenedor=(datosRuta.contenedorActual.fillingLevel*0.76)/100
+            tvTituloRecoleccion.text=datosRuta.contenedorActual.id
+            tvFillingLevel.text = "${(datosRuta.contenedorActual.fillingLevel*100).toDouble().format(2)}%"
+            if(datosRuta.tolvaFillLevel>0.9){
+                tvWarning.text="Tolva llena! compactar antes de recolectar"
+            }
+            if(datosRuta.fillLevel+m3contenedor>=0.99){
+                tvWarning.text="Vehiculo lleno, clickea en finalizar"
+                btnRecolectar.isEnabled=false
+            }
             cvRecoleccion.visibility=View.VISIBLE
         })
-
         btnRecolectar.setOnClickListener {
+            var m3contenedor=(datosRuta.contenedorActual.fillingLevel*0.76)
+            var porcentaje = ((m3contenedor*100)/20)/100
+            var sum = datosRuta.fillLevel+porcentaje
+            datosRuta.actualizarVehiculo(sum,contexto)
+            datosRuta.actualizarContenedor(datosRuta.contenedorActual.id,contexto)
             cvRecoleccion.visibility=View.INVISIBLE
+            tvWarning.text=""
             pausa=false
         }
+
         btnIniciar.setOnClickListener{
             cvResumen.visibility=View.INVISIBLE
             cvInstruccion.visibility=View.VISIBLE
-            ActualizarMapa()
-            //ActualizarMapa(tvInstruccion,tvSigInstruccion,ivActual,ivSig,contexto)
+            ActualizarMapa(contexto)
         }
         return rootView
     }
@@ -152,7 +169,7 @@ class Camino : Fragment() {
             }
     }
 
-   fun ActualizarMapa() {
+   fun ActualizarMapa(contexto: Context) {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 // función a ejecutar
@@ -161,7 +178,7 @@ class Camino : Fragment() {
                     var ubicacionActual = datosRuta.coordenadasDecodificadas[auxContador]
                     if (datosRuta.buscarContenedor(ubicacionActual)) {
                         pausa = true
-                        datosRuta.controlRecoleccion.postValue(pausa)
+                        datosRuta.obtenerVehiculo(datosRuta.idVehiculo,contexto)
                     }
                     if (datosRuta.auxInstruccion.estoyCerca(ubicacionActual))
                         datosRuta.actualizarInstrucciones()
@@ -173,7 +190,7 @@ class Camino : Fragment() {
         }, 3000)
     }
     fun Double.format(digits: Any) = "%.${digits}f".format(this)
-    private fun obtenerUbicacionActual(contexto : Context){
+    /*private fun obtenerUbicacionActual(contexto : Context){
         if(ActivityCompat.checkSelfPermission(contexto,android.Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(contexto as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),LOCATION_PERMISSION_REQUEST_CODE)
             return
@@ -183,10 +200,8 @@ class Camino : Fragment() {
                 ultimaUbicacion=location
                 val ubicacionActual=LatLng(location.latitude,location.longitude)
                 //UtilidadesMaps.crearRuta(contexto,ubicacionActual,ubicacionActual)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual,15f))
-                mMap.isMyLocationEnabled=true
             }
         }
-    }
+    }*/
 }
 
