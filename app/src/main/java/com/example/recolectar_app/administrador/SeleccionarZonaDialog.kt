@@ -1,5 +1,4 @@
 package com.example.recolectar_app.administrador
-
 import android.accessibilityservice.GestureDescription
 import android.content.Context
 import android.os.Bundle
@@ -36,9 +35,9 @@ class SeleccionarZonaDialog : DialogFragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
-        val v: View = inflater.inflate(R.layout.seleccionar_zona,container, false)
+        var v: View = inflater.inflate(R.layout.seleccionar_zona,container, false)
         obtenerZonas()
         combo_zonas = v.findViewById(R.id.combo_zonas)
         val arrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,zonas)
@@ -54,6 +53,7 @@ class SeleccionarZonaDialog : DialogFragment(){
 
             findNavController().previousBackStackEntry?.savedStateHandle?.set("Id_Zona", id_zona)
             dismiss()
+
 
         }
 
@@ -77,10 +77,17 @@ class SeleccionarZonaDialog : DialogFragment(){
 
     fun generarArrayZonas(response:JSONArray){
         for (i in 0 until response.length()){
-            val zona = (response[i] as JSONObject) ["id"] as String
+            var zona = (response[i] as JSONObject) ["id"] as String
             zonas.add(zona)
         }
     }
+/*
+    override fun passDataCom(id: String) {
+        val bundle = Bundle()
+        bundle.putString("message",id)
 
 
+    }
+
+ */
 }
