@@ -100,9 +100,9 @@ class ContenedorUpdate : Fragment() {
         contenedor.setLocation(mutableListOf(edittextContenedorLatitud.text.toString().toDouble(),edittextContenedorLongitud.text.toString().toDouble()))
         val contenedorUpdateRequest = UpdateRequestModel()
         contenedorUpdateRequest.addContenedor(contenedor)
-        val gson = Gson()
-        val asd = gson.toJson(contenedorUpdateRequest)
-        Toast.makeText(thiscontext, asd, Toast.LENGTH_SHORT).show()
+//        val gson = Gson()
+//        val asd = gson.toJson(contenedorUpdateRequest)
+//        Toast.makeText(thiscontext, asd, Toast.LENGTH_SHORT).show()
         contenedorUpdateVM.updateContenedor(contenedorUpdateRequest)
     }
 
