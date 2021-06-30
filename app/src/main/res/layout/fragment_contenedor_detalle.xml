@@ -11,6 +11,7 @@
         android:id="@+id/scrollView_detalle_contenedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="80dp"
         tools:ignore="MissingConstraints">
 
     <LinearLayout

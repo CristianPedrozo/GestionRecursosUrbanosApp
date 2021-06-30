@@ -22,9 +22,7 @@ class ContenedorHolder (v: View) : RecyclerView.ViewHolder(v) {
                 contenedorModel.fillingLevel.value.toString().split(".")[1] + "%"
         }
         binding.cardPackageItemContenedor.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(ContenedoresListAdminDirections.actionContenedoresToContenedorDetalle(
-                contenedorModel
-            ))
+            Navigation.findNavController(binding.root).navigate(ContenedoresListAdminDirections.actionContenedoresToContenedorDetalle(contenedorModel))
         }
     }
 
